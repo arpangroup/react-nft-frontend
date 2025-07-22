@@ -1,0 +1,63 @@
+.profit-card {
+  background-color: #1f1f1f;
+  color: #fff;
+  border-radius: 12px;
+  padding: 16px;
+  max-width: 360px;
+  width: 90%;
+  margin: 12px auto;
+  font-family: 'Segoe UI', sans-serif;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
+  transition: transform 0.2s;
+}
+
+.profit-card:hover {
+  transform: scale(1.02);
+}
+
+.profit-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.profit-label {
+  font-size: 14px;
+  color: #aaa;
+  background-color: #333;
+  padding: 4px 8px;
+  border-radius: 6px;
+}
+
+.profit-amount {
+  font-size: 24px;
+  font-weight: bold;
+  text-align: left;
+  word-break: break-word;
+}
+
+.positive {
+  color: #4ade80; /* green */
+}
+
+.negative {
+  color: #f87171; /* red */
+}
+
+/* Responsive Design */
+@media (max-width: 480px) {
+  .profit-card {
+    padding: 12px;
+    font-size: 90%;
+  }
+
+  .profit-amount {
+    font-size: 20px;
+  }
+
+  .profit-label {
+    font-size: 12px;
+    padding: 3px 6px;
+  }
+}

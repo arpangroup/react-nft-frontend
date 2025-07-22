@@ -15,10 +15,12 @@ const Bids = ({title}) => {
   return (
     <div className='bids section__padding'>
       <div className="bids-container">
-        <div className="bids-container-text">
+        {title && <div className="bids-container-text">
           <h1>{title}</h1>
         </div>
+        }
         <div className="bids-container-card">
+          
           <div className="card-column" >
             <div className="bids-card">
               <div className="bids-card-top">
@@ -33,6 +35,8 @@ const Bids = ({title}) => {
               </div>
             </div>
           </div>
+
+
           <div className="card-column" >
             <div className="bids-card">
               <div className="bids-card-top">
@@ -47,6 +51,8 @@ const Bids = ({title}) => {
               </div>
             </div>
           </div>
+
+
           <div className="card-column" >
             <div className="bids-card">
               <div className="bids-card-top">
@@ -61,6 +67,8 @@ const Bids = ({title}) => {
               </div>
             </div>
           </div>
+
+
           <div className="card-column" >
             <div className="bids-card">
               <div className="bids-card-top">

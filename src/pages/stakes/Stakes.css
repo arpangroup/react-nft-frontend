@@ -1,0 +1,77 @@
+.search_container {
+    margin-top: 8px;;
+}
+
+.search_container input {
+  background: #1B1A21;
+  border-radius: 10px;
+  border: none;
+  padding: 7px 19px 7px 15px;
+  font-family: var(--font-family);
+  outline: none;
+  color: whitesmoke;
+  width: 100%;
+}
+
+:root {
+  --bg-color: #121212;
+  --input-bg: #1E1E2F;
+  --input-border: #333;
+  --input-hover: #2C2C3C;
+  --text-color: #E0E0E0;
+  --placeholder-color: #888;
+  --focus-border: #5D9EFF;
+  --border-radius: 10px;
+  --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  font-family: var(--font-family);
+}
+
+.stake-list {
+  padding: 20px;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.search_container input,
+.filter_container input {
+  background-color: var(--input-bg);
+  border: 1px solid var(--input-border);
+  border-radius: var(--border-radius);
+  padding: 10px 16px;
+  color: var(--text-color);
+  width: 100%;
+  margin-bottom: 16px;
+  transition: border-color 0.3s, background-color 0.3s;
+  font-size: 16px;
+}
+
+.search_container input::placeholder,
+.filter_container input::placeholder {
+  color: var(--placeholder-color);
+}
+
+.search_container input:focus,
+.filter_container input:focus {
+  outline: none;
+  border-color: var(--focus-border);
+  background-color: var(--input-hover);
+}
+
+.filter_container {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.filter_container input {
+  flex: 1 1 calc(50% - 10px);
+}
+
+.stakes {
+  padding: 0rem 14px !important;
+}

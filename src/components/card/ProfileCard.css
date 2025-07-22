@@ -1,0 +1,67 @@
+.profile-card {
+  background-color: #1e1e1e;
+  color: #ffffff;
+  border-radius: 12px;
+  padding: 16px;
+  max-width: 420px;
+  margin: auto;
+  font-family: 'Segoe UI', sans-serif;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  margin-bottom: 20px;
+}
+
+.top-row {
+  display: flex;
+  align-items: flex-start;
+}
+
+.profile-img {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #444;
+  margin-right: 16px;
+}
+
+.user-info {
+  flex: 1;
+}
+
+.user-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.username {
+  font-size: 18px;
+  margin: 0;
+}
+
+.wallet-icon {
+  font-size: 20px;
+  color: #ccc;
+}
+
+.user-id {
+  font-size: 13px;
+  color: #999;
+  margin-top: 4px;
+  word-break: break-all;
+}
+
+.bottom-row {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 16px;
+}
+
+.info-box {
+  border: 1px solid #555;
+  border-radius: 6px;
+  padding: 6px 12px;
+  font-size: 14px;
+  color: #ccc;
+  background-color: rgba(255, 255, 255, 0.05);
+}

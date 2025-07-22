@@ -1,0 +1,28 @@
+.income_card {
+    background-color: #1f2937;
+    background-color: rgb(51 55 62 / 1);
+    color: #fff;
+    padding: 24px;
+    border-radius: 16px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+}
+
+.income_table table {
+    background-color: transparent;
+}
+
+.income_table table th, .income_table table td{
+    border: none;
+    padding: 6px;
+    text-align: left;
+    background-color: rgb(51 55 62 / 1);
+}
+.income_table table thead {
+    border-bottom: 1px solid #474747;
+    border-top: 1px solid #474747;
+}
+
+.card_header p {
+    margin: 0;
+    margin-bottom: 6px;
+}
