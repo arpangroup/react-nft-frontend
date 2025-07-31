@@ -1,0 +1,23 @@
+.dark-bg {
+  background-color: #121212;
+  padding: 2rem;
+}
+
+.custom-card {
+  background-color: #1e1e1e;
+  border-radius: 12px;
+  padding: 2rem;
+  max-width: 720px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.icon-size {
+  font-size: 2.5rem;
+  color: #f8f9fa;
+}
+
+/* Optional: make sure paragraphs don’t wrap weirdly */
+p {
+  white-space: nowrap;
+}

@@ -5,6 +5,7 @@ import ProfileCard from '../../components/card/ProfileCard';
 import ProfitBalanceCard from '../../components/card/ProfitBalanceCard';
 import IncomeTable from './IncomeTable';
 import Transaction from '../../components/transaction/Transaction';
+import DarkButtonGroup from './DarkButtonGroup';
 
 function UserDetails() {
   const [userHierarchy, setUserHierarchy] = useState([]);
@@ -35,6 +36,8 @@ function UserDetails() {
 
      <ProfitBalanceCard amount={1580.75} currency="USD" label="Today" />
      <ProfitBalanceCard amount={-325.50} currency="USD" label="Last 7 Days" />
+
+     <DarkButtonGroup/>
 
      <IncomeTable
         incomeData={[

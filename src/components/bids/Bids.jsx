@@ -141,7 +141,7 @@ const Bids = ({title}) => {
           </div>
         </div>
       </div>
-      <div className="load-more">
+      <div className="load-more mb-80">
         <button>Load More</button>
       </div>
     </div>

@@ -1,0 +1,45 @@
+/* Container */
+.countdown-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #121212;
+  padding: 20px;
+  border-radius: 12px;
+}
+
+/* Countdown Area */
+.countdown-area {
+  text-align: center;
+  color: #ffffff;
+}
+
+/* Title */
+.countdown-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #ffffff;
+  margin-bottom: 10px;
+}
+
+/* Timer */
+.countdown-timer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Time Boxes */
+.countdown-box {
+  background-color: #1e1e1e;
+  border: 1px solid #333;
+  color: #ffffff;
+  font-size: 20px;
+  font-weight: bold;
+  border-radius: 6px;
+  padding: 10px 12px;
+  margin: 0 4px;
+  min-width: 40px;
+  text-align: center;
+  box-shadow: 0 0 10px rgba(0,0,0,0.4);
+}

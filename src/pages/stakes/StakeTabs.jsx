@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import './DarkTabs.css';
-import TabContent from './TabContent';
+import './StakeTabs.css';
+// import StakeTabContent from './StakeTabContent';
 
-const tabs = ['Today\'s', 'Reserve', 'Collection'];
+const tabs = ['Exclusive', 'FreeZOne', 'My Stake'];
 
-const DarkTabs = () => {
+const StakeTabs = () => {
   const [activeTab, setActiveTab] = useState(0);
 
   return (
@@ -34,9 +34,11 @@ const DarkTabs = () => {
           ))}
         </div>
       </div>
-      <TabContent activeTab={activeTab}/>
+      <div className="dark-tab-content">
+        {/* <StakeTabContent activeTab={activeTab} /> */}
+      </div>
     </div>
   );
 };
 
-export default DarkTabs;
+export default StakeTabs;

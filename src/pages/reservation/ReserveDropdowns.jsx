@@ -1,6 +1,8 @@
 import React from 'react';
+import Countdown from './Countdown';
 
 const ReserveDropdowns = () => (
+  <>
   <div className="reserve-content">
     <select id="option1" className="reserve-dropdown">
       <option value="val1">Value 1</option>
@@ -14,6 +16,8 @@ const ReserveDropdowns = () => (
       <option value="valC">Value C</option>
     </select>
   </div>
+  <Countdown initialTimeInSeconds={4907} />
+  </>
 );
 
 export default ReserveDropdowns;

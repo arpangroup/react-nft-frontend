@@ -34,7 +34,7 @@ const DarkTabs = () => {
           ))}
         </div>
       </div>
-      <div className="dark-tab-content">
+      <div className="dark-tab-content" style={{marginBottom: '50px'}}>
         <TabContent activeTab={activeTab} />
       </div>
     </div>

@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './Stakes.css';
 import { Bids } from '../../components';
+import apiClient from '../../api/apiClient'
 
 import bids1 from '../../assets/bids1.png'
 import bids2 from '../../assets/bids2.png'
@@ -11,6 +13,9 @@ import bids6 from '../../assets/bids6.png'
 import bids7 from '../../assets/bids7.png'
 import bids8 from '../../assets/bids8.png'
 import StakeCard from '../../components/card/StakeCard'
+import { API_ROUTES } from '../../api/apiRoutes';
+import { stakes } from '../../mocks/mockResponses';
+import StakeTabs from './StakeTabs';
 
 const stakeItems = [
   { image: bids1, title: "Abstract Smoke Red", price: "1.25", likes: 92 },
@@ -24,10 +29,35 @@ const stakeItems = [
 ];
 
 
+
 function Stakes() {
+  const [stakeItems, setStakeItems] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const navigate = useNavigate();
+
+   useEffect(() => {
+      const fetchStakes = async () => {
+        try {
+          // const response = await apiClient.get(API_ROUTES.STAKES);
+          const response = stakes;
+          console.log("RESPONSE: ", response);
+          setStakeItems(response.content || []);
+        } catch (err) {
+          console.error('Failed to fetch stake items:', err);
+          setError('Failed to load stake items.');
+        } finally {
+          setLoading(false);
+        }
+      };
+
+      fetchStakes();
+    }, []);
 
   return (
     <div>
+      
+      <StakeTabs/>
       <div className="stake-list">
         <div className="search_container">
           <input type="text" placeholder="Search Item Here" autoFocus />
@@ -41,8 +71,17 @@ function Stakes() {
       <div className='stakes'>
         <div className="bids-container">
           <div className="bids-container-card">
-            {stakeItems.map((item, index) => (
-              <StakeCard key={index} {...item} />
+            {loading && <p>Loading stake items...</p>}
+            {error && <p>{error}</p>}
+            {!loading && !error && stakeItems.map((item, index) => (
+              <StakeCard 
+                key={item.id || index}
+                image={item.imageUrl}
+                title={item.title}
+                price={item.minimumInvestmentAmount}
+                likes={item.totalReturnPeriods} // or any other available metric
+                onClick={() => navigate(`/stakes/${item.id}`)}
+              />
             ))}
           </div>
         </div>
