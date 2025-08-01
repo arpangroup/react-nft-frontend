@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './Stakes.css';
+import './StakeList.css';
 import { Bids } from '../../components';
 import apiClient from '../../api/apiClient'
 
@@ -15,7 +15,7 @@ import bids8 from '../../assets/bids8.png'
 import StakeCard from '../../components/card/StakeCard'
 import { API_ROUTES } from '../../api/apiRoutes';
 import { stakes } from '../../mocks/mockResponses';
-import StakeTabs from './StakeTabs';
+import NoData from '../../components/NoData';
 
 const stakeItems = [
   { image: bids1, title: "Abstract Smoke Red", price: "1.25", likes: 92 },
@@ -56,23 +56,24 @@ function Stakes() {
 
   return (
     <div>
-      
-      <StakeTabs/>
-      <div className="stake-list">
-        <div className="search_container">
+       <div className="search_container">
           <input type="text" placeholder="Search Item Here" autoFocus />
+          <div className="filter_container">
+            <input type="number" placeholder="Lowest Price" min="0" />
+            <input type="number" placeholder="Highest Price" min="0" />
+            </div>
         </div>
-        <div className="filter_container">
-          <input type="number" placeholder="Lowest Price" min="0" />
-          <input type="number" placeholder="Highest Price" min="0" />
-        </div>
-      </div>
 
       <div className='stakes'>
         <div className="bids-container">
           <div className="bids-container-card">
             {loading && <p>Loading stake items...</p>}
             {error && <p>{error}</p>}
+
+             {!loading && !error && stakeItems.length === 0 && (
+              <NoData message="No stake items found." />
+            )}
+
             {!loading && !error && stakeItems.map((item, index) => (
               <StakeCard 
                 key={item.id || index}

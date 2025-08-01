@@ -3,7 +3,7 @@ import {Navbar,NavbarV2,Footer} from './components'
 import {Home,Profile,Item, Create,Login,Register, Settings, Forgot, Level, UserDashboardPage, MLMTree} from './pages'
 import { Routes, Route, useLocation } from "react-router-dom";
 import ItemList from './pages/demo/ItemList';
-import Stakes from './pages/stakes/Stakes';
+import Stake from './pages/stakes/Stake';
 import BottomNav from './components/bottomnav/BottomNav';
 import Earn from './pages/earn/Earn';
 import UserDetails from './pages/user/UserDetails';
@@ -22,7 +22,7 @@ function App() {
        <div style={{ marginTop: showNavbar ? '60px' : '0' }}>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/stakes" element={<Stakes />} />
+          <Route path="/stakes" element={<Stake />} />
           <Route path="/earn" element={<Earn />} />
           <Route path=":item/:id" element={<Item />} />
           <Route path="/userDetails/:id" element={<UserDetails />} />

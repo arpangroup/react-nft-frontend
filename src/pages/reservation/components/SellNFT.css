@@ -1,0 +1,150 @@
+/* Base page style */
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Fullscreen dark modal */
+.drawer-content {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #121212;
+  color: #ffffff;
+  /* padding: 30px; */
+  z-index: 1000;
+  overflow-y: auto;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Centered content box */
+.drawer-body {
+  background-color: #1e1e1e;
+  padding: 30px;
+  border-radius: 12px;
+  width: 400px;
+  max-width: 90%;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
+
+  max-width: 100%;
+  height: 100vh;
+}
+
+/* Title section */
+.step1-area .title {
+  display: flex;
+  align-items: center;
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: #fff;
+}
+
+/* Cancel icon */
+.cancel-icon {
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+/* NFT image - resized and centered */
+.img-item {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 10px;
+  margin: 0 auto 15px;
+  display: block;
+}
+
+/* Item name */
+.item-name {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 20px;
+  color: #e0e0e0;
+  text-align: center;
+}
+
+/* Section subtitles */
+.sub-title {
+  font-size: 16px;
+  font-weight: 500;
+  margin-bottom: 10px;
+  color: #aaa;
+}
+
+/* Price display */
+.price-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+/* Coin selector */
+.select-coin {
+  display: flex;
+  align-items: center;
+  background-color: #2a2a2a;
+  padding: 8px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+/* Coin icon inside selector */
+.coin-img {
+  width: 20px;
+  height: 20px;
+  margin-right: 8px;
+}
+
+/* Coin label */
+.coin-label {
+  font-size: 14px;
+}
+
+/* Price text */
+.price-value {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+/* Fees section */
+.fee-area {
+  margin-bottom: 20px;
+}
+
+.fee-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  color: #ccc;
+}
+
+/* Bottom action button */
+.footer {
+  text-align: center;
+}
+
+.btn-complete {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  font-size: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  width: 100%;
+  transition: background-color 0.3s ease;
+}
+
+.btn-complete:hover {
+  background-color: #43a047;
+}

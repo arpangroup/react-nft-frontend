@@ -1,0 +1,156 @@
+.user-statistics {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: space-between;
+  padding: 12px;
+  background-color: transparent;
+}
+
+/* Each card */
+.stat-card {
+  flex: 1 1 calc(33.33% - 12px); /* 3 per row on desktop */
+  min-width: 140px;
+  background-color: #2a2a2a;
+  padding: 16px;
+  border-radius: 10px;
+  box-sizing: border-box;
+  color: #fff;
+  text-align: center;
+  transition: transform 0.2s;
+}
+
+.stat-card:hover {
+  transform: translateY(-2px);
+}
+
+.stat-title {
+  font-size: 13px;
+  color: #bbb;
+  margin-bottom: 6px;
+}
+
+.stat-value {
+  font-size: 18px;
+  font-weight: bold;
+  word-break: break-word;
+}
+
+/* Color themes */
+.stat-card.blue {
+  background-color: #1e3a5f;
+}
+.stat-card.green {
+  background-color: #1f4e3c;
+}
+.stat-card.gray {
+  background-color: #383838;
+}
+.stat-card.orange {
+  background-color: #4e3218;
+}
+.stat-card.cyan {
+  background-color: #175d66;
+}
+.stat-card.dark {
+  background-color: #111;
+}
+
+/* Adjust layout for tablets and smaller screens */
+@media (max-width: 1023px) {
+  .stat-card {
+    flex: 1 1 calc(50% - 12px); /* 2 per row */
+  }
+}
+
+/* On very narrow screens, force 2 per row as much as possible */
+@media (max-width: 480px) {
+  .stat-card {
+    flex: 1 1 calc(50% - 12px); /* still 2 per row */
+  }
+}
+
+
+/* ############################# */
+/* Base card styling */
+.stat-card {
+  flex: 1 1 calc(33.33% - 12px);
+  min-width: 140px;
+  padding: 16px;
+  border-radius: 12px;
+  box-sizing: border-box;
+  text-align: center;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  background-color: #1e1e1e;
+  border: 1px solid #2a2a2a;
+  color: #e0e0e0;
+}
+
+.stat-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 14px rgba(0, 255, 204, 0.1);
+}
+
+/* Title */
+.stat-title {
+  font-size: 13px;
+  color: #aaaaaa;
+  font-weight: 500;
+  margin-bottom: 6px;
+}
+
+/* Value */
+.stat-value {
+  font-size: 20px;
+  font-weight: 600;
+  color: #ffffff;
+  word-break: break-word;
+}
+
+/* Color themes with subtle glows */
+.stat-card.blue {
+  background-color: #0d2f4f;
+  border: 1px solid #1e4d7a;
+  box-shadow: 0 0 4px rgba(30, 77, 122, 0.4);
+}
+
+.stat-card.green {
+  background-color: #0f3d2e;
+  border: 1px solid #1c634c;
+  box-shadow: 0 0 4px rgba(30, 122, 90, 0.4);
+}
+
+.stat-card.orange {
+  background-color: #4a2c10;
+  border: 1px solid #ff8c42;
+  box-shadow: 0 0 4px rgba(255, 140, 66, 0.3);
+}
+
+.stat-card.cyan {
+  background-color: #073f45;
+  border: 1px solid #2fb1b3;
+  box-shadow: 0 0 4px rgba(47, 177, 179, 0.3);
+}
+
+.stat-card.gray {
+  background-color: #2a2a2a;
+  border: 1px solid #3b3b3b;
+}
+
+.stat-card.dark {
+  background-color: #141414;
+  border: 1px solid #222;
+}
+
+/* Responsive tweaks */
+@media (max-width: 1023px) {
+  .stat-card {
+    flex: 1 1 calc(50% - 12px);
+  }
+}
+
+@media (max-width: 480px) {
+  .stat-card {
+    flex: 1 1 100%;
+  }
+}

@@ -13,6 +13,7 @@
   width: 100%;
 }
 
+
 :root {
   --bg-color: #121212;
   --input-bg: #1E1E2F;
@@ -70,12 +71,4 @@ body {
 
 .filter_container input {
   flex: 1 1 calc(50% - 10px);
-}
-
-.stakes {
-  padding: 0rem 14px !important;
-}
-
-.stakes .bids-container {
-  margin-bottom: 80px;
 }
