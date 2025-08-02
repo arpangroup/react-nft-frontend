@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import StatCard from '../../components/card/StatCard';
 import StakeCard from './components/StakeCard';
-import NFTStakeModal from './components/NFTStakeModal';
-import StakeWarningModal from './components/StakeWarningModal';
-import ExclusiveStakingModal from './components/ExclusiveStakingModal';
+import NFTStakeModal from '../../components/modal/NFTStakeModal';
+import StakeWarningModal from '../../components/modal/StakeWarningModal';
+import ExclusiveStakingModal from '../../components/modal/ExclusiveStakingModal';
 
 
 function MyStakeList() {
