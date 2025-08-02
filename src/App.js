@@ -8,6 +8,7 @@ import BottomNav from './components/bottomnav/BottomNav';
 import Earn from './pages/earn/Earn';
 import UserDetails from './pages/user/UserDetails';
 import Reservation from './pages/reservation/Reservation';
+import DepositPage from './pages/deposit/DepositPage';
 
 function App() {
   const location = useLocation();
@@ -36,6 +37,9 @@ function App() {
           <Route path="/register" element={ <Register />} />
           <Route path="/forgot" element={ <Forgot />} />
           <Route path="/settings" element={<Settings />} />
+
+
+          <Route path="/deposit" element={<DepositPage />} />
 
 
           <Route path="/level" element={<Level />} />

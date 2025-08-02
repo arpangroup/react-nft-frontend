@@ -2,7 +2,7 @@ import React from 'react';
 import { AiFillHeart } from "react-icons/ai";
 import { Link } from 'react-router-dom';
 
-const BidCard = ({ image, title, price, likes, link = '/post/123', onClick }) => (
+const BidCard = ({ image, title, price, currency = 'USD', likes, link = '/post/123', onClick }) => (
   <div className="card-column">
     <div className="bids-card" onClick={onClick} style={{ cursor: 'pointer' }}>
       <div className="bids-card-top">
@@ -12,7 +12,7 @@ const BidCard = ({ image, title, price, likes, link = '/post/123', onClick }) =>
         </Link>
       </div>
       <div className="bids-card-bottom">
-        <p>{price} <span>ETH</span></p>
+        <p>{price} <span>{currency}</span></p>
         <p><AiFillHeart /> {likes}</p>
       </div>
     </div>

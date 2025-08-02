@@ -16,6 +16,7 @@ import StakeCard from '../../components/card/StakeCard'
 import { API_ROUTES } from '../../api/apiRoutes';
 import { stakes } from '../../mocks/mockResponses';
 import NoData from '../../components/NoData';
+import { CURRENCY_UNIT } from '../../constants/config';
 
 const stakeItems = [
   { image: bids1, title: "Abstract Smoke Red", price: "1.25", likes: 92 },
@@ -39,8 +40,8 @@ function Stakes() {
    useEffect(() => {
       const fetchStakes = async () => {
         try {
-          // const response = await apiClient.get(API_ROUTES.STAKES);
-          const response = stakes;
+          const response = await apiClient.get(API_ROUTES.STAKES);
+          // const response = stakes;
           console.log("RESPONSE: ", response);
           setStakeItems(response.content || []);
         } catch (err) {
@@ -64,7 +65,7 @@ function Stakes() {
             </div>
         </div>
 
-      <div className='stakes'>
+      <div className='stakes' style={{marginBottom: '80px'}}>
         <div className="bids-container">
           <div className="bids-container-card">
             {loading && <p>Loading stake items...</p>}
@@ -80,6 +81,7 @@ function Stakes() {
                 image={item.imageUrl}
                 title={item.title}
                 price={item.minimumInvestmentAmount}
+                currency={CURRENCY_UNIT}
                 likes={item.totalReturnPeriods} // or any other available metric
                 onClick={() => navigate(`/stakes/${item.id}`)}
               />

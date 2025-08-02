@@ -1,7 +1,8 @@
 import { mockResponses } from "../mocks/mockResponses";
 import { findMockResponse } from "../mocks/findMockResponse";
 
-const isMockMode = process.env.REACT_APP_API_MOCK === 'true';
+// const isMockMode = process.env.REACT_APP_API_MOCK === 'true';
+const isMockMode = false;
 
 const apiClient = {
   get: async (url) => {

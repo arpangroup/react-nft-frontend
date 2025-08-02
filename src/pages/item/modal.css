@@ -1,0 +1,78 @@
+/* Dark overlay */
+.custom-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(10, 10, 10, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+/* Modal container */
+.custom-modal {
+  background-color: #1e1e1e;
+  border-radius: 8px;
+  width: 400px;
+  padding: 24px;
+  color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
+}
+
+/* Modal body */
+.custom-modal-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+/* Image */
+.custom-img {
+  margin-bottom: 10px;
+}
+
+/* Title text */
+.custom-title {
+  font-size: 20px;
+  font-weight: 600;
+  text-align: center;
+  margin-top: 12px;
+}
+
+/* Footer */
+.custom-modal-footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+/* Button styles */
+.footer-button {
+  flex: 1;
+  padding: 12px;
+  text-align: center;
+  border-radius: 6px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.finish-button {
+  border: 1px solid #888;
+  background-color: transparent;
+  color: #ccc;
+}
+
+.primary-button {
+  background-color: #2e8bff;
+  color: white;
+  border: none;
+}
+
+.deposit-button:hover,
+.finish-button:hover {
+  opacity: 0.85;
+}
