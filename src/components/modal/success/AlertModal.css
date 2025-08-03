@@ -59,10 +59,8 @@
   margin-top: 24px;
 }
 
-.success-button {
+.btn {
   width: 100%;
-  background-color: #ffc107;
-  color: #000;
   font-weight: bold;
   padding: 12px;
   border: none;
@@ -70,9 +68,27 @@
   cursor: pointer;
   font-size: 15px;
   transition: background-color 0.3s ease;
+  color: #000;
 }
 
-.upgrade-button:hover {
-  background-color: #ffb300;
+.btn-success {
+  background-color: #28a745;
+}
+.btn-success:hover {
+  background-color: #218838;
 }
 
+.btn-error {
+  background-color: #dc3545;  
+}
+.btn-error:hover {
+  background-color: #c82333;
+}
+
+.btn-warning {
+  /* background-color: #ffc107;   */
+  background-color: #ffc107;
+}
+.btn-warning:hover {
+  background-color: #e0a800;
+}

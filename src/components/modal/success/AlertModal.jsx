@@ -1,11 +1,12 @@
 import React from 'react';
-import './SuccessModal.css';
+import './AlertModal.css';
 import SuccessIcon from '../../../assets/icons/success.png'
+import WarningIcon from '../../../assets/icons/warming.png'
 
-export default function SuccessModal({ 
+export default function AlertModal({ 
   onClose, 
   icon = SuccessIcon,
-  title = 'Payment Success',
+  title = 'Try Again',
   children,
   footerButtons = [],
   onSuccess, 

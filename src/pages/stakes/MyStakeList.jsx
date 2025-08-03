@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import StatCard from '../../components/card/StatCard';
-import StakeCard from './components/StakeCard';
+import StakeCard from '../../components/card/StakeCard'
 // import NFTStakeModal from '../../components/modal/NFTStakeModal';
 // import WarningModal from '../../components/modal/warning/WarningModal';
 import ExclusiveStakingModal from '../../components/modal/ExclusiveStakingModal';

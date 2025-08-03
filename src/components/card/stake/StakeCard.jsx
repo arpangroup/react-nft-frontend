@@ -1,8 +1,9 @@
 import React from "react";
 import "./StakeCard.css";
+const defaultImage = "http://localhost:8080/api/v1/files/download/stake_1.png";
 
 export default function StakeCard({
-  imgUrl = "https://prodimage-dan.treasurenft.xyz/Stake/Stake_14778.png",
+  imgUrl = defaultImage,
   stakeName = "Stake_147555",
   stakeValue = "2000 USDT",
   apr = "1.5%",
