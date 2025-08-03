@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
 import './ExclusiveStakingModal.css';
 
-export default function ExclusiveStakingModal({ onClose }) {
+export default function ExclusiveStakingModal({ isOpen, onClose }) {
   const [activeTab, setActiveTab] = useState('illustrate');
+
+  // Don't render the modal if it's not open
+  if (!isOpen) return null;
 
   return (
     <div className="modal-overlay">

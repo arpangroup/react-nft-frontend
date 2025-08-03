@@ -25,6 +25,17 @@
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
 }
 
+.close-button {
+  position: absolute;
+  /* top: 12px; */
+  right: 32px;
+  background: transparent;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: #fff;
+}
+
 .modal-image {
   display: block;
   margin: 0 auto 16px; /* top-bottom margin of 0 and 16px bottom spacing */

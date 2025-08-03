@@ -1,8 +1,8 @@
 import React from 'react';
-import './modal.css';
+import './ConfirmModal.css';
 import { useNavigate } from 'react-router-dom';
 
-const Modal = ({ 
+const ConfirmModal = ({ 
     isOpen, 
     onClose,
     title = 'Conditions not met',
@@ -37,4 +37,4 @@ const Modal = ({
   );
 };
 
-export default Modal;
+export default ConfirmModal;

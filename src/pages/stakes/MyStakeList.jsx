@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import StatCard from '../../components/card/StatCard';
 import StakeCard from './components/StakeCard';
-import NFTStakeModal from '../../components/modal/NFTStakeModal';
-import StakeWarningModal from '../../components/modal/StakeWarningModal';
+// import NFTStakeModal from '../../components/modal/NFTStakeModal';
+// import WarningModal from '../../components/modal/warning/WarningModal';
 import ExclusiveStakingModal from '../../components/modal/ExclusiveStakingModal';
 
 
@@ -48,8 +48,8 @@ function MyStakeList() {
                     // />
 
                     <ExclusiveStakingModal
+                        isOpen={isModalOpen}
                         onClose={() => setModalOpen(false)}
-                        onUpgrade={() => {setModalOpen(false)}}
                     />
                     
                 )}

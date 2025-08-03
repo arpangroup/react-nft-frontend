@@ -5,7 +5,9 @@ import creator from '../../assets/seller2.png'
 import { CURRENCY_UNIT } from '../../constants/config';
 import apiClient from '../../api/apiClient';
 import itemImage  from '../../assets/item1.png'
-import Modal from './Modal';
+import ConfirmModal from '../../components/modal/confirm/ConfirmModal';
+import WarningModal from '../../components/modal/warning/WarningModal';
+import SuccessModal from '../../components/modal/success/SuccessModal';
 
 const description = `Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book`;
 
@@ -88,13 +90,35 @@ const Item = () => {
                 </button>
               {/* <button className="secondary-btn">Make Offer</button> */}
 
-              <Modal 
+              {/* <ConfirmModal 
                 isOpen={modalOpen} 
                 onClose={handleCloseModal}
                 onPrimaryAction={handleNavigateToDeposit}
                 primaryButtonLabel="Deposit"
                 title="Conditions not met"
-              />
+              /> */}
+              {modalOpen && (
+                // <WarningModal
+                //   onClose={handleCloseModal}
+                //   onUpgrade={handleNavigateToDeposit}
+                // />
+                <SuccessModal
+                  onClose={handleCloseModal}
+                  onSuccess={handleNavigateToDeposit}
+                  title={'Subscriptiion Success!!'}
+                  footerButtons={[
+                    {
+                      label: 'Go to Subscription',
+                      onClick: handleNavigateToDeposit,
+                      className: 'success-button',
+                    },
+                  ]}
+                >
+                  <p><strong>Subscription Amount:</strong> 100USDT</p>
+                  <p><strong>ROI:</strong> 2.5%</p>
+                  <p><strong>Mature At:</strong> 21 AUG 2025</p>
+                </SuccessModal>
+              )}
             </div>
           </div>
       </div>

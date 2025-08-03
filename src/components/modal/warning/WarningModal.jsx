@@ -1,15 +1,21 @@
 import React from 'react';
-import './StakeWarningModal.css';
+import './WarningModal.css';
+import WarningIcon from '../../../assets/icons/warming.png'
 
-export default function StakeWarningModal({ onClose, onUpgrade }) {
+export default function WarningModal({ onClose, onUpgrade }) {
   return (
     <div className="modal-overlay">
       <div className="modal-content">
 
+        {/* Close Button */}
+        <button className="close-button" onClick={onClose} aria-label="Close modal">
+          &times;
+        </button>
+
         {/* Modal Body */}
         <div className="modal-body">
           <img
-            src="https://image.treasurenft.xyz/PC/img/img-stake-warning_01.png"
+            src={WarningIcon}
             width="80"
             height="80"
             alt="stake-img"
