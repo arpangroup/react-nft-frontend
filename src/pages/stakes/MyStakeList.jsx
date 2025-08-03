@@ -56,8 +56,8 @@ function MyStakeList() {
     useEffect(() => {
       const fetchStakes = async () => {
         try {
-          const response = await apiClient.get(API_ROUTES.MY_STAKES);
-          //setStakeItems(response.content || []);
+          const response = await apiClient.get(API_ROUTES.STAKES_BY_USER_ID(1));
+          setStakeItems(response.content || []);
         } catch (err) {
           console.error('Failed to fetch stake items:', err);
           setError('Failed to load stake items.');
@@ -106,26 +106,25 @@ function MyStakeList() {
                     ))}
                 </div>
 
-                {isModalOpen && (
-                    // <NFTStakeModal
-                    //     onClose={() => setModalOpen(false)}
-                    //     {...selectedStake} // pass stake data to modal (optional)
-                    // />
+                {/* {isModalOpen && (
+                    <NFTStakeModal
+                        onClose={() => setModalOpen(false)}
+                        {...selectedStake} // pass stake data to modal (optional)
+                    />
 
-                    // <StakeWarningModal
-                    //     onClose={() => setModalOpen(false)}
-                    //     onUpgrade={() => {
-                    //         setModalOpen(false);
-                    //         // Handle upgrade logic
-                    //     }}
-                    // />
+                    <StakeWarningModal
+                        onClose={() => setModalOpen(false)}
+                        onUpgrade={() => {
+                            setModalOpen(false);
+                            // Handle upgrade logic
+                        }}
+                    />
 
                     <ExclusiveStakingModal
                         isOpen={isModalOpen}
                         onClose={() => setModalOpen(false)}
-                    />
-                    
-                )}
+                    />                    
+                )} */}
             </div>
         </>
 
