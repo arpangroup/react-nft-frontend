@@ -1,24 +1,27 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './AlertModal.css';
 import SuccessIcon from '../../../assets/icons/success.png'
 import WarningIcon from '../../../assets/icons/warming.png'
 
 export default function AlertModal({ 
-  onClose, 
+  type = 'warning',
+  onClose,
   icon = SuccessIcon,
   title = 'Try Again',
   children,
   footerButtons = [],
-  onSuccess, 
 }) {
-  return (
+
+  return (    
     <div className="modal-overlay">
       <div className="modal-content">
 
         {/* Close Button */}
-        <button className="close-button" onClick={onClose} aria-label="Close modal">
-          &times;
-        </button>
+        { type !== 'success' && (
+          <button className="close-button" onClick={onClose} aria-label="Close modal">
+            &times;
+          </button>
+        )}
 
         {/* Modal Body */}
         <div className="modal-body">

@@ -12,6 +12,7 @@ import SuccessIcon from '../../assets/icons/success.png';
 import WarningIcon from '../../assets/icons/warming.png';
 import AlertModal from '../../components/modal/success/AlertModal';
 import { ERRORS } from '../../constants/errors';
+import confetti from 'canvas-confetti';
 
 
 const description = `Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book`;
@@ -51,6 +52,14 @@ const Item = () => {
     if (id) {
       fetchSchema();
     }
+
+    // Resize canvas on mount
+    const canvas = document.getElementById('confetti-canvas');
+    if (canvas) {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+
   }, []);
 
   const handleBuyClick = async () => {
@@ -80,11 +89,29 @@ const Item = () => {
         footerButtons: [
           {
             label: 'Go to Subscription',
-            onClick: handleNavigateToDeposit,
+            onClick: handleNavigateToMyStake,
             className: 'btn btn-success',
           },
         ],
       });
+
+      // 🎉 Confetti trigger after modal is set
+      setTimeout(() => {
+        const canvas = document.getElementById('confetti-canvas');
+        if (canvas) {
+          confetti.create(canvas, { resize: true })({
+            particleCount: 150,
+            spread: 100,
+            origin: { y: 0.6 },
+          });
+
+          // Optional cleanup after 2 seconds
+          setTimeout(() => {
+            const ctx = canvas.getContext('2d');
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+          }, 2000);
+        }
+      }, 200);
     } catch (error) {
       //console.log("ERRORR: ", JSON.stringify(error))
       const errorCode =error.response?.errorCode;
@@ -124,6 +151,13 @@ const Item = () => {
     navigate(`/deposit`);
   };
 
+  const handleNavigateToMyStake = () => {
+    navigate('/stakes', {
+      replace: true,
+      state: { activeTab: 'MyStake' }
+    });
+  }
+
   if (loading) return <div className="item">Loading...</div>;
   if (error) return <div className="item">Error: {error}</div>;
   if (!schema) return null;
@@ -131,6 +165,17 @@ const Item = () => {
 
   return( 
       <div className='item section__padding'>
+        {/* 🎉 Confetti canvas above all content */}
+        <canvas id="confetti-canvas" style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          pointerEvents: 'none',
+          width: '100vw',
+          height: '100vh',
+          zIndex: 2000
+        }} />
+
         <div className="item-image">
           <img src={schema.imageUrl || itemImage} alt="item" />
         </div>
@@ -201,6 +246,7 @@ const Item = () => {
 
               {modalData.isOpen && (
                 <AlertModal
+                    type={modalData.type}
                     icon={modalData.type === 'success' ? SuccessIcon : WarningIcon}
                     onClose={() => setModalData(prev => ({ ...prev, isOpen: false }))}
                     title={modalData.title}

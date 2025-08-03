@@ -2,7 +2,7 @@ import React from 'react';
 import { AiFillHeart } from "react-icons/ai";
 import { Link } from 'react-router-dom';
 
-const BidCard = ({ image, title, price, currency = 'USD', likes, link = '/post/123', onClick }) => (
+const StakeCard = ({ image, title, price, currency = 'USD', likes, link = '/post/123', onClick }) => (
   <div className="card-column">
     <div className="bids-card" onClick={onClick} style={{ cursor: 'pointer' }}>
       <div className="bids-card-top">
@@ -19,4 +19,4 @@ const BidCard = ({ image, title, price, currency = 'USD', likes, link = '/post/1
   </div>
 );
 
-export default BidCard;
+export default StakeCard;

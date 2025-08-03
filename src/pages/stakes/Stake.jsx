@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 // import './Stake.css';
 import { Bids } from '../../components';
 import apiClient from '../../api/apiClient'
@@ -22,23 +22,29 @@ import  StakeList from './StakeList';
 import NoData from '../../components/NoData';
 import MyStake from './MyStake';
 
-const stakeItems = [
-  { image: bids1, title: "Abstract Smoke Red", price: "1.25", likes: 92 },
-  { image: bids2, title: "Mountain Landscape", price: "0.20", likes: 25 },
-  { image: bids3, title: "Paint Color on Wall", price: "0.55", likes: 55 },
-  { image: bids4, title: "Abstract Pattern", price: "0.87", likes: 82 },
-  { image: bids5, title: "White Line Graffiti", price: "0.09", likes: 22 },
-  { image: bids6, title: "Abstract Triangle", price: "0.90", likes: 71 },
-  { image: bids7, title: "Lake Landscape", price: "0.52", likes: 63 },
-  { image: bids8, title: "Blue Red Art", price: "0.85", likes: 66 }
-];
+// Map tab titles to indexes — must match your TabContainer tab order
+const tabTitleToIndex = {
+  ExclusiveZone: 0,
+  FreeZone: 1,
+  MyStake: 2,
+};
 
+function Stake() {  
+  const location = useLocation();
+  const [initialIndex, setInitialIndex] = useState(0);
 
+  useEffect(() => {
+    if (location.state?.activeTab) {
+      const index = tabTitleToIndex[location.state.activeTab];
+      if (index !== undefined) {
+        setInitialIndex(index);
+      }
+    }
+  }, [location.state]);
 
-function Stake() {
   return (
     <div>
-      <TabContainer>
+      <TabContainer initialIndex={initialIndex}>
         <Tab title="ExclusiveZone"> 
           <StakeList/>
         </Tab>

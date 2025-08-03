@@ -1,8 +1,12 @@
-import React, { useState, Children, cloneElement } from 'react';
+import React, { useState, Children, cloneElement, useEffect } from 'react';
 import './TabContainer.css';
 
-const TabContainer = ({ children }) => {
-  const [activeIndex, setActiveIndex] = useState(0);
+const TabContainer = ({ children, initialIndex = 0 }) => {
+  const [activeIndex, setActiveIndex] = useState(initialIndex);
+
+  useEffect(() => {
+    setActiveIndex(initialIndex);
+  }, [initialIndex]);
 
   const tabs = Children.toArray(children);
 

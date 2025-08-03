@@ -21,7 +21,7 @@ function Stakes() {
         try {
           const response = await apiClient.get(API_ROUTES.STAKES);
           // const response = stakes;
-          console.log("RESPONSE: ", response);
+          //console.log("RESPONSE: ", response);
           setStakeItems(response.content || []);
         } catch (err) {
           console.error('Failed to fetch stake items:', err);
