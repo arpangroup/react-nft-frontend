@@ -11,6 +11,7 @@ import { API_ROUTES } from '../../api/apiRoutes';
 import SuccessIcon from '../../assets/icons/success.png';
 import WarningIcon from '../../assets/icons/warming.png';
 import AlertModal from '../../components/modal/success/AlertModal';
+import { ERRORS } from '../../constants/errors';
 
 
 const description = `Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book`;
@@ -85,7 +86,11 @@ const Item = () => {
         ],
       });
     } catch (error) {
-      console.error("Subscription failed:", error);
+      //console.log("ERRORR: ", JSON.stringify(error))
+      const errorCode =error.response?.errorCode;
+      const isInsufficientBalance = ERRORS.INSUFFICIENT_BALANCE === errorCode;
+      const buttonLabel = isInsufficientBalance ? 'Deposit' : 'Try Again';
+
       //setShowWarningModal(true); // Open Warning modal
       setModalData({
         isOpen: true,
@@ -96,8 +101,13 @@ const Item = () => {
         ),
         footerButtons: [
           {
-            label: 'Try Again',
-            onClick: () => setModalData(prev => ({ ...prev, isOpen: false })),
+            label: buttonLabel,
+            onClick: () => {
+              setModalData(prev => ({ ...prev, isOpen: false }));
+              if (isInsufficientBalance) {
+                navigate('/deposit'); // ⬅️ Navigate conditionally
+              }
+            },
             className: 'btn btn-warning',
           },
         ],
