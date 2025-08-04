@@ -4,7 +4,7 @@ import StatCard from '../../../components/card/StatCard';
 import apiClient from '../../../api/apiClient';
 import { API_ROUTES } from '../../../api/apiRoutes';
 import MyStakeCard from '../../../components/card/stake/MyStakeCard';
-import { CURRENCY_UNIT } from '../../../constants/config';
+import { CURRENCY_UNIT, USER_ID } from '../../../constants/config';
 import NoData from '../../../components/NoData';
 import NFTStakeModal from '../../../components/modal/NFTStakeModal';
 
@@ -22,7 +22,7 @@ function MyStake() {
 
   const fetchStakes = async () => {
     try {
-      const response = await apiClient.get(API_ROUTES.STAKES_BY_USER_ID(1));
+      const response = await apiClient.get(API_ROUTES.STAKES_BY_USER_ID(USER_ID));
       setStakeItems(response.content || []);
     } catch (err) {
       console.error('Failed to fetch stake items:', err);
