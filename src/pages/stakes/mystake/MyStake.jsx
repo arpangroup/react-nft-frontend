@@ -36,6 +36,7 @@ function MyStake() {
     setSelectedStake(stake);
     setModalOpen(true);
   };
+  
 
   if (loading) return <p>Loading stake items...</p>;
   if (error) return <p>{error}</p>;
@@ -62,7 +63,7 @@ function MyStake() {
             key={item.investmentId || index}
             {...item}
             currency={item.currencyCode || CURRENCY_UNIT}
-            onDetailsClick={() => setModalOpen(true)}
+            onDetailsClick={() => handleDetailsClick(item)}
           />
         ))}
       </div>

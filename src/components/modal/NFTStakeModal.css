@@ -1,172 +1,182 @@
-/* Overlay background */
-.modal-overlay {
+/* Fullscreen Overlay */
+.mystake-modal-overlay {
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(10, 10, 10, 0.9);
+  height: 100vh;
+  width: 100vw;
+  background: rgba(0, 0, 0, 0.85);
   display: flex;
-  align-items: center;
   justify-content: center;
-  z-index: 1000;
-  padding: 16px;
+  align-items: flex-end; /* 👈 Stick modal to bottom */
+  /* padding: 12px; */
   box-sizing: border-box;
+  z-index: 9999;
 }
 
-/* Modal container */
-.modal-content {
-  background-color: #181818;
-  color: #ffffff;
-  border-radius: 12px;
-  max-width: 500px;
+/* Modal Box */
+.modal-container {
   width: 100%;
-  overflow: hidden;
+  max-width: 420px;
+  background-color: #1e1e1e;
+  border-radius: 16px;
+  border-bottom-left-radius: 0px;
+  border-bottom-right-radius: 0px;
+  color: #fff;
   display: flex;
   flex-direction: column;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.8);
+  overflow: hidden;
+  height: 90vh;
+  max-height: 90vh; /* Enough space but still fits screen */
 }
 
 /* Header */
 .modal-header {
+  padding: 16px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 16px;
-  background-color: #202020;
-  border-bottom: 1px solid #2e2e2e;
+  /* background: #2b2b2b; */
+  /* border-bottom: 1px solid #333; */
 }
 
-.modal-title {
-  font-size: 18px;
+.modal-header h2 {
+  font-size: 24px;
   font-weight: 700;
   margin: 0;
-  color: #ffffff;
+  margin-left: 12px;
 }
 
-.close-icon {
+.close-button {
+  background: none;
+  border: none;
+  font-size: 24px;
+  font-weight: bold;
+  color: #ccc;
   cursor: pointer;
-  filter: brightness(0.8);
-  transition: filter 0.2s ease;
+  line-height: 1;
+  padding: 0;
+  margin: 0;
 }
-.close-icon:hover {
-  filter: brightness(1);
+.close-button:hover {
+  filter: #fff;
 }
 
 /* Body */
 .modal-body {
   padding: 16px;
+  overflow-y: auto;
+  flex-grow: 1;
+  overflow-y: auto;
 }
 
-.nft-preview {
+.image-block {  
+  display: flex;
+  flex-direction: column;
+  align-items: center;  /* This centers the image and text */
+  justify-content: center;
   text-align: center;
-  margin-bottom: 24px;
+  margin-bottom: 20px;
 }
 
-.nft-image {
-  width: 160px;
-  height: 160px;
-  border-radius: 8px;
+.nft-thumbnail {
+  width: 180px;
+  height: 180px;
   object-fit: cover;
-  margin-bottom: 12px;
+  border-radius: 12px;
+  border: 2px solid #333;
+  margin-bottom: 10px;
 }
 
-.nft-image {
-  width: 160px;
-  height: 160px;
-  border-radius: 8px;
-  object-fit: cover;
-  margin: 0 auto 12px; /* <-- this centers it horizontally */
-  display: block;      /* ensure it’s treated as a block-level element */
-}
-
-.nft-title {
-  font-size: 20px;
+.image-block h3 {
+  margin: 0;
+  font-size: 16px;
   font-weight: 600;
-  margin: 8px 0;
   color: #fff;
 }
 
-.value-section {
+/* Info List */
+.info-section {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  font-size: 16px;
-  margin-top: 8px;
+  flex-direction: column;
+  gap: 12px;
+  /* padding: 8px 0; */
+  padding: 12px;
 }
 
-.value-section .label {
-  color: #aaa;
-  margin-right: 4px;
-}
-
-.value-section .value {
-  font-weight: bold;
-  color: #ffffff;
-}
-
-.coin-icon {
-  width: 24px;
-  height: 24px;
-}
-
-/* Pledge Details */
-.pledge-details {
-  border-top: 1px solid #2e2e2e;
-  padding-top: 16px;
-}
-
-.section-title {
-  font-size: 16px;
-  font-weight: 600;
-  margin-bottom: 12px;
-  color: #ffffff;
-}
-
-.detail-row {
+.info-group {
   display: flex;
   justify-content: space-between;
-  padding: 6px 0;
-}
-
-.detail-row .label {
-  color: #aaa;
   font-size: 14px;
+  border-bottom: 1px dashed #333;
+  padding-bottom: 4px;
+  color: #ddd;
 }
-
-.detail-row .value {
-  font-size: 14px;
-  font-weight: 500;
-  color: #ffffff;
-}
-
-.detail-row .value.green {
-  color: #00d47e;
+.info-group span:last-child {
+  font-weight: 600;
+  color: #00e78e;
 }
 
 /* Footer */
-.modal-footer {
-  padding: 16px;
-  border-top: 1px solid #2e2e2e;
-  background-color: #202020;
-  display: flex;
-  justify-content: center;
+.modal-footer {  
+  position: sticky;
+  bottom: 0;
+  background-color: #2b2b2b;
+  border-top: 1px solid #333;
+  padding: 14px;
+  z-index: 1;
 }
 
-.primary-btn {
+.modal-close-btn {
   width: 100%;
   padding: 12px;
-  font-size: 16px;
-  font-weight: 600;
-  background-color: #00d47e;
+  background: #00e78e;
   color: #000;
+  font-weight: 700;
+  font-size: 16px;
   border: none;
   border-radius: 8px;
   cursor: pointer;
-  transition: background-color 0.2s ease;
+  transition: background 0.25s ease;
+}
+.close-btn:hover {
+  background: #00c274;
 }
 
-.primary-btn:hover {
-  background-color: #00b86c;
+/* Scroll on overflow */
+@media (max-height: 600px) {
+  .modal-body {
+    max-height: 60vh;
+  }
+}
+
+/* Responsive Text */
+@media (max-width: 400px) {
+  .modal-header h2 {
+    font-size: 16px;
+  }
+  .info-group {
+    font-size: 13px;
+  }
+  .close-btn {
+    font-size: 14px;
+  }
+}
+
+
+/* ############# Animation ##################### */
+@keyframes smoothSlideUp {
+  0% {
+    transform: translateY(100%) scale(0.95);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+}
+
+.modal-container {
+  animation: smoothSlideUp 0.45s cubic-bezier(0.22, 1, 0.36, 1);
 }

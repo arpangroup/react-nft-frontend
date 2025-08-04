@@ -1,68 +1,101 @@
 import React from 'react';
 import './NFTStakeModal.css';
 
-export default function NFTStakeModal({ onClose }) {
+export default function NFTStakeModal({ onClose, ...stake }) {
+  const {
+    schemaName,
+    imageUrl,
+    investedAmount,
+    roiValue,
+    expectedReturn,
+    totalEarningPotential,
+    earlyExitPenalty,
+    nextReturnAmount,
+    subscribedAt,
+    nextPayoutDate,
+    maturityAt,
+    payoutFrequencyLabel,
+    investmentStatus,
+    currencyCode,
+    daysRemaining,
+  } = stake;
+
   return (
-    <div className="modal-overlay">
-      <div className="modal-content">
+    <div className="mystake-modal-overlay">
+      <div className="modal-container">
 
         {/* Header */}
         <div className="modal-header">
-          <h3 className="modal-title">NFT Stake</h3>
-          <img
-            src="https://image.treasurenft.xyz/PC/img/icon-close_01.svg"
-            alt="Close"
-            width="24"
-            height="24"
-            onClick={onClose}
-            className="close-icon"
-          />
+          <h2>Stake Summary</h2>
+          <button className="close-button" onClick={onClose}>
+            &times;
+          </button>
         </div>
 
         {/* Body */}
         <div className="modal-body">
-          <div className="nft-preview">
-            <img
-              src="https://prodimage-dan.treasurenft.xyz/Stake/Stake_14778.png"
-              alt="NFT"
-              className="nft-image"
-            />
-            <h4 className="nft-title">Stake_14757796</h4>
-            <div className="value-section">
-              <p className="label">Value</p>
-              <p className="value">2,000 USDT</p>
-            </div>
+          <div className="image-block">
+            <img src={imageUrl} alt={schemaName} className="nft-thumbnail" />
+            <h3>{schemaName}</h3>
           </div>
 
-          <div className="pledge-details">
-            <p className="section-title">Pledge Details</p>
-
-            <div className="detail-row">
-              <span className="label">APR:</span>
-              <span className="value">1.5%</span>
+          <div className="info-section">
+            <div className="info-group">
+              <span>Invested Amount:</span>
+              <span>{investedAmount} {currencyCode}</span>
             </div>
-
-            <div className="detail-row">
-              <span className="label">Total Stake Value:</span>
-              <span className="value green">2000 USDT</span>
+            <div className="info-group">
+              <span>ROI:</span>
+              <span>{roiValue}%</span>
             </div>
-
-            <div className="detail-row">
-              <span className="label">End Time:</span>
-              <span className="value green">2025-08-26 12:00:17</span>
+            <div className="info-group">
+              <span>Expected Return:</span>
+              <span>{expectedReturn} {currencyCode}</span>
             </div>
-
-            <div className="detail-row">
-              <span className="label">Rewards Available:</span>
-              <span className="value green">7500 TUFT</span>
+            <div className="info-group">
+              <span>Total Earning Potential:</span>
+              <span>{totalEarningPotential} {currencyCode}</span>
+            </div>
+            <div className="info-group">
+              <span>Next Return:</span>
+              <span>{nextReturnAmount} {currencyCode}</span>
+            </div>
+            <div className="info-group">
+              <span>Early Exit Penalty:</span>
+              <span>{earlyExitPenalty} {currencyCode}</span>
+            </div>
+            <div className="info-group">
+              <span>Subscribed At:</span>
+              <span>{new Date(subscribedAt).toLocaleString()}</span>
+            </div>
+            <div className="info-group">
+              <span>Next Payout:</span>
+              <span>{new Date(nextPayoutDate).toLocaleString()}</span>
+            </div>
+            <div className="info-group">
+              <span>Maturity Date:</span>
+              <span>{new Date(maturityAt).toLocaleString()}</span>
+            </div>
+            <div className="info-group">
+              <span>Payout Frequency:</span>
+              <span>{payoutFrequencyLabel}</span>
+            </div>
+            <div className="info-group">
+              <span>Status:</span>
+              <span>{investmentStatus}</span>
+            </div>
+            <div className="info-group">
+              <span>Days Remaining:</span>
+              <span>{daysRemaining}</span>
             </div>
           </div>
         </div>
 
         {/* Footer */}
         <div className="modal-footer">
-          <button className="primary-btn" onClick={onClose}>Close</button>
+          <button className="modal-close-btn" onClick={onClose}>Close</button>
         </div>
+
       </div>
     </div>
   );

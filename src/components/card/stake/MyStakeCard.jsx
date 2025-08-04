@@ -12,7 +12,7 @@ const defaultImage = "http://localhost:8080/api/v1/files/download/stake_1.png";
   );
 
 export default function MyStakeCard({
-  image = defaultImage,
+  imageUrl = defaultImage,
   title = "Untitled Stake",
   investedAmount = 0,
   currency = CURRENCY_UNIT,
@@ -34,7 +34,7 @@ export default function MyStakeCard({
     <div className="stake-card">
       <div className="stake-card__top-row">
         <img
-          src={image}
+          src={imageUrl}
           alt={title}
           className="stake-card__image"
           loading="lazy"
@@ -60,12 +60,12 @@ export default function MyStakeCard({
 
       <div className="stake-card__bottom-row">        
         <Detail label="Remaining" value={`${remainingPeriods} ${payoutFrequencyLabel === "Daily" ? "days" : payoutFrequencyLabel}`} />
-        <Detail label="Per Period Profit" value={formatCurrency(perPeriodProfit)} />
-        <Detail label="Expected Return" value={formatCurrency(expectedReturn)} />
-        <Detail label="Received Return" value={formatCurrency(receivedReturn)} />
+        {/* <Detail label="Per Period Profit" value={formatCurrency(perPeriodProfit)} /> */}
+        {/* <Detail label="Expected Return" value={formatCurrency(expectedReturn)} /> */}
+        {/* <Detail label="Received Return" value={formatCurrency(receivedReturn)} /> */}
+        {/* <Detail label="Next Return Amount" value={formatCurrency(nextReturnAmount)} /> */}
+        {/* <Detail label="Next Payout Date" value={formatDateShort(nextPayoutDate)} /> */}
         <Detail label="Total Earning Potential" value={formatCurrency(totalEarningPotential)} />
-        <Detail label="Next Return Amount" value={formatCurrency(nextReturnAmount)} />
-        <Detail label="Next Payout Date" value={formatDateShort(nextPayoutDate)} />
       </div>
 
       <button className="stake-card__button" onClick={onDetailsClick}>
