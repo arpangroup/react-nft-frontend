@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './StakeList.css';
-import apiClient from '../../api/apiClient'
+import apiClient from '../../../api/apiClient'
 
 
-import StakeCard from '../../components/card/StakeCard'
-import { API_ROUTES } from '../../api/apiRoutes';
-import NoData from '../../components/NoData';
-import { CURRENCY_UNIT } from '../../constants/config';
+import StakeCard from '../../../components/card/StakeCard'
+import { API_ROUTES } from '../../../api/apiRoutes';
+import NoData from '../../../components/NoData';
+import { CURRENCY_UNIT } from '../../../constants/config';
 
 
 function Stakes() {

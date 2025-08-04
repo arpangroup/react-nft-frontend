@@ -1,0 +1,12 @@
+.stake-stat-container{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: space-between;
+    background-color: transparent;
+    margin-bottom: 32px;
+}
+
+.mystake-list {
+    margin-bottom: 60px;
+}

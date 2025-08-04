@@ -37,8 +37,8 @@
 }
 
 .stake-card__stake-name {
-  font-size: 20px;
-  font-weight: 900;
+  font-size: 16px;
+  font-weight: 700;
   color: #fff;
 }
 
@@ -55,7 +55,7 @@
 }
 
 .stake-card__value--apr {
-  color: #fff;
+  /* color: #fff; */
 }
 
 .stake-card__divider {
@@ -109,7 +109,7 @@
   background-color: #1565c0;
 }
 
-.stake-card__row_expire {
+.stake-card__col2 {
   display: flex;
   justify-content: space-between;
   align-items: center;
