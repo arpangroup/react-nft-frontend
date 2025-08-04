@@ -3,7 +3,7 @@ import NoData from '../../../components/NoData';
 import CollectionCard from '../../../components/card/collection/CollectionCard';
 import { useNavigate } from 'react-router';
 import { CURRENCY_UNIT } from '../../../constants/config';
-import SellNFTModal  from '../sellNft/SellNFTModal';
+import SellNFTModal  from '../../../components/modal/sellNft/SellNFTModal';
 
 const defaultItems = [{
   id: 1,
