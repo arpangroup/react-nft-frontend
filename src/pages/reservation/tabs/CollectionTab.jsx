@@ -2,8 +2,10 @@ import React, { useEffect, useState } from 'react';
 import NoData from '../../../components/NoData';
 import CollectionCard from '../../../components/card/collection/CollectionCard';
 import { useNavigate } from 'react-router';
-import { CURRENCY_UNIT } from '../../../constants/config';
+import { CURRENCY_UNIT, USER_ID } from '../../../constants/config';
 import SellNFTModal  from '../../../components/modal/sellNft/SellNFTModal';
+import apiClient from '../../../api/apiClient';
+import { API_ROUTES } from '../../../api/apiRoutes';
 
 const defaultItems = [{
   id: 1,
@@ -26,8 +28,8 @@ function CollectionTab() {
 
   const fetchReservedStakes = async () => {
     try {
-      //const response = await apiClient.get(API_ROUTES.RESERVED_STAKES_BY_USER_ID);
-      //setReservedItems(response.content || []);
+      const response = await apiClient.get(API_ROUTES.RESERVED_STAKES(USER_ID));
+      setReservedItems(response.content || []);
     } catch (err) {
       console.error('Failed to fetch reserved stake items:', err);
       setError('Failed to load reserved stake items.');

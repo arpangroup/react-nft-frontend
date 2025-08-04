@@ -1,8 +1,11 @@
 import React from 'react';
 import './ProfileCard.css';
 import { FaWallet } from 'react-icons/fa';
+import { useNavigate } from 'react-router';
 
 const ProfileCard = ({ username, uuid, level, points, profileImage }) => {
+  const navigate = useNavigate();
+
   return (
     <div className="profile-card">
       <div className="top-row">
@@ -10,7 +13,7 @@ const ProfileCard = ({ username, uuid, level, points, profileImage }) => {
         <div className="user-info">
           <div className="user-header">
             <h2 className="username">{username}</h2>
-            <FaWallet className="wallet-icon" />
+            <FaWallet className="wallet-icon" onClick={() => navigate(`/transactions`)} />
           </div>
           <div className="user-id">UID: {uuid}</div>
         </div>

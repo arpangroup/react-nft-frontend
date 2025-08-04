@@ -4,7 +4,7 @@ import NoData from '../../../components/NoData';
 import { useNavigate } from 'react-router';
 import { API_ROUTES } from '../../../api/apiRoutes';
 import apiClient from '../../../api/apiClient';
-import { CURRENCY_UNIT } from '../../../constants/config';
+import { CURRENCY_UNIT, USER_ID } from '../../../constants/config';
 
 const defaultReservedItems = [{
   investmentId: 1,
@@ -30,8 +30,11 @@ function TodaysReservationTab() {
 
   const fetchReservedStakes = async () => {
     try {
-      //const response = await apiClient.get(API_ROUTES.RESERVED_STAKES_BY_USER_ID);
-      //setReservedItems(response.content || []);
+      const today = new Date().toISOString().split('T')[0]; // Format: YYYY-MM-DD
+      const url = API_ROUTES.RESERVED_STAKES(USER_ID, { date: today });
+
+      const response = await apiClient.get(url);
+      setReservedItems(response.content || []);
     } catch (err) {
       console.error('Failed to fetch reserved stake items:', err);
       setError('Failed to load reserved stake items.');

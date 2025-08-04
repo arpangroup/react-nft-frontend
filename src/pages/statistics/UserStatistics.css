@@ -7,65 +7,23 @@
   background-color: transparent;
 }
 
-/* Each card */
-.stat-card {
-  flex: 1 1 calc(33.33% - 12px); /* 3 per row on desktop */
-  min-width: 140px;
-  background-color: #2a2a2a;
-  padding: 16px;
-  border-radius: 10px;
-  box-sizing: border-box;
-  color: #fff;
+
+.loader {
   text-align: center;
-  transition: transform 0.2s;
+  margin-top: 2rem;
 }
 
-.stat-card:hover {
-  transform: translateY(-2px);
+.loader-spinner {
+  border: 6px solid #f3f3f3;
+  border-top: 6px solid #3498db;
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  animation: spin 1s linear infinite;
+  margin: auto;
 }
 
-.stat-title {
-  font-size: 13px;
-  color: #bbb;
-  margin-bottom: 6px;
-}
-
-.stat-value {
-  font-size: 18px;
-  font-weight: bold;
-  word-break: break-word;
-}
-
-/* Color themes */
-.stat-card.blue {
-  background-color: #1e3a5f;
-}
-.stat-card.green {
-  background-color: #1f4e3c;
-}
-.stat-card.gray {
-  background-color: #383838;
-}
-.stat-card.orange {
-  background-color: #4e3218;
-}
-.stat-card.cyan {
-  background-color: #175d66;
-}
-.stat-card.dark {
-  background-color: #111;
-}
-
-/* Adjust layout for tablets and smaller screens */
-@media (max-width: 1023px) {
-  .stat-card {
-    flex: 1 1 calc(50% - 12px); /* 2 per row */
-  }
-}
-
-/* On very narrow screens, force 2 per row as much as possible */
-@media (max-width: 480px) {
-  .stat-card {
-    flex: 1 1 calc(50% - 12px); /* still 2 per row */
-  }
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
