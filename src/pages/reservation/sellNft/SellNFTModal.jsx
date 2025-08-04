@@ -1,7 +1,7 @@
-import './SellNFT.css';
+import './SellNFTModal.css';
 import { FiX } from 'react-icons/fi';
 
-const SellNFT = ({ onClose }) => {
+const SellNFTModal = ({ onClose }) => {
   return (
     <div className="drawer-content">
       <div className="drawer-body">
@@ -57,4 +57,4 @@ const SellNFT = ({ onClose }) => {
     </div>
   );
 };
-export default SellNFT;
+export default SellNFTModal;

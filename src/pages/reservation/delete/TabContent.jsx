@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import NoData from './NoData';
-import ReserveDropdowns from './ReserveDropdowns';
+import ReserveDropdowns from '../ReserveDropdowns';
 import ReservationCard from './ReservationCard ';
-import OrderCard from './OrderCard ';
-import StakeCard from '../../components/card/StakeCard'
+import OrderCard from '../../components/card/order/OrderCard ';
+import StakeCard from '../../../components/card/StakeCard'
 import CollectionCard from './components/CollectionCard';
-import SellNFT from './components/SellNFT ';
+import SellNFT from '../sellNft/SellNFT ';
 
 
 const tabs = ['Today\'s', 'Reserve', 'Collection'];

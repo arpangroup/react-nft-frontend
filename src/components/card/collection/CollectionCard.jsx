@@ -7,7 +7,7 @@ const CollectionCard = ({ image, title, price, likes, link = '/post/123', onSell
   <div className="card-column">
     <div className="bids-card" style={{ cursor: 'pointer' }}>
       <div className="bids-card-top">
-        <img src={image} alt={title} />
+        <img src={image} alt={title} style={{height: '80px'}}/>
         <Link to={link}>
           <p className="bids-title">{title}</p>
         </Link>

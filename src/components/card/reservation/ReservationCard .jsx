@@ -2,14 +2,14 @@ import React from 'react';
 import './ReservationCard.css';
 
 const ReservationCard = ({
-  drawDate = '2025/08/01 03:03:40',
-  status = 'Won',
-  orderNo = 'R3AE9995033223',
-  reservationDate = '(GMT+05:30) 2025/08/01 03:03:28',
-  estimatedAmount = '50 ~ 1000',
-  itemName = 'GiffgaffApeClub_0021549',
-  itemPrice = '177.26',
-  itemImg = 'https://prodimage-dan.treasurefun.xyz/GiffgaffApeClub/GiffgaffApeClub_1470_compre.png'
+  drawDate,
+  status,
+  orderNo,
+  reservationDate,
+  estimatedAmount,
+  itemName,
+  itemPrice,
+  itemImg
 }) => (
   <div className="tab-pane active py-3">
     <div className="reservation-card position-relative">

@@ -5,5 +5,7 @@ export const API_ROUTES = {
   STAKE_DETAILS: (id) => `/api/v1/investment-schemas/${id}`,
   STAKES_BY_USER_ID: (userId) => `/api/v1/investments/user/${userId}`,
   STAKE_SUBSCRIBE: `/api/v1/investments/subscribe`,
-  DEPOSIT_REQUEST: `/api/v1/deposits/manual`, 
+  DEPOSIT_REQUEST: `/api/v1/deposits/manual`,
+
+  RESERVED_STAKES_BY_USER_ID: (userId) => `/api/v1/investment/reserved/${userId}`,
 };

@@ -1,5 +1,5 @@
 import React from 'react';
-import Countdown from './Countdown';
+import Countdown from '../../../components/countdown/Countdown';
 import './ReserveDropdowns.css'
 
 const ReserveDropdowns = () => (
