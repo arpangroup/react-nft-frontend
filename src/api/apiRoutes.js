@@ -6,6 +6,12 @@ export const API_ROUTES = {
   STAKES_BY_USER_ID: (userId) => `/api/v1/investments/user/${userId}`,
   STAKE_SUBSCRIBE: `/api/v1/investments/subscribe`,
 
+  //ELIGIBLE_INVESTMENTS_SUMMARY: (userId) => `/api/v1/investments/eligible-summary?userId=${userId}`,
+  INVESTMENTS_API : {
+    ELIGIBLE_SUMMARY: (userId) => `/api/v1/investments/eligible-summary?userId=${userId}`,
+    RESERVE_NOW: '/api/investments/reserve'
+  },
+
   // Need to be implement....
   DEPOSIT_REQUEST: `/api/v1/deposits/manual`,
   //RESERVED_STAKES: `/api/v1/investment/reserved/${userId}`,
@@ -15,3 +21,4 @@ export const API_ROUTES = {
   },
   USER_STATS: (userId) => `/api/v1/stats/${userId}`,
 };
+

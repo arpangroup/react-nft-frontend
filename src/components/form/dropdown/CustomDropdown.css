@@ -3,7 +3,7 @@
   width: 100%;
   max-width: 350px;
   font-family: sans-serif;
-  z-index: 1000;
+  /* z-index: 1000; */
 }
 
 .dropdown-header {
@@ -16,6 +16,14 @@
   justify-content: space-between;
   align-items: center;
   color: #eee;
+}
+
+.dropdown-header-content {
+  display: flex;
+  flex: 1;
+  justify-content: space-between;
+  align-items: center;
+  margin-right: 10px; /* space between sublabel and arrow */
 }
 
 .dropdown-arrow {
@@ -31,7 +39,7 @@
   background: #1c1c1c;
   border: 1px solid #444;
   border-top: none;
-  max-height: 250px;
+  max-height: 230px;
   overflow-y: auto;
   list-style: none;
   padding: 0;
@@ -83,7 +91,16 @@
 }
 
 .dropdown-text {
-  flex: 1;
+  /* flex: 1;   */
+  font-weight: 500;
+  color: #eee;
+}
+
+.dropdown-sublabel {
+  font-size: 13px;
+  color: #90ee90;
+  white-space: nowrap;
+  margin-left: 10px;
 }
 
 .dropdown-item.disabled {

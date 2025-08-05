@@ -30,7 +30,7 @@ const UserStatistics = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    // fetchUserStats(setStats, setLoading, setError);
+    fetchUserStats(setStats, setLoading, setError);
   }, []);
 
   const fetchUserStats = async () => {

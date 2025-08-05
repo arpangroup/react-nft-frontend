@@ -21,7 +21,12 @@ const CustomDropdown = ({ options, selectedValue, onChange }) => {
   return (
     <div className="custom-dropdown" ref={dropdownRef}>
       <div className="dropdown-header" onClick={() => setIsOpen(!isOpen)}>
-        <span className="dropdown-text">{selected ? selected.label : 'Select an option'}</span>
+        <div className="dropdown-header-content">
+          <span className="dropdown-text">{selected ? selected.label : 'Select an option'}</span>
+          {selected?.subLabel && (
+            <span className="dropdown-sublabel">{selected.subLabel}</span>
+          )}
+        </div>
         <span className="dropdown-arrow">{isOpen ? '▲' : '▼'}</span>
       </div>
 

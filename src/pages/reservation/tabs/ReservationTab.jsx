@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import './ReservationTab.css';
 import Countdown from '../../../components/countdown/Countdown';
-import axios from 'axios';
-import CustomDropdown from '../components/CustomDropdown';
+import CustomDropdown from '../../../components/form/dropdown/CustomDropdown';
+import apiClient from '../../../api/apiClient';
+import { API_ROUTES } from '../../../api/apiRoutes';
+import { USER_ID } from '../../../constants/config';
 
 function formatAmount(value) {
   const num = Number(value);
@@ -25,13 +27,12 @@ function ReservationTab() {
   const [dropdownOptions, setDropdownOptions] = useState([]);     // for CustomDropdown
   const [selectedInvestmentRange, setSelectedInvestmentRange] = useState(null);
   const [selectedRank, setSelectedRank] = useState(null);
-  const isReservedFound = false;
+  const [isReservedFound, setIsReservedFound] = useState(false);
 
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await axios.get('/api/v1/investments/eligible-summary?userId=1');
-        const allRanks = response.data || [];
+        const allRanks = await apiClient.get(API_ROUTES.INVESTMENTS_API.ELIGIBLE_SUMMARY(USER_ID));
         setInvestmentOptions(allRanks);
 
         // Format for Rank dropdown with default header option
@@ -59,7 +60,7 @@ function ReservationTab() {
     fetchData();
   }, []);
 
-  
+
   // When selectedRank changes, reset selectedInvestmentRange
   useEffect(() => {
     if (selectedRank) {
@@ -80,14 +81,43 @@ function ReservationTab() {
     setSelectedInvestmentRange(value);
   };
 
+  const handleReserveClick = async () => {
+    if (!selectedRank || !selectedInvestmentRange) {
+      alert('Please select a valid rank and investment range.');
+      return;
+    }
+
+    try {
+      const payload = {
+        userId: USER_ID,
+        rankCode: selectedRank.rankCode,
+        investmentRange: selectedInvestmentRange,
+      };
+
+      const response = await apiClient.post(API_ROUTES.INVESTMENTS_API.RESERVE_NOW, payload);
+
+      if (response.status === 200 || response.status === 201) {
+        alert('Reservation successful!');
+        // You can also trigger any countdown or UI change here
+      } else {
+        console.error('Unexpected response:', response);
+        alert('Failed to reserve. Please try again.');
+      }
+    } catch (error) {
+      console.error('Error while reserving:', error);
+      alert('An error occurred during reservation.');
+    }
+  };
+
   // Prepare options for Investment Range dropdown (currently just one range per rank)
   const investmentRangeOptions = selectedRank ? [
-        {
-          value: `${selectedRank.minInvestmentAmount}-${selectedRank.maxInvestmentAmount}`,
-          label: `${formatAmount(selectedRank.minInvestmentAmount)} - ${formatAmount(selectedRank.maxInvestmentAmount)}`
-        }
-      ]
+    {
+      value: `${selectedRank.minInvestmentAmount}-${selectedRank.maxInvestmentAmount}`,
+      label: `${formatAmount(selectedRank.minInvestmentAmount)} - ${formatAmount(selectedRank.maxInvestmentAmount)}`
+    }
+  ]
     : [];
+
 
   if (isReservedFound) {
     return <Countdown initialTimeInSeconds={4907} />;
@@ -125,7 +155,11 @@ function ReservationTab() {
       </div>
 
       {/* Reserve Now Button - only enabled if selectedRank is enabled */}
-      <button className="reserve-btn" disabled={!selectedRank?.enabled}>
+      <button 
+        className="reserve-btn" 
+        disabled={!selectedRank?.enabled}        
+        onClick={handleReserveClick}
+      >
         Reserve Now
       </button>
     </div>

@@ -25,7 +25,7 @@ function TodaysReservationTab() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // fetchReservedStakes();
+    fetchReservedStakes();
   }, []);
 
   const fetchReservedStakes = async () => {
