@@ -23,7 +23,6 @@ const rankLabelMap = {
 function ReservationTab() {
   const [investmentOptions, setInvestmentOptions] = useState([]); // original full data
   const [dropdownOptions, setDropdownOptions] = useState([]);     // for CustomDropdown
-  const [selectedInvestmentRange, setSelectedInvestmentRange] = useState(null);
   const [selectedRank, setSelectedRank] = useState(null);
   const isReservedFound = false;
 
@@ -34,7 +33,8 @@ function ReservationTab() {
         const allRanks = response.data || [];
         setInvestmentOptions(allRanks);
 
-        // Format for Rank dropdown with default header option
+        // Transform to fit CustomDropdown expected format
+        // Map and prepend default option
         const dropdownFormatted = [
           { value: null, label: "Lv", subLabel: "Income%", disabled: true },
           ...allRanks.map(rank => ({
@@ -45,12 +45,21 @@ function ReservationTab() {
         ];
         setDropdownOptions(dropdownFormatted);
 
-        // Select first enabled rank as default
         const firstEnabled = allRanks.find(rank => rank.enabled);
         if (firstEnabled) {
           setSelectedRank(firstEnabled);
         }
 
+        // const enabledRanks = response.data.filter(r => r.enabled);
+        // setInvestmentOptions(enabledRanks);
+        // if (enabledRanks.length > 0) {
+        //   setSelectedRank(enabledRanks[0]);
+        // }
+
+        // Select first rank as default
+        // if (allRanks.length > 0) {
+        //   setSelectedRank(allRanks[0]);
+        // }
       } catch (error) {
         console.error('Error fetching investment options:', error);
       }
@@ -59,35 +68,10 @@ function ReservationTab() {
     fetchData();
   }, []);
 
-  
-  // When selectedRank changes, reset selectedInvestmentRange
-  useEffect(() => {
-    if (selectedRank) {
-      setSelectedInvestmentRange(
-        `${selectedRank.minInvestmentAmount}-${selectedRank.maxInvestmentAmount}`
-      );
-    } else {
-      setSelectedInvestmentRange(null);
-    }
-  }, [selectedRank]);
-
   const handleRankChange = (code) => {
     const rank = investmentOptions.find(r => r.rankCode === code);
     setSelectedRank(rank);
   };
-
-  const handleInvestmentRangeChange = (value) => {
-    setSelectedInvestmentRange(value);
-  };
-
-  // Prepare options for Investment Range dropdown (currently just one range per rank)
-  const investmentRangeOptions = selectedRank ? [
-        {
-          value: `${selectedRank.minInvestmentAmount}-${selectedRank.maxInvestmentAmount}`,
-          label: `${formatAmount(selectedRank.minInvestmentAmount)} - ${formatAmount(selectedRank.maxInvestmentAmount)}`
-        }
-      ]
-    : [];
 
   if (isReservedFound) {
     return <Countdown initialTimeInSeconds={4907} />;
@@ -107,19 +91,13 @@ function ReservationTab() {
 
         {/* Investment Range Dropdown */}
         <div className="select-wrapper">
-          {/* <select className="reserve-dropdown" disabled={!selectedRank}>
+          <select className="reserve-dropdown" disabled={!selectedRank}>
             {selectedRank && (
               <option>
                 {formatAmount(selectedRank.minInvestmentAmount)} - {formatAmount(selectedRank.maxInvestmentAmount)}
               </option>
             )}
-          </select> */}
-          <CustomDropdown
-            options={investmentRangeOptions}
-            selectedValue={selectedInvestmentRange || ''}
-            onChange={handleInvestmentRangeChange}
-            disabled={!selectedRank}
-          />
+          </select>
         </div>
 
       </div>

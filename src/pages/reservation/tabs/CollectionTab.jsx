@@ -23,7 +23,7 @@ function CollectionTab() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetchReservedStakes();
+    // fetchReservedStakes();
   }, []);
 
   const fetchReservedStakes = async () => {

@@ -25,7 +25,7 @@ function TodaysReservationTab() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetchReservedStakes();
+    // fetchReservedStakes();
   }, []);
 
   const fetchReservedStakes = async () => {
@@ -33,8 +33,8 @@ function TodaysReservationTab() {
       const today = new Date().toISOString().split('T')[0]; // Format: YYYY-MM-DD
       const url = API_ROUTES.RESERVED_STAKES(USER_ID, { date: today });
 
-      const response = await apiClient.get(url);
-      setReservedItems(response.content || []);
+      //const response = await apiClient.get(url);
+      //setReservedItems(response.content || []);
     } catch (err) {
       console.error('Failed to fetch reserved stake items:', err);
       setError('Failed to load reserved stake items.');
