@@ -3,11 +3,11 @@ import { AiFillHeart } from "react-icons/ai";
 import { Link } from 'react-router-dom';
 import './CollectionCard.css';
 
-const CollectionCard = ({ image, title, price, likes, link = '/post/123', onSellClick }) => (
+const CollectionCard = ({ imageUrl, title, price, likes, link = '/post/123', onSellClick }) => (
   <div className="card-column">
     <div className="bids-card" style={{ cursor: 'pointer' }}>
       <div className="bids-card-top">
-        <img src={image} alt={title} style={{height: '80px'}}/>
+        <img src={imageUrl} alt={title} style={{height: '80px'}}/>
         <Link to={link}>
           <p className="bids-title">{title}</p>
         </Link>

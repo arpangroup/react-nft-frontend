@@ -15,16 +15,18 @@ const defaultReservedItems = [{
   estimatedAmount: '50 ~ 1000',
   itemName: 'GiffgaffApeClub_0021549',
   itemPrice: '177.26',
-  itemImg: 'https://prodimage-dan.treasurefun.xyz/GiffgaffApeClub/GiffgaffApeClub_1470_compre.png'
+  imageUrl: 'https://prodimage-dan.treasurefun.xyz/GiffgaffApeClub/GiffgaffApeClub_1470_compre.png'
 }];
 
-function TodaysReservationTab() {
-  const [reservedItems, setReservedItems] = useState(defaultReservedItems);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const navigate = useNavigate();
+function TodaysReservationTab({ reservedStakes, loading, error }) {
+  const todayDate = new Date().toISOString().split('T')[0];
+  
+  const todaysItems = reservedStakes.filter(item => {
+    const reservedAtDate = new Date(item.reservedAt).toISOString().split('T')[0];
+    return reservedAtDate === todayDate;
+  });
 
-  useEffect(() => {
+  /*useEffect(() => {
     fetchReservedStakes();
   }, []);
 
@@ -41,18 +43,18 @@ function TodaysReservationTab() {
     } finally {
       setLoading(false);
     }
-  };
+  };*/
 
   return (
     <div>
       {loading && <p>Loading stake items...</p>}
       {error && <p>{error}</p>}
 
-      {!loading && !error && reservedItems.length === 0 && (
+      {!loading && !error && todaysItems.length === 0 && (
         <NoData message="No stake items found." />
       )}
 
-      {!loading && !error && reservedItems.map((item, index) => (
+      {!loading && !error && todaysItems.map((item, index) => (
         <ReservationCard        
             key={item.investmentId || index}
             {...item}

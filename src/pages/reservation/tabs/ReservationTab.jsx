@@ -22,7 +22,7 @@ const rankLabelMap = {
   RANK_7: "LV8", // optional, handle extra rank
 };
 
-function ReservationTab() {
+function ReservationTab({reservedStakes}) {
   const [investmentOptions, setInvestmentOptions] = useState([]); // original full data
   const [dropdownOptions, setDropdownOptions] = useState([]);     // for CustomDropdown
   const [selectedInvestmentRange, setSelectedInvestmentRange] = useState(null);
@@ -94,7 +94,7 @@ function ReservationTab() {
         investmentRange: selectedInvestmentRange,
       };
 
-      const response = await apiClient.post(API_ROUTES.INVESTMENTS_API.RESERVE_NOW, payload);
+      const response = await apiClient.post(API_ROUTES.RESERVATION_API.RESERVE_NOW, payload);
 
       if (response.status === 200 || response.status === 201) {
         alert('Reservation successful!');
@@ -119,8 +119,16 @@ function ReservationTab() {
     : [];
 
 
-  if (isReservedFound) {
-    return <Countdown initialTimeInSeconds={4907} />;
+  // if (isReservedFound || reservedStakes && reservedStakes.length > 0) {
+  //   return <Countdown initialTimeInSeconds={4907} />;
+  // }
+
+  if (reservedStakes && reservedStakes.length > 0) {
+    const expiryTime = new Date(reservedStakes[0].expiryAt).getTime();
+    const now = Date.now();
+    const timeRemainingInSeconds = Math.max(Math.floor((expiryTime - now) / 1000), 0); // prevent negative time
+
+    return <Countdown initialTimeInSeconds={timeRemainingInSeconds} />;
   }
 
   return (

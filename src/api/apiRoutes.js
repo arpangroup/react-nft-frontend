@@ -8,8 +8,13 @@ export const API_ROUTES = {
 
   //ELIGIBLE_INVESTMENTS_SUMMARY: (userId) => `/api/v1/investments/eligible-summary?userId=${userId}`,
   INVESTMENTS_API : {
-    ELIGIBLE_SUMMARY: (userId) => `/api/v1/investments/eligible-summary?userId=${userId}`,
-    RESERVE_NOW: '/api/investments/reserve'
+    ELIGIBLE_SUMMARY: (userId) => `/api/v1/reservations/eligibility?userId=${userId}`
+  },
+
+  RESERVATION_API : {
+    ACTIVE_RESERVATIONS: (userId) => `/api/v1/reservations/active?userId=${userId}`,
+    RESERVE_NOW: '/api/v1/reservations/reserve',
+    SELL_RESERVED_STAKE: (reservationId) => `/api/v1/reservations/${reservationId}/sell`,
   },
 
   // Need to be implement....

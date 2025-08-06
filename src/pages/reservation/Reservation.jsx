@@ -6,6 +6,9 @@ import { useLocation } from 'react-router';
 import TodaysReservationTab from './tabs/TodaysReservationTab';
 import ReservationTab from './tabs/ReservationTab';
 import CollectionTab from './tabs/CollectionTab';
+import { USER_ID } from '../../constants/config';
+import apiClient from '../../api/apiClient';
+import { API_ROUTES } from '../../api/apiRoutes';
 
 const tabTitleToIndex = {
   Todays: 0,
@@ -14,6 +17,9 @@ const tabTitleToIndex = {
 };
 
 function Reservation() {
+  const [reservedStakes, setReservedStakes] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const location = useLocation();
   //const [initialIndex, setInitialIndex] = useState(0);
   const [initialIndex, setInitialIndex] = useState(() => {
@@ -23,8 +29,6 @@ function Reservation() {
     }
     return 0;
   });
-
-
   
   useEffect(() => {
     if (location.state?.activeTab) {
@@ -35,24 +39,49 @@ function Reservation() {
     }
   }, [location.state]);
 
+  
+  useEffect(() => {
+    fetchReservedStakes(setReservedStakes, setLoading, setError);
+  }, []);
+
+  const fetchReservedStakes = async () => {
+    try {
+      const response = await apiClient.get(API_ROUTES.RESERVATION_API.ACTIVE_RESERVATIONS(USER_ID));
+      console.log("RESPONSE: ", response);
+      setReservedStakes(response || []);
+    } catch (err) {
+      console.error('Failed to fetch stake items:', err);
+      setError('Failed to load stake items.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div style={{marginBottom: '120px'}}>
       <UserStatistics/>
 
       <TabContainer initialIndex={initialIndex}>
         <Tab title={`Today\'s`}> 
-          <TodaysReservationTab/>
+          <TodaysReservationTab
+            reservedStakes={reservedStakes}
+            loading={loading}
+            error={error}
+          />
         </Tab>
-        <Tab title="Reserve"> 
-          <ReservationTab/>
+        <Tab title="Buy Stake"> 
+          <ReservationTab
+            reservedStakes={reservedStakes}
+          />
         </Tab>
-        <Tab title="Collection"> 
-          <CollectionTab/>
+        <Tab title="Sell Stake"> 
+          <CollectionTab          
+            reservedStakes={reservedStakes}
+            loading={loading}
+            error={error}
+          />
         </Tab>
       </TabContainer>
-      {/* {isSelling && sellData && (
-        <SellNFT item={sellData} onClose={handleClose} />
-      )} */}
     </div>
   );
 }

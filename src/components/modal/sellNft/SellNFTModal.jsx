@@ -1,7 +1,8 @@
 import './SellNFTModal.css';
 import { FiX } from 'react-icons/fi';
 
-const SellNFTModal = ({ onClose }) => {
+const SellNFTModal = ({ item, onSell, onClose }) => {
+  const {imageUrl, schemaTitle, reservedAmount, reservedAt, expiryAt} = item;
   return (
     <div className="drawer-content">
       <div className="drawer-body">
@@ -19,10 +20,10 @@ const SellNFTModal = ({ onClose }) => {
           <img
             className="img-item"
             alt="NFT Item"
-            src="https://prodimage-dan.treasurefun.xyz/GiffgaffApeClub/GiffgaffApeClub_1470.png"
+            src={imageUrl}
           />
 
-          <h3 className="item-name">GiffgaffApeClub_0021549</h3>
+          <h3 className="item-name">{schemaTitle}</h3>
 
           <div className="price-area">
             <h4 className="sub-title">Price</h4>
@@ -35,7 +36,7 @@ const SellNFTModal = ({ onClose }) => {
                 />
                 <span className="coin-label">USDT</span>
               </div>
-              <div className="price-value">184.89032924</div>
+              <div className="price-value">{reservedAmount}</div>
             </div>
           </div>
 
@@ -48,8 +49,10 @@ const SellNFTModal = ({ onClose }) => {
           </div>
 
           <div className="footer">
-            <button className="btn-complete" onClick={onClose}>
-              Completed
+            <button 
+              className="btn-sell" 
+              onClick={() => onSell(item)}>
+              Sell Stake
             </button>
           </div>
         </div>

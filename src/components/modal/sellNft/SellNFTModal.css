@@ -133,7 +133,7 @@ body {
   text-align: center;
 }
 
-.btn-complete {
+.btn-sell {
   background-color: #4caf50;
   color: white;
   border: none;
@@ -145,6 +145,6 @@ body {
   transition: background-color 0.3s ease;
 }
 
-.btn-complete:hover {
+.btn-sell:hover {
   background-color: #43a047;
 }

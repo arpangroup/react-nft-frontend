@@ -13,7 +13,7 @@ const defaultImage = "http://localhost:8080/api/v1/files/download/stake_1.png";
 
 export default function MyStakeCard({
   imageUrl = defaultImage,
-  title = "Untitled Stake",
+  schemaName = "Untitled Stake",
   investedAmount = 0,
   currency = CURRENCY_UNIT,
   roiValue = 0,
@@ -35,13 +35,13 @@ export default function MyStakeCard({
       <div className="stake-card__top-row">
         <img
           src={imageUrl}
-          alt={title}
+          alt={schemaName}
           className="stake-card__image"
           loading="lazy"
           onError={(e) => (e.target.src = defaultImage)}
         />
         <div className="stake-card__text-block">
-          <div className="stake-card__stake-name">{title}</div>
+          <div className="stake-card__stake-name">{schemaName}</div>
           <div className="stake-card__col2">
             <span className="stake-card__label">Stake Value </span>
             <span className="stake-card__value">{formatCurrency(investedAmount)}</span>

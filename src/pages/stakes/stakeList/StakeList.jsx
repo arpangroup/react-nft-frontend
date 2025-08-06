@@ -57,7 +57,7 @@ function Stakes() {
                 key={item.id || index}
                 image={item.imageUrl}
                 title={item.title}
-                price={item.minimumInvestmentAmount}
+                price={item.price}
                 currency={CURRENCY_UNIT}
                 likes={item.totalReturnPeriods} // or any other available metric
                 onClick={() => navigate(`/stakes/${item.id}`)}

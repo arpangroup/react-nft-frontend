@@ -67,7 +67,7 @@ const Item = () => {
       const payload = {
         schemaId: schema.id,
         userId: 1, // Replace with dynamic user ID if available
-        amount: schema.minimumInvestmentAmount
+        amount: schema.price
       };
 
       const response = await apiClient.post(API_ROUTES.STAKE_SUBSCRIBE, payload);
@@ -205,7 +205,7 @@ const Item = () => {
                 className="primary-btn"
                 onClick={handleBuyClick}
                 >
-                Buy For {schema.minimumInvestmentAmount} {schema.currency || CURRENCY_UNIT}                
+                Buy For {schema.price} {schema.currency || CURRENCY_UNIT}                
                 </button>
               {/* <button className="secondary-btn">Make Offer</button> */}
 
