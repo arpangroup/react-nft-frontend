@@ -9,6 +9,7 @@ import Earn from './pages/earn/Earn';
 import UserDetails from './pages/user/UserDetails';
 import Reservation from './pages/reservation/Reservation';
 import DepositPage from './pages/deposit/DepositPage';
+import NotificationList from './pages/notifications/NotificationList';
 
 function App() {
   const location = useLocation();
@@ -45,6 +46,9 @@ function App() {
           <Route path="/level" element={<Level />} />
           <Route path="/dashboard" element={<UserDashboardPage />} />
           <Route path="/tree" element={<MLMTree />} />
+
+          
+          <Route path="/alerts" element={<NotificationList />} />
 
         </Routes>
        </div>

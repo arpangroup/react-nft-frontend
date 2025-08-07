@@ -1,0 +1,19 @@
+body {
+  background: #121212;
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #fff;
+}
+
+.notification-wrapper {
+  padding: 1rem;
+  max-width: 600px;
+  margin: auto;
+}
+
+.heading {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  color: #ffffff;
+  text-align: center;
+}

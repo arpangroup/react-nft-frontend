@@ -1,7 +1,7 @@
 import React,{ useState, useEffect } from 'react'
 import './navbarV2.css'
-import { RiMenu3Line, RiCloseLine, RiHome2Line, RiInformationLine, RiSettings3Line, RiNotificationLine } from 'react-icons/ri';
-import logo from '../../assets/logo.png'
+import { RiMenu3Line, RiCloseLine, RiHome2Line, RiInformationLine, RiSettings3Line, RiNotificationLine, RiNotification3Line } from 'react-icons/ri';
+import LogoIcon from '../../assets/logo.png'
 import {  Link, useLocation, useNavigate } from "react-router-dom";
 
 const Menu = () => (
@@ -18,6 +18,7 @@ const NavbarV2 = () => {
   const location = useLocation();
   const isActive = (path) => location.pathname === path;
   const navigate = useNavigate();
+  const [notificationCount, setNotificationCount] = useState(3);
 
   const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
 
@@ -51,18 +52,21 @@ const NavbarV2 = () => {
         </button>
         <div className="logo">
           <img
-            src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACEAAAAgCAMAAACrZuH4AAAABGdBTUEAALGPC/xhBQAAAAFzUkdCAK7OHOkAAAB1UExURUdwTNAat9QZsNYaq+wUht8Znd4Xn+wUhM4bu80bu84bvewVgusUhdcaqukUiOkUhuoVhdAauOsUhNUZr9wXod8Xm+IWldgYqOUVkNEategUihsaIc4buisZK34YXUwZP2kYUMkXlYwYadIVgLIWdKgYgqEWYDCLd4wAAAASdFJOUwDf75XnIDN/gH1fYKfPz5Bgr9mCYawAAAFVSURBVDjLddTbkoMgDABQ67Z2p92rd0wBQe3/f+IGJAasy1M7cyYJITHL/Cm+v85lOQxD37dt0zR1/vl2yfhcPkp/WKDpOjbFuSTRUwwEXXcqQgQCLOrakypfo0TAJ1mFA1V1cuCnfBUNCfEeh4iv4stAIHIss2QxKS1Bamu2LEIU2Z2FlRCO2oC4ZdcNjAB6nloz44+RsmAhVwZyDoUu0pFqJ54gp61QI2FZxYOFBht1VIFek7CYQMY9xyBmF+MJOunoCHYXQ4FKBP4/EJxkE484y5gIDctOYKVTPByuUpEIvK2KyrCgq72YXRASeFn7InzXg3BdX7sRCZwN92Czacyi3cuFECjuPD6KHl/abhM3miA/X5P1E6QMPSyKgqZwSLrBwo3y9X/hk9Aox1MciRNv1MEioAgb5bYyWaaaZpS20m32wboJ8ZtsP34dkjLw6xAC/AE0NFJK3rXLDAAAAABJRU5ErkJggg=="
+            src={LogoIcon}
             alt="App Logo" />
-            <span className="logo-title">TrustAI</span>
+            <Link to="/" className="logo-title">TrustAI</Link>
         </div>
         <div className="profile-icon">
-          <img src="https://image.treasurenft.xyz/icon/icon_notice_02.png" alt="Profile" />
+          <Link to="/alerts" className="notification-icon-wrapper">
+            <RiNotification3Line size={28} />
+            <span className="notification-badge">3</span>
+          </Link>
         </div>
       </div>
 
       <div className={`sidebar ${isSidebarOpen ? 'open' : ''}`}>
         <div className="sidebar-header">
-          <img src={logo} alt="Logo" className="sidebar-logo" />
+          <img src={LogoIcon} alt="Logo" className="sidebar-logo" />
           <span className="sidebar-title">TreasureApp</span>
         </div>
 
