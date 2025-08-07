@@ -41,18 +41,20 @@ export default function AlertModal({
             {/* <p><strong>Subscription AMount:</strong> 100USDT</p>
             <p><strong>ROI:</strong> 2.5%</p>
             <p><strong>Mature At: </strong> 21 AUG 2025</p> */}
-            {children}
+            {children && children}
           </div>
         </div>
 
         {/* Footer */}
-        <div className="modal-footer">
-          {footerButtons.map(({ label, onClick, className = '', key }) => (
-            <button key={key || label} className={className} onClick={onClick}>
-              {label}
-            </button>
-          ))}
-        </div>
+        {footerButtons.length > 0 && (
+          <div className="modal-footer">
+            {footerButtons.map(({ label, onClick, className = '', key }) => (
+              <button key={key || label} className={className} onClick={onClick}>
+                {label}
+              </button>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );

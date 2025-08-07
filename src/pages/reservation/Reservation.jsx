@@ -12,8 +12,8 @@ import { API_ROUTES } from '../../api/apiRoutes';
 
 const tabTitleToIndex = {
   Todays: 0,
-  Reserve: 1,
-  Collection: 2,
+  BuyStake: 1,
+  SellStake: 2,
 };
 
 function Reservation() {
@@ -21,20 +21,17 @@ function Reservation() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const location = useLocation();
-  //const [initialIndex, setInitialIndex] = useState(0);
-  const [initialIndex, setInitialIndex] = useState(() => {
-    if (location.state?.activeTab) {
-      const index = tabTitleToIndex[location.state.activeTab];
-      return index !== undefined ? index : 0;
-    }
-    return 0;
+  
+  const [activeTabIndex, setActiveTabIndex] = useState(() => {
+    const index = tabTitleToIndex[location.state?.activeTab] ?? 0;
+    return index;
   });
   
   useEffect(() => {
     if (location.state?.activeTab) {
       const index = tabTitleToIndex[location.state.activeTab];
       if (index !== undefined) {
-        setInitialIndex(index);
+        setActiveTabIndex(index);
       }
     }
   }, [location.state]);
@@ -57,24 +54,30 @@ function Reservation() {
     }
   };
 
+  const handleOnNewSuccessfullReserve = () => {
+    console.log("handleOnNewSuccessfullReserve...");
+    fetchReservedStakes();
+  }
+
   return (
-    <div style={{marginBottom: '120px'}}>
+    <div>
       <UserStatistics/>
 
-      <TabContainer initialIndex={initialIndex}>
-        <Tab title={`Today\'s`}> 
+      <TabContainer activeIndex={activeTabIndex} onTabChange={setActiveTabIndex}>
+        <Tab title="Todays">
           <TodaysReservationTab
             reservedStakes={reservedStakes}
             loading={loading}
             error={error}
           />
         </Tab>
-        <Tab title="Buy Stake"> 
+        <Tab title="BuyStake"> 
           <ReservationTab
             reservedStakes={reservedStakes}
+            onReservedSuccess = {handleOnNewSuccessfullReserve}
           />
         </Tab>
-        <Tab title="Sell Stake"> 
+        <Tab title="SellStake"> 
           <CollectionTab          
             reservedStakes={reservedStakes}
             loading={loading}

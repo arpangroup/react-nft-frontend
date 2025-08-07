@@ -16,6 +16,17 @@ export const SCHEDULE_OPTIONS = [
   { label: "No Schedule", value: 6, disabled: true, }
 ];
 
+export const RANK_LABEL_MAP = {
+  RANK_0: "LV1",
+  RANK_1: "LV2",
+  RANK_2: "LV3",
+  RANK_3: "LV4",
+  RANK_4: "LV5",
+  RANK_5: "LV6",
+  RANK_6: "LV7",
+  RANK_7: "LV8", // optional, handle extra rank
+};
+
 const imageFileTypes = "image/png, image/jpeg, image/gif";
 const allFileTypes = "";
 export const ACCEPTED_FILE_TYPES = imageFileTypes;

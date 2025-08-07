@@ -4,30 +4,33 @@ import Countdown from '../../../components/countdown/Countdown';
 import CustomDropdown from '../../../components/form/dropdown/CustomDropdown';
 import apiClient from '../../../api/apiClient';
 import { API_ROUTES } from '../../../api/apiRoutes';
-import { USER_ID } from '../../../constants/config';
+import { RANK_LABEL_MAP, USER_ID } from '../../../constants/config';
+import SuccessIcon from '../../../assets/icons/success.png';
+import WarningIcon from '../../../assets/icons/warming.png';
+import AlertModal from '../../../components/modal/success/AlertModal';
+import { Navigate, useNavigate } from 'react-router';
 
 function formatAmount(value) {
   const num = Number(value);
   return num >= 1000 ? `${(num / 1000).toFixed(num % 1000 === 0 ? 0 : 1)}K` : `${num}`;
 }
 
-const rankLabelMap = {
-  RANK_0: "LV1",
-  RANK_1: "LV2",
-  RANK_2: "LV3",
-  RANK_3: "LV4",
-  RANK_4: "LV5",
-  RANK_5: "LV6",
-  RANK_6: "LV7",
-  RANK_7: "LV8", // optional, handle extra rank
-};
-
-function ReservationTab({reservedStakes}) {
+function ReservationTab({reservedStakes, onReservedSuccess}) {
+  const navigate = useNavigate();
   const [investmentOptions, setInvestmentOptions] = useState([]); // original full data
   const [dropdownOptions, setDropdownOptions] = useState([]);     // for CustomDropdown
   const [selectedInvestmentRange, setSelectedInvestmentRange] = useState(null);
   const [selectedRank, setSelectedRank] = useState(null);
   const [isReservedFound, setIsReservedFound] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [modalData, setModalData] = useState({
+    isOpen: false,
+    type: '', // 'success' or 'error'
+    title: '',
+    content: '',
+    footerButtons: []
+  });
 
   useEffect(() => {
     async function fetchData() {
@@ -40,7 +43,7 @@ function ReservationTab({reservedStakes}) {
           { value: null, label: "Lv", subLabel: "Income%", disabled: true },
           ...allRanks.map(rank => ({
             value: rank.rankCode,
-            label: rankLabelMap[rank.rankCode] || rank.rankCode, // fallback to rankCode if not mappe
+            label: RANK_LABEL_MAP[rank.rankCode] || rank.rankCode, // fallback to rankCode if not mappe
             subLabel: rank.incomePercentageRange
           }))
         ];
@@ -81,6 +84,14 @@ function ReservationTab({reservedStakes}) {
     setSelectedInvestmentRange(value);
   };
 
+  const handleNavigateToTodaysStake = () => {
+    setModalData(prev => ({ ...prev, isOpen: false }));
+    navigate('/reservation', {
+      replace: true,
+      state: { activeTab: 'Todays' }
+    });
+  }
+
   const handleReserveClick = async () => {
     if (!selectedRank || !selectedInvestmentRange) {
       alert('Please select a valid rank and investment range.');
@@ -95,17 +106,38 @@ function ReservationTab({reservedStakes}) {
       };
 
       const response = await apiClient.post(API_ROUTES.RESERVATION_API.RESERVE_NOW, payload);
+      console.log("setIsReservedFound...");
+      setIsReservedFound(true);
+      console.log("onReservedSuccess...");
+      onReservedSuccess(response);
+      console.log("handleNavigateToTodaysStake...");
+      handleNavigateToTodaysStake();
 
-      if (response.status === 200 || response.status === 201) {
-        alert('Reservation successful!');
-        // You can also trigger any countdown or UI change here
-      } else {
-        console.error('Unexpected response:', response);
-        alert('Failed to reserve. Please try again.');
-      }
+
+      // Show Success Modal
+      // setModalData({
+      //     isOpen: true,
+      //     type: 'success',
+      //     title: 'Successfully Reserved the Stake',
+      //     content: null,
+      //     footerButtons: [
+      //     {
+      //       label: 'Go to Subscription',
+      //       onClick: handleNavigateToTodaysStake,
+      //       className: 'btn btn-success',
+      //     },
+      //   ],
+      // });
     } catch (error) {
       console.error('Error while reserving:', error);
-      alert('An error occurred during reservation.');
+      setModalData({
+        isOpen: true,
+        type: 'error',
+        title: 'Reservation Failed',
+        content: (
+          <p>{error?.message || 'Something went wrong. Please try again.'}</p>
+        ),
+      });
     }
   };
 
@@ -145,13 +177,6 @@ function ReservationTab({reservedStakes}) {
 
         {/* Investment Range Dropdown */}
         <div className="select-wrapper">
-          {/* <select className="reserve-dropdown" disabled={!selectedRank}>
-            {selectedRank && (
-              <option>
-                {formatAmount(selectedRank.minInvestmentAmount)} - {formatAmount(selectedRank.maxInvestmentAmount)}
-              </option>
-            )}
-          </select> */}
           <CustomDropdown
             options={investmentRangeOptions}
             selectedValue={selectedInvestmentRange || ''}
@@ -170,6 +195,19 @@ function ReservationTab({reservedStakes}) {
       >
         Reserve Now
       </button>
+
+      {modalData.isOpen && (
+        <AlertModal
+            type={modalData.type}
+            icon={modalData.type === 'success' ? SuccessIcon : WarningIcon}
+            onClose={() => setModalData(prev => ({ ...prev, isOpen: false }))}
+            title={modalData.title}
+            footerButtons={modalData.footerButtons}
+          >
+            {modalData.content}
+          </AlertModal>
+      )}
+
     </div>
   );
 }

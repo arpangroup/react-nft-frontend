@@ -6,7 +6,6 @@ import StakeList from './stakeList/StakeList';
 import NoData from '../../components/NoData';
 import MyStake from './mystake/MyStake';
 
-// Map tab titles to indexes — must match your TabContainer tab order
 const tabTitleToIndex = {
   ExclusiveZone: 0,
   FreeZone: 1,
@@ -15,27 +14,23 @@ const tabTitleToIndex = {
 
 function Stake() {  
   const location = useLocation();
-  //const [initialIndex, setInitialIndex] = useState(0);
-  const [initialIndex, setInitialIndex] = useState(() => {
-    if (location.state?.activeTab) {
-      const index = tabTitleToIndex[location.state.activeTab];
-      return index !== undefined ? index : 0;
-    }
-    return 0;
+  const [activeTabIndex, setActiveTabIndex] = useState(() => {
+    const index = tabTitleToIndex[location.state?.activeTab] ?? 0;
+    return index;
   });
 
   useEffect(() => {
     if (location.state?.activeTab) {
       const index = tabTitleToIndex[location.state.activeTab];
       if (index !== undefined) {
-        setInitialIndex(index);
+        setActiveTabIndex(index);
       }
     }
   }, [location.state]);
 
   return (
     <div>
-      <TabContainer initialIndex={initialIndex}>
+      <TabContainer activeIndex={activeTabIndex} onTabChange={setActiveTabIndex}>
         <Tab title="ExclusiveZone"> 
           <StakeList/>
         </Tab>
