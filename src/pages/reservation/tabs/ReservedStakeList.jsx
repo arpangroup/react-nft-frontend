@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import NoData from '../../../components/NoData';
-import CollectionCard from '../../../components/card/collection/CollectionCard';
+import SellStakeCard from '../../../components/card/collection/SellStakeCard';
 import { useNavigate } from 'react-router';
 import { CURRENCY_UNIT, USER_ID } from '../../../constants/config';
 import SellNFTModal from '../../../components/modal/sellNft/SellNFTModal';
@@ -14,7 +14,7 @@ const defaultItems = [{
   price: '177.26',
 }];
 
-function CollectionTab({ reservedStakes, loading, error }) {
+function ReservedStakeList({ reservedStakes, loading, error }) {
   const [isSelling, setIsSelling] = useState(false);
   const [sellData, setSellData] = useState(null); // For passing NFT info to SellNFT Modal
 
@@ -74,7 +74,7 @@ function CollectionTab({ reservedStakes, loading, error }) {
   };
 
   return (
-    <div style={{ marginBottom: '80px' }}>
+    <div className='sell-stake-container' style={{minHeight: '250px'}}>
       {loading && <p>Loading stake items...</p>}
       {error && <p>{error}</p>}
 
@@ -83,17 +83,27 @@ function CollectionTab({ reservedStakes, loading, error }) {
       )}
 
       {!loading && !error && reservedStakes.map((item, index) => (
-        <CollectionCard
+        <SellStakeCard
           key={item.investmentId || index}
           {...item}
+          itemName = {item.schemaTitle}
+          imageUrl = {item.imageUrl}
+          price = {item.reservedAmount}
+          currey = {CURRENCY_UNIT}
+          valuationDelta = {item.valuationDelta}
           onSellClick={() => handleSellClick(item)}
         />
-      ))}
+      ))}     
 
       {isSelling && sellData && (
         <SellNFTModal
           item={sellData}
-          onSell={handleSellStake}
+          itemName = {sellData.schemaTitle}
+          imageUrl = {sellData.imageUrl}
+          price = {sellData.reservedAmount + sellData.valuationDelta}
+          currency = {CURRENCY_UNIT}
+          handlingFee = {sellData.handlingFee}
+          royalty = {sellData.returnRate}
           onClose={() => setIsSelling(false)}
         />
       )}
@@ -101,4 +111,4 @@ function CollectionTab({ reservedStakes, loading, error }) {
   );
 }
 
-export default CollectionTab;
+export default ReservedStakeList;

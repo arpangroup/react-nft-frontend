@@ -28,14 +28,10 @@ const ReservationCard = ({
       <p className="reservation-date">{`Reservation date: ${reservationDate}`}</p>
 
       {/* Estimated amount */}
-      {/* <div className="d-flex justify-content-between align-items-center mb-4">
-        <span className="fw-semibold text-muted">Estimated Amount:</span>
-        <span className="text-light text-end">{estimatedAmount} {currency}</span>
-      </div> */}
       <KeyValuePair
         label="Estimated Amount"
         value={`${estimatedAmount} ${currency}`}
-        valueStyle={{color: '#90ee90', fontSize: '14px', fontWeight: 600}}
+        valueStyle={{color: '#90ee90', fontSize: '12x', fontWeight: 600}}
       />
 
       {/* Item image and info */}  

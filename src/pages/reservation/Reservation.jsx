@@ -3,9 +3,9 @@ import UserStatistics from '../statistics/UserStatistics';
 import TabContainer from '../../components/tab/TabContainer';
 import Tab from '../../components/tab/Tab';
 import { useLocation } from 'react-router';
-import TodaysReservationTab from './tabs/TodaysReservationTab';
-import ReservationTab from './tabs/ReservationTab';
-import CollectionTab from './tabs/CollectionTab';
+import TodaysReservedStakeList from './tabs/TodaysReservedStakeList';
+import ReserveNow from './tabs/ReserveNow';
+import ReservedStakeList from './tabs/ReservedStakeList';
 import { USER_ID } from '../../constants/config';
 import apiClient from '../../api/apiClient';
 import { API_ROUTES } from '../../api/apiRoutes';
@@ -60,20 +60,20 @@ function Reservation() {
 
       <TabContainer activeIndex={activeTabIndex} onTabChange={setActiveTabIndex}>
         <Tab title="Todays">
-          <TodaysReservationTab
+          <TodaysReservedStakeList
             reservedStakes={reservedStakes}
             loading={loading}
             error={error}
           />
         </Tab>
-        <Tab title="BuyStake"> 
-          <ReservationTab
+        <Tab title="Reserve Stake"> 
+          <ReserveNow
             reservedStakes={reservedStakes}
             onReservedSuccess = {() => fetchReservedStakes()}
           />
         </Tab>
-        <Tab title="SellStake"> 
-          <CollectionTab          
+        <Tab title="Sell Stake"> 
+          <ReservedStakeList          
             reservedStakes={reservedStakes}
             loading={loading}
             error={error}

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import './ReservationTab.css';
+import './ReserveNow.css';
 import Countdown from '../../../components/countdown/Countdown';
 import CustomDropdown from '../../../components/form/dropdown/CustomDropdown';
 import apiClient from '../../../api/apiClient';
@@ -15,7 +15,7 @@ function formatAmount(value) {
   return num >= 1000 ? `${(num / 1000).toFixed(num % 1000 === 0 ? 0 : 1)}K` : `${num}`;
 }
 
-function ReservationTab({reservedStakes, onReservedSuccess}) {
+function ReserveNow({reservedStakes, onReservedSuccess}) {
   const navigate = useNavigate();
   const [investmentOptions, setInvestmentOptions] = useState([]); // original full data
   const [dropdownOptions, setDropdownOptions] = useState([]);     // for CustomDropdown
@@ -206,4 +206,4 @@ function ReservationTab({reservedStakes, onReservedSuccess}) {
   );
 }
 
-export default ReservationTab;
+export default ReserveNow;

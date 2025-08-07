@@ -1,8 +1,16 @@
 import './SellNFTModal.css';
 import { FiX } from 'react-icons/fi';
 
-const SellNFTModal = ({ item, onSell, onClose }) => {
-  const {imageUrl, schemaTitle, reservedAmount, reservedAt, expiryAt} = item;
+const SellNFTModal = ({ 
+  itemName,
+  imageUrl,
+  price,
+  currency,
+  handlingFee,
+  royalty,
+  onSell, 
+  onClose 
+}) => {
   return (
     <div className="drawer-content">
       <div className="drawer-body">
@@ -23,7 +31,7 @@ const SellNFTModal = ({ item, onSell, onClose }) => {
             src={imageUrl}
           />
 
-          <h3 className="item-name">{schemaTitle}</h3>
+          <h3 className="item-name">{itemName}</h3>
 
           <div className="price-area">
             <h4 className="sub-title">Price</h4>
@@ -34,24 +42,27 @@ const SellNFTModal = ({ item, onSell, onClose }) => {
                   alt="USDT icon"
                   className="coin-img"
                 />
-                <span className="coin-label">USDT</span>
+                <span className="coin-label">{currency}</span>
               </div>
-              <div className="price-value">{reservedAmount}</div>
+              <div className="price-value">{price}</div>
             </div>
           </div>
 
           <div className="fee-area">
-            <h4 className="sub-title">Fees</h4>
+            <div className="fee-row">
+              <h4 className="sub-title">Fees</h4>
+              <span>{handlingFee}</span>
+            </div>
             <div className="fee-row">
               <p>Royalty</p>
-              <span>0.2%</span>
+              <span>{royalty}%</span>
             </div>
           </div>
 
           <div className="footer">
             <button 
               className="btn-sell" 
-              onClick={() => onSell(item)}>
+              onClick={() => onSell()}>
               Sell Stake
             </button>
           </div>
