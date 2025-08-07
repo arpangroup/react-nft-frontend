@@ -44,7 +44,7 @@ function Reservation() {
   const fetchReservedStakes = async () => {
     try {
       const response = await apiClient.get(API_ROUTES.RESERVATION_API.ACTIVE_RESERVATIONS(USER_ID));
-      console.log("RESPONSE: ", response);
+      //console.log("RESPONSE: ", response);
       setReservedStakes(response || []);
     } catch (err) {
       console.error('Failed to fetch stake items:', err);
@@ -53,11 +53,6 @@ function Reservation() {
       setLoading(false);
     }
   };
-
-  const handleOnNewSuccessfullReserve = () => {
-    console.log("handleOnNewSuccessfullReserve...");
-    fetchReservedStakes();
-  }
 
   return (
     <div>
@@ -74,7 +69,7 @@ function Reservation() {
         <Tab title="BuyStake"> 
           <ReservationTab
             reservedStakes={reservedStakes}
-            onReservedSuccess = {handleOnNewSuccessfullReserve}
+            onReservedSuccess = {() => fetchReservedStakes()}
           />
         </Tab>
         <Tab title="SellStake"> 

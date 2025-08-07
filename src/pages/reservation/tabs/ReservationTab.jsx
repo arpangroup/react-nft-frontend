@@ -21,9 +21,10 @@ function ReservationTab({reservedStakes, onReservedSuccess}) {
   const [dropdownOptions, setDropdownOptions] = useState([]);     // for CustomDropdown
   const [selectedInvestmentRange, setSelectedInvestmentRange] = useState(null);
   const [selectedRank, setSelectedRank] = useState(null);
-  const [isReservedFound, setIsReservedFound] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [expiryAt, setExpiryAt] = useState(null);
+
   const [modalData, setModalData] = useState({
     isOpen: false,
     type: '', // 'success' or 'error'
@@ -63,6 +64,16 @@ function ReservationTab({reservedStakes, onReservedSuccess}) {
     fetchData();
   }, []);
 
+  useEffect(() => {
+    if (
+      Array.isArray(reservedStakes) &&
+      reservedStakes.length > 0 &&
+      reservedStakes[0].expiryAt != null
+    ) {
+      setExpiryAt(reservedStakes[0].expiryAt);
+    }
+  }, [reservedStakes]);
+
 
   // When selectedRank changes, reset selectedInvestmentRange
   useEffect(() => {
@@ -94,7 +105,12 @@ function ReservationTab({reservedStakes, onReservedSuccess}) {
 
   const handleReserveClick = async () => {
     if (!selectedRank || !selectedInvestmentRange) {
-      alert('Please select a valid rank and investment range.');
+      setModalData({
+        isOpen: true,
+        type: 'error',
+        title: 'Please select a valid rank and investment range.',
+        content: null
+      });
       return;
     }
 
@@ -106,28 +122,10 @@ function ReservationTab({reservedStakes, onReservedSuccess}) {
       };
 
       const response = await apiClient.post(API_ROUTES.RESERVATION_API.RESERVE_NOW, payload);
-      console.log("setIsReservedFound...");
-      setIsReservedFound(true);
-      console.log("onReservedSuccess...");
+      //console.log("RESPONSE: ", response)
+      setExpiryAt(response.expiryAt);
       onReservedSuccess(response);
-      console.log("handleNavigateToTodaysStake...");
       handleNavigateToTodaysStake();
-
-
-      // Show Success Modal
-      // setModalData({
-      //     isOpen: true,
-      //     type: 'success',
-      //     title: 'Successfully Reserved the Stake',
-      //     content: null,
-      //     footerButtons: [
-      //     {
-      //       label: 'Go to Subscription',
-      //       onClick: handleNavigateToTodaysStake,
-      //       className: 'btn btn-success',
-      //     },
-      //   ],
-      // });
     } catch (error) {
       console.error('Error while reserving:', error);
       setModalData({
@@ -151,12 +149,8 @@ function ReservationTab({reservedStakes, onReservedSuccess}) {
     : [];
 
 
-  // if (isReservedFound || reservedStakes && reservedStakes.length > 0) {
-  //   return <Countdown initialTimeInSeconds={4907} />;
-  // }
-
-  if (reservedStakes && reservedStakes.length > 0) {
-    const expiryTime = new Date(reservedStakes[0].expiryAt).getTime();
+  if (expiryAt) {
+    const expiryTime = new Date(expiryAt).getTime();
     const now = Date.now();
     const timeRemainingInSeconds = Math.max(Math.floor((expiryTime - now) / 1000), 0); // prevent negative time
 

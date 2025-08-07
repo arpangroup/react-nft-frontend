@@ -8,7 +8,6 @@ const CustomDropdown = ({ options, selectedValue, onChange }) => {
   const selected = options.find((opt) => opt.value === selectedValue);
 
   useEffect(() => {
-    console.log("OPTIONS: ", options);
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
         setIsOpen(false);
