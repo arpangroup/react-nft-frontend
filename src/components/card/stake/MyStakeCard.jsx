@@ -2,14 +2,8 @@ import React from "react";
 import "./MyStakeCard.css";
 import { CURRENCY_SYMBOL, CURRENCY_UNIT } from "../../../constants/config";
 import { formatDateShort } from "../../../constants/dateFormatter";
+import KeyValuePair from "../../keyValuePair/KeyValuePair";
 const defaultImage = "http://localhost:8080/api/v1/files/download/stake_1.png";
-
-  const Detail = ({ label, value }) => (
-    <div className="stake-card__col2">
-      <span className="label">{label}: </span>
-      <span className="value">{value}</span>
-    </div>
-  );
 
 export default function MyStakeCard({
   imageUrl = defaultImage,
@@ -58,14 +52,14 @@ export default function MyStakeCard({
 
       <div className="stake-card__divider" />
 
-      <div className="stake-card__bottom-row">        
-        <Detail label="Remaining" value={`${remainingPeriods} ${payoutFrequencyLabel === "Daily" ? "days" : payoutFrequencyLabel}`} />
-        {/* <Detail label="Per Period Profit" value={formatCurrency(perPeriodProfit)} /> */}
-        {/* <Detail label="Expected Return" value={formatCurrency(expectedReturn)} /> */}
-        {/* <Detail label="Received Return" value={formatCurrency(receivedReturn)} /> */}
-        {/* <Detail label="Next Return Amount" value={formatCurrency(nextReturnAmount)} /> */}
-        {/* <Detail label="Next Payout Date" value={formatDateShort(nextPayoutDate)} /> */}
-        <Detail label="Total Earning Potential" value={formatCurrency(totalEarningPotential)} />
+      <div className="stake-card__bottom-row">    
+        <KeyValuePair label="Remaining" value={`${remainingPeriods} ${payoutFrequencyLabel === "Daily" ? "days" : payoutFrequencyLabel}`}/>
+        {/* <KeyValuePair label="Per Period Profit" value={formatCurrency(perPeriodProfit)} /> */}
+        {/* <KeyValuePair label="Expected Return" value={formatCurrency(expectedReturn)} /> */}
+        {/* <KeyValuePair label="Received Return" value={formatCurrency(receivedReturn)} /> */}
+        {/* <KeyValuePair label="Next Return Amount" value={formatCurrency(nextReturnAmount)} /> */}
+        {/* <KeyValuePair label="Next Payout Date" value={formatDateShort(nextPayoutDate)} /> */}
+         <KeyValuePair label="Total Earning Potential" value={formatCurrency(totalEarningPotential)}/>
       </div>
 
       <button className="stake-card__button" onClick={onDetailsClick}>

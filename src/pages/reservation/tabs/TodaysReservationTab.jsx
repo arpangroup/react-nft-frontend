@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router';
 import { API_ROUTES } from '../../../api/apiRoutes';
 import apiClient from '../../../api/apiClient';
 import { CURRENCY_UNIT, USER_ID } from '../../../constants/config';
+import { formatDateTime } from '../../../constants/dateFormatter';
 
 const defaultReservedItems = [{
   investmentId: 1,
@@ -18,6 +19,16 @@ const defaultReservedItems = [{
   imageUrl: 'https://prodimage-dan.treasurefun.xyz/GiffgaffApeClub/GiffgaffApeClub_1470_compre.png'
 }];
 
+const formatOrderNo = (reservedAt, reservationId) => {
+  const date = new Date(reservedAt);
+  const yyyy = date.getFullYear();
+  const mm = String(date.getMonth() + 1).padStart(2, '0');
+  const dd = String(date.getDate()).padStart(2, '0');
+  const paddedId = String(reservationId).padStart(4, '0');
+  return `TRST${yyyy}${mm}${dd}${paddedId}`;
+};
+
+
 function TodaysReservationTab({ reservedStakes, loading, error }) {
   const todayDate = new Date().toISOString().split('T')[0];
   
@@ -25,25 +36,6 @@ function TodaysReservationTab({ reservedStakes, loading, error }) {
     const reservedAtDate = new Date(item.reservedAt).toISOString().split('T')[0];
     return reservedAtDate === todayDate;
   });
-
-  /*useEffect(() => {
-    fetchReservedStakes();
-  }, []);
-
-  const fetchReservedStakes = async () => {
-    try {
-      const today = new Date().toISOString().split('T')[0]; // Format: YYYY-MM-DD
-      const url = API_ROUTES.RESERVED_STAKES(USER_ID, { date: today });
-
-      //const response = await apiClient.get(url);
-      //setReservedItems(response.content || []);
-    } catch (err) {
-      console.error('Failed to fetch reserved stake items:', err);
-      setError('Failed to load reserved stake items.');
-    } finally {
-      setLoading(false);
-    }
-  };*/
 
   return (
     <div>
@@ -54,13 +46,33 @@ function TodaysReservationTab({ reservedStakes, loading, error }) {
         <NoData message="No stake items found." />
       )}
 
-      {!loading && !error && todaysItems.map((item, index) => (
-        <ReservationCard        
-            key={item.investmentId || index}
-            {...item}
-            currency={item.currencyCode || CURRENCY_UNIT}
-        />
-      ))}
+      {!loading && !error && todaysItems.map((item, index) => {
+        const {
+          reservationId,
+          schemaTitle,
+          imageUrl,
+          reservedAmount,
+          reservedAt,
+          expiryAt,
+          incomeEarned
+        } = item;
+        const orderNo = formatOrderNo(reservedAt, reservationId);
+
+        return(
+          <ReservationCard        
+              key={reservationId || index}
+              orderNo = {orderNo}
+              itemName = {schemaTitle}
+              itemPrice = {reservedAmount}
+              reservationDate = {formatDateTime(reservedAt)}
+              drawDate = {expiryAt}
+              itemImg={imageUrl}
+              estimatedAmount = "50-1000"
+              currency={item.currencyCode || CURRENCY_UNIT}
+              {...item}
+          />
+        );
+      })}
     </div>
   );
 }
