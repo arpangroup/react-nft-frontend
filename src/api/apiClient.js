@@ -146,8 +146,31 @@ const apiClient = {
       method: 'DELETE',
     });
     if (!response.ok) throw new Error("Network response was not ok");
-    return await response.json();
+    //return await response.json();
+    const contentType = response.headers.get('content-type');
+    if (contentType && contentType.includes('application/json')) {
+      return await response.json();
+    }
 
+  },
+
+  patch: async (url, body = null) => {
+    const response = await fetch(url, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      // body: body ? JSON.stringify(body) : null,
+    });
+
+    const text = await response.text();
+    const data = text ? JSON.parse(text) : {};
+
+    if (!response.ok) {
+      const error = new Error(data.message || 'PATCH request failed');
+      error.response = data;
+      throw error;
+    }
+
+    return data;
   },
 
 

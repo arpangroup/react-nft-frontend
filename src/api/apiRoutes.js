@@ -17,6 +17,12 @@ export const API_ROUTES = {
     SELL_RESERVED_STAKE: (reservationId) => `/api/v1/reservations/${reservationId}/sell`,
   },
 
+  NOTIFICATION_API : {
+    NOTIFICATIONS: (userId) => `/api/v1/notifications?userId=${userId}`,
+    MARK_VIEWED: (id) => `/api/v1/notifications/${id}/view`,
+    DELETE: (id) => `/api/v1/notifications/${id}`,
+  },
+
   // Need to be implement....
   DEPOSIT_REQUEST: `/api/v1/deposits/manual`,
   //RESERVED_STAKES: `/api/v1/investment/reserved/${userId}`,
