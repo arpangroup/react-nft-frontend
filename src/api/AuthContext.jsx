@@ -7,6 +7,7 @@ export function AuthProvider({ children }) {
   const [expAt, setExpAt] = useState(() => Number(localStorage.getItem('jwtExpAt')));
   const [isAuthenticated, setIsAuthenticated] = useState(!!token);
 
+  // Sync token and expiry to localStorage & update isAuthenticated
   useEffect(() => {
     if (token) {
       localStorage.setItem('jwtToken', token);
@@ -19,6 +20,27 @@ export function AuthProvider({ children }) {
     }
   }, [token, expAt]);
 
+  // Auto logout when token expires
+  useEffect(() => {
+    if (!expAt) return;
+
+    const now = Date.now();
+    const timeLeft = expAt - now;
+
+    if (timeLeft <= 0) {
+      logout();
+      return;
+    }
+
+    const timeoutId = setTimeout(() => {
+      logout();
+    }, timeLeft);
+
+    // Clear timeout if expAt changes or component unmounts
+    return () => clearTimeout(timeoutId);
+
+  }, [expAt]);
+
   const login = (jwtToken, expiry) => {
     setToken(jwtToken);
     setExpAt(expiry);
@@ -30,7 +52,7 @@ export function AuthProvider({ children }) {
   };
 
   return (
-    <AuthContext.Provider value={{ token, isAuthenticated, login, logout }}>
+    <AuthContext.Provider value={{ token, isAuthenticated, login, logout, expAt }}>
       {children}
     </AuthContext.Provider>
   );

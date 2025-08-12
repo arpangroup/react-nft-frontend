@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import './login.css'
-import {Link, useNavigate} from 'react-router-dom'
+import {Link, useLocation, useNavigate} from 'react-router-dom'
 import { AuthContext } from '../../api/AuthContext.jsx';
 import { useApiClient } from '../../api/useApiClient.jsx';
 
@@ -13,6 +13,10 @@ export default function Login() {
   const { login } = useContext(AuthContext);
   const api = useApiClient();
   const navigate = useNavigate();
+  const location = useLocation();
+
+  // Where to redirect after login (default /dashboard)
+  const from = location.state?.from?.pathname || '/dashboard';
 
 
   const handleSubmit = async (e) => {
@@ -25,8 +29,8 @@ export default function Login() {
         flow: 'password',
       });
       console.log("RESPONSE: ", data);
-      login(data.token, data.expAt);  
-      navigate('/dashboard');
+      login(data.token, data.expiresAt);  
+      navigate(from, { replace: true });
     } catch (err) {
       setError(err.message || 'Login failed');
     }

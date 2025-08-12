@@ -7,12 +7,14 @@ import StakeCard from '../../../components/card/StakeCard'
 import { API_ROUTES } from '../../../api/apiRoutes';
 import NoData from '../../../components/NoData';
 import { CURRENCY_UNIT } from '../../../constants/config';
+import { useApiClient } from '../../../api/useApiClient';
 
 function Stakes() {
   const [stakeItems, setStakeItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
+  const api = useApiClient();
 
   useEffect(() => {
     fetchStakes();
@@ -20,7 +22,7 @@ function Stakes() {
 
   const fetchStakes = async () => {
     try {
-      const response = await apiClient.get(API_ROUTES.STAKES);
+      const response = await api.get(API_ROUTES.STAKES);
       // const response = stakes;
       //console.log("RESPONSE: ", response);
       setStakeItems(response.content || []);
