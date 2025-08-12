@@ -1,21 +1,61 @@
-import React from 'react';
+import React, { useContext, useState } from 'react';
 import './login.css'
-import {Link} from 'react-router-dom'
+import {Link, useNavigate} from 'react-router-dom'
+import { AuthContext } from '../../api/AuthContext.jsx';
+import { useApiClient } from '../../api/useApiClient.jsx';
 
 
-const Login = () => {
+export default function Login() {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState(null);
+
+  const { login } = useContext(AuthContext);
+  const api = useApiClient();
+  const navigate = useNavigate();
+
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError(null);
+    try {
+      const data = await api.post('/api/auth/token', {
+        username,
+        password,
+        flow: 'password',
+      });
+      console.log("RESPONSE: ", data);
+      login(data.token, data.expAt);  
+      navigate('/dashboard');
+    } catch (err) {
+      setError(err.message || 'Login failed');
+    }
+  };
+
   return (
     <div className='login section__padding'>
       <div className="login-container">
         <h1>Login</h1>
-        <form className='login-writeForm' autoComplete='off'>
+        <form className='login-writeForm' onSubmit={handleSubmit} autoComplete="off">
           <div className="login-formGroup">
             <label>Username <span className="required">*</span></label>
-            <input type="text" placeholder='Username'  />
+            <input 
+              type="text" 
+              placeholder='Username'
+              value={username}
+              onChange={e => setUsername(e.target.value)}
+              required
+            />
           </div>
           <div className="login-formGroup">
             <label>Password <span className="required">*</span></label>
-            <input type="password" placeholder='Password'  />
+            <input 
+              type="password" 
+              placeholder='Password'
+              value={password}
+              onChange={e => setPassword(e.target.value)}
+              required
+            />
           </div>
           
          {/* <div className="login-button">
@@ -27,6 +67,7 @@ const Login = () => {
 
          <div className="login-formGroup">
             <button className='register-writeButton' type='submit'>Login</button>
+            {error && <p style={{ color: 'red' }}>{error}</p>}
           </div>
 
           <div className=''>
@@ -39,5 +80,3 @@ const Login = () => {
     </div>
    )
 };
-
-export default Login;
