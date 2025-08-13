@@ -8,9 +8,12 @@ export const API_ROUTES = {
     VERIFY_OTP: `/api/auth/verify-otp`,
   },
 
-  STAKES: "/api/v1/investment-schemas?type=STAKE",
-  STAKE_DETAILS: (id) => `/api/v1/investment-schemas/${id}`,
-  STAKES_BY_USER_ID: (userId) => `/api/v1/investments/user/${userId}`,
+  STAKES: {
+    STAKE_LIST: "/api/v1/investment-schemas?type=STAKE",
+    STAKE_DETAILS: (id) => `/api/v1/investment-schemas/${id}`,
+    MY_STAKE: `/api/v1/investments`,
+  },
+
   STAKE_SUBSCRIBE: `/api/v1/investments/subscribe`,
 
   //ELIGIBLE_INVESTMENTS_SUMMARY: (userId) => `/api/v1/investments/eligible-summary?userId=${userId}`,

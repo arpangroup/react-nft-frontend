@@ -21,7 +21,7 @@ function Stakes() {
     setLoading(true);
     setError(null);
     try {
-      const res = await apiClient.get(API_ROUTES.STAKES);
+      const res = await apiClient.get(API_ROUTES.STAKES.STAKE_LIST);
       // const response = stakes;
       //console.log("RESPONSE: ", response);
       setStakeItems(res.data?.content || []);

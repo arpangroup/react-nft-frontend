@@ -38,7 +38,7 @@ const Item = () => {
   useEffect(() => {
     const fetchSchema = async () => {
       try {
-        const resp = await apiClient.get(API_ROUTES.STAKE_DETAILS(id));
+        const resp = await apiClient.get(API_ROUTES.STAKES.STAKE_DETAILS(id));
         setSchema(resp.data);
       } catch (err) {
         setError('Failed to load data');

@@ -22,8 +22,8 @@ function MyStake() {
 
   const fetchStakes = async () => {
     try {
-      const response = await apiClient.get(API_ROUTES.STAKES_BY_USER_ID(USER_ID));
-      setStakeItems(response.content || []);
+      const res = await apiClient.get(API_ROUTES.STAKES.MY_STAKE);
+      setStakeItems(res.data?.content || []);
     } catch (err) {
       console.error('Failed to fetch stake items:', err);
       setError('Failed to load stake items.');
