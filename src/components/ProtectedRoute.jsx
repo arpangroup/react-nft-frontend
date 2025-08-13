@@ -3,24 +3,16 @@ import { Navigate, Outlet, useLocation } from 'react-router-dom';
 import { AuthContext } from '../api/AuthContext';
 
 export default function ProtectedRoute() {
-  const { isAuthenticated, expAt, logout } = useContext(AuthContext);
+  const { isAuthenticated } = useContext(AuthContext);
   const location = useLocation();
 
-  // Check if token expired
-   if (expAt && Date.now() >= expAt) {
-    // Optionally logout user to clear state
-    logout();
+  const refreshTokenExpiry = Number(localStorage.getItem('refreshTokenExpiry'));
 
-    // Redirect to login with from location
+  // ✅ If refresh token is expired, force logout
+  if (!isAuthenticated || Date.now() > refreshTokenExpiry) {
+    localStorage.clear(); // Clear all tokens
     return <Navigate to="/login" state={{ from: location }} replace />;
   }
 
-  if (!isAuthenticated) {
-    // Redirect to login page and save current location for redirect after login
-    return <Navigate to="/login" state={{ from: location }} replace />;
-  }
-
-  // Render child routes here
-  //return children;
-  return <Outlet/>;
+  return <Outlet />;
 }

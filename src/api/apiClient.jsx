@@ -1,122 +1,106 @@
+import axios from 'axios';
+import createAuthRefreshInterceptor from 'axios-auth-refresh';
+import { API_ROUTES } from './apiRoutes';
 
-import { mockResponses } from "../mocks/mockResponses";
-import { findMockResponse } from "../mocks/findMockResponse";
+const apiClient = axios.create({
+  baseURL: '', // Adjust if your backend URL is different
+});
 
-const isMockMode = false; // or from env config
 
-class ApiClient {
-  constructor(baseURL = '') {
-    this.baseURL = baseURL;
+// 🔐 Attach Authorization header to every request
+apiClient.interceptors.request.use((config) => {
+  const token = localStorage.getItem('accessToken');
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+});
+
+
+// ♻️ Token Refresh Logic
+const refreshAuthLogic = async (failedRequest) => {
+  const refreshToken = localStorage.getItem('refreshToken');
+  const refreshTokenExpiry = Number(localStorage.getItem('refreshTokenExpiry'));
+
+  if (!refreshToken || Date.now() >= refreshTokenExpiry) {
+    throw new Error('Refresh token expired or missing');
   }
 
-  async _mockResponse(method, endpoint, body = null) {
-    // Separate path and query
-    const [baseUrl, queryString] = endpoint.split("?");
-    const queryParams = new URLSearchParams(queryString || "");
+  try {
+    console.log('🔁 Refreshing access token...');
+    const response = await axios.post(API_ROUTES.AUTH_API.REFRESH_TOKEN, {
+      refreshToken,
+    });
 
-    console.log(`[MOCK] ${method}: ${endpoint}`, body);
+    const {
+      accessToken,
+      refreshToken: newRefreshToken,
+      accessTokenExpiry,
+      refreshTokenExpiry: newRefreshTokenExpiry
+    } = response.data;
 
-    let key = endpoint;
-    if (method !== "GET") {
-      key = `${baseUrl}|${method}`;
+    // Save new tokens to local storage
+    localStorage.setItem('accessToken', accessToken);
+    localStorage.setItem('refreshToken', newRefreshToken);
+    localStorage.setItem('accessTokenExpiry', accessTokenExpiry);
+    localStorage.setItem('refreshTokenExpiry', newRefreshTokenExpiry);
+
+    // Retry original request with new token
+    failedRequest.response.config.headers['Authorization'] = 'Bearer ' + accessToken;
+    return Promise.resolve();
+  } catch (err) {
+    console.error('❌ Refresh token failed. Redirecting to login.');
+
+    // Refresh failed → force logout → Clear tokens
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('refreshToken');
+    localStorage.removeItem('accessTokenExpiry');
+    localStorage.removeItem('refreshTokenExpiry');
+
+    // Avoid redirect loop
+    if (window.location.pathname !== '/login') {
+      window.location.href = '/login';
     }
 
-    let handler = mockResponses[key];
-    let params = {};
-
-    if (!handler) {
-      // Try dynamic pattern match
-      const match = findMockResponse(baseUrl, mockResponses, method);
-      if (match) {
-        handler = match.handler;
-        params = match.params;
-      }
-    }
-
-    if (typeof handler === "function") {
-      // For GET: pass queryParams; for others: pass body + params
-      if (method === "GET") {
-        return await handler({ ...params, queryParams });
-      } else {
-        return await handler({ ...params, body });
-      }
-    }
-
-    throw new Error(`No mock handler found for ${method} ${endpoint}`);
+    return Promise.reject(err);
   }
+};
 
-  async _request(endpoint, options = {}) {
-    // Mock call
-    if (isMockMode) {
-      const method = (options.method || 'GET').toUpperCase();
-      let body = null;
-      if (options.body) {
-        try {
-          body = JSON.parse(options.body);
-        } catch {
-          body = options.body;
-        }
-      }
-      return this._mockResponse(method, endpoint, body);
+// ✅ Attach token refresh BEFORE error handler
+createAuthRefreshInterceptor(apiClient, refreshAuthLogic);
+
+
+// ❗Centralized Response Error Handling (MUST come after refresh interceptor)
+apiClient.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    // Handle error globally here
+    const status = error.response?.status;
+    const data = error.response?.data;
+
+    let customMessage = 'An unexpected error occurred.';
+
+    if (data?.message) {
+      // Server provided structured error message
+      customMessage = data.message;
+    } else if (error.message === 'Network Error') {
+      customMessage = 'Network error: Server unreachable.';
+    } else if (status === 401) {
+      customMessage = 'Unauthorized. Please login again.';
+    } else if (status === 403) {
+      customMessage = 'Forbidden. You do not have access.';
+    } else if (status === 500) {
+      customMessage = 'Server error. Please try again later.';
     }
 
-    // Normal fetch call
-    const url = this.baseURL + endpoint;
-    const response = await fetch(url, options);
-
-    const contentType = response.headers.get('content-type');
-    let data;
-    if (contentType && contentType.includes('application/json')) {
-      data = await response.json();
-    } else {
-      data = await response.text();
-    }
-
-    if (!response.ok) {
-      const error = new Error(data?.message || 'Network response was not ok');
-      error.response = data;
-      throw error;
-    }
-
-    return data;
-  }
-
-
-
-
-  get(endpoint, headers = {}) {
-    return this._request(endpoint, { method: 'GET', headers });
-  }
-
-  post(endpoint, body, headers = {}) {
-    return this._request(endpoint, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', ...headers },
-      body: JSON.stringify(body),
+    // Replace the original error message with something clean
+    return Promise.reject({
+      message: customMessage,
+      status: status,
+      originalError: error,
     });
   }
+);
 
-  put(endpoint, body, headers = {}) {
-    return this._request(endpoint, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json', ...headers },
-      body: JSON.stringify(body),
-    });
-  }
-
-  delete(endpoint, headers = {}) {
-    return this._request(endpoint, { method: 'DELETE', headers });
-  }
-
-  patch(endpoint, body, headers = {}) {
-    return this._request(endpoint, {
-      method: 'PATCH',
-      headers: { 'Content-Type': 'application/json', ...headers },
-      body: JSON.stringify(body),
-    });
-  }
-}
-
-const apiClient = new ApiClient();
 
 export default apiClient;

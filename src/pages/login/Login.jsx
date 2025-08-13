@@ -1,8 +1,9 @@
 import React, { useContext, useState } from 'react';
-import './login.css'
-import {Link, useLocation, useNavigate} from 'react-router-dom'
+import './login.css';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../api/AuthContext.jsx';
-import { useApiClient } from '../../api/useApiClient.jsx';
+import { API_ROUTES } from '../../api/apiRoutes.js';
+import apiClient from '../../api/apiClient.jsx';
 
 
 export default function Login() {
@@ -11,28 +12,42 @@ export default function Login() {
   const [error, setError] = useState(null);
 
   const { login } = useContext(AuthContext);
-  const api = useApiClient();
   const navigate = useNavigate();
   const location = useLocation();
 
   // Where to redirect after login (default /dashboard)
-  const from = location.state?.from?.pathname || '/dashboard';
+  const from = location.state?.from?.pathname || '/';
 
 
-  const handleSubmit = async (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
     setError(null);
+
     try {
-      const data = await api.post('/api/auth/token', {
+      console.log('Calling ACCESS_TOKEN...');
+      const res = await apiClient.post(API_ROUTES.AUTH_API.ACCESS_TOKEN, {
         username,
         password,
         flow: 'password',
       });
-      console.log("RESPONSE: ", data);
-      login(data.token, data.expiresAt);  
+
+      const {
+      accessToken,
+      refreshToken,
+      accessTokenExpiry,
+      refreshTokenExpiry
+    } = res.data;
+
+      console.log('ACCESS_TOKEN_RESPONSE:', res.data);
+
+      // Store tokens in AuthContext
+      login(accessToken, refreshToken, accessTokenExpiry, refreshTokenExpiry);
+
+      // Navigate to previous or default route
       navigate(from, { replace: true });
     } catch (err) {
-      setError(err.message || 'Login failed');
+      console.error('Login error:', err);
+      setError(err.response?.data?.message || err.message || 'Login failed');
     }
   };
 
@@ -40,7 +55,7 @@ export default function Login() {
     <div className='login section__padding'>
       <div className="login-container">
         <h1>Login</h1>
-        <form className='login-writeForm' onSubmit={handleSubmit} autoComplete="off">
+        <form className='login-writeForm' onSubmit={handleLogin} autoComplete="off">
           <div className="login-formGroup">
             <label>Username <span className="required">*</span></label>
             <input 

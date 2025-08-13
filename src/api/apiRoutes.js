@@ -1,6 +1,13 @@
 import { act } from "react";
 
 export const API_ROUTES = {
+
+  AUTH_API : {
+    ACCESS_TOKEN: `/api/auth/accessToken`,
+    REFRESH_TOKEN: '/api/auth/refresh',
+    VERIFY_OTP: `/api/auth/verify-otp`,
+  },
+
   STAKES: "/api/v1/investment-schemas?type=STAKE",
   STAKE_DETAILS: (id) => `/api/v1/investment-schemas/${id}`,
   STAKES_BY_USER_ID: (userId) => `/api/v1/investments/user/${userId}`,

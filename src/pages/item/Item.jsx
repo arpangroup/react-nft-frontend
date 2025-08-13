@@ -4,7 +4,6 @@ import './item.css'
 import creator from '../../assets/seller2.png'
 import { CURRENCY_UNIT } from '../../constants/config';
 import apiClient from '../../api/apiClient';
-import itemImage  from '../../assets/item1.png'
 import ConfirmModal from '../../components/modal/confirm/ConfirmModal';
 import WarningModal from '../../components/modal/warning/WarningModal';
 import { API_ROUTES } from '../../api/apiRoutes';
@@ -39,8 +38,8 @@ const Item = () => {
   useEffect(() => {
     const fetchSchema = async () => {
       try {
-        const data = await apiClient.get(API_ROUTES.STAKE_DETAILS(id));
-        setSchema(data);
+        const resp = await apiClient.get(API_ROUTES.STAKE_DETAILS(id));
+        setSchema(resp.data);
       } catch (err) {
         setError('Failed to load data');
         console.error(err);
@@ -177,7 +176,7 @@ const Item = () => {
         }} />
 
         <div className="item-image">
-          <img src={schema.imageUrl || itemImage} alt="item" />
+          <img src={schema.imageUrl} alt="item" />
         </div>
           <div className="item-content">
             <div className="item-content-title">

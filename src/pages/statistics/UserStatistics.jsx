@@ -34,12 +34,15 @@ const UserStatistics = () => {
   }, []);
 
   const fetchUserStats = async () => {
+    setLoading(true);
+    setError(null);
     try {
-      const response = await apiClient.get(API_ROUTES.USER_STATS(USER_ID));
-      setStats(response.content || []);
+      const res = await apiClient.get(API_ROUTES.USER_STATS(USER_ID));
+      setStats(res.data?.content || []);
     } catch (err) {
       console.error('Failed to fetch stake items:', err);
-      setError('Failed to load stake items.');
+      const message = err?.message || 'Failed to load stake items.';
+      setError(message);
     } finally {
       setLoading(false);
     }
@@ -48,15 +51,23 @@ const UserStatistics = () => {
     <div className="user-statistics">
        {loading ? (
          <Loader size={60} color="#007bff" />
-       ): (
-        stats.map((stat, index) => (
-        <UserStatCard 
-          key={index}
-          title={stat.title}
-          value={stat.value}
-          color={stat.color}
-          />
-      ))
+       ): error ? (
+        <div className="error-message">
+          <p>{error}</p>
+        </div>
+      ) : (
+        Array.isArray(stats) && stats.length > 0 ? (
+          stats.map((stat, index) => (
+          <UserStatCard 
+            key={index}
+            title={stat.title}
+            value={stat.value}
+            color={stat.color}
+            />
+        ))
+      ) : (
+        <p>No statistics available.</p>
+      )
     )}
       {/* <UserStatCard key="0" title="Today Earnings" value={statData.todayEarning} color={'blue'}/>
       <UserStatCard key="1" title="Cumulative Income" value={statData.cumulativeIncome} color={'green'}/>

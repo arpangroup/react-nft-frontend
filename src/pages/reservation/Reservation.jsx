@@ -45,7 +45,7 @@ function Reservation() {
     try {
       const response = await apiClient.get(API_ROUTES.RESERVATION_API.ACTIVE_RESERVATIONS(USER_ID));
       //console.log("RESPONSE: ", response);
-      setReservedStakes(response || []);
+      setReservedStakes(response.data || []);
     } catch (err) {
       console.error('Failed to fetch stake items:', err);
       setError('Failed to load stake items.');

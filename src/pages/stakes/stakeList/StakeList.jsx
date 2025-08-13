@@ -1,31 +1,30 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './StakeList.css';
-import apiClient from '../../../api/apiClient'
-
 import StakeCard from '../../../components/card/StakeCard'
 import { API_ROUTES } from '../../../api/apiRoutes';
 import NoData from '../../../components/NoData';
 import { CURRENCY_UNIT } from '../../../constants/config';
-import { useApiClient } from '../../../api/useApiClient';
+import apiClient from '../../../api/apiClient';
 
 function Stakes() {
   const [stakeItems, setStakeItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
-  const api = useApiClient();
 
   useEffect(() => {
     fetchStakes();
   }, []);
 
   const fetchStakes = async () => {
+    setLoading(true);
+    setError(null);
     try {
-      const response = await api.get(API_ROUTES.STAKES);
+      const res = await apiClient.get(API_ROUTES.STAKES);
       // const response = stakes;
       //console.log("RESPONSE: ", response);
-      setStakeItems(response.content || []);
+      setStakeItems(res.data?.content || []);
     } catch (err) {
       console.error('Failed to fetch stake items:', err);
       setError('Failed to load stake items.');

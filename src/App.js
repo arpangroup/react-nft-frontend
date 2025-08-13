@@ -51,7 +51,7 @@ function App() {
             <Route path="/deposit" element={<DepositPage />} />
 
             <Route path="/level" element={<Level />} />
-            <Route path="/dashboard" element={<UserDashboardPage />} />
+            {/* <Route path="/dashboard" element={<UserDashboardPage />} /> */}
             <Route path="/tree" element={<MLMTree />} />
             
             <Route path="/alerts" element={<NotificationList />} />
