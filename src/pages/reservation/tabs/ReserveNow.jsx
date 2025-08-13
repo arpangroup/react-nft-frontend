@@ -36,7 +36,8 @@ function ReserveNow({reservedStakes, onReservedSuccess}) {
   useEffect(() => {
     async function fetchData() {
       try {
-        const allRanks = await apiClient.get(API_ROUTES.INVESTMENTS_API.ELIGIBLE_SUMMARY(USER_ID));
+        const res = await apiClient.get(API_ROUTES.INVESTMENTS_API.ELIGIBLE_SUMMARY);
+        const allRanks = res.data || [];
         setInvestmentOptions(allRanks);
 
         // Format for Rank dropdown with default header option

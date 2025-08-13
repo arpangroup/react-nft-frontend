@@ -43,7 +43,7 @@ function Reservation() {
 
   const fetchReservedStakes = async () => {
     try {
-      const response = await apiClient.get(API_ROUTES.RESERVATION_API.ACTIVE_RESERVATIONS(USER_ID));
+      const response = await apiClient.get(API_ROUTES.RESERVATION_API.ACTIVE_RESERVATIONS);
       //console.log("RESPONSE: ", response);
       setReservedStakes(response.data || []);
     } catch (err) {

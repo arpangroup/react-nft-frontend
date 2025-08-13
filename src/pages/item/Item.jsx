@@ -69,7 +69,7 @@ const Item = () => {
         amount: schema.price
       };
 
-      const response = await apiClient.post(API_ROUTES.STAKE_SUBSCRIBE, payload);
+      const response = await apiClient.post(API_ROUTES.STAKES.SUBSCRIBE_STAKE, payload);
 
       console.log("API response:", response);
       //setShowSuccessModal(true); // Open Success modal
