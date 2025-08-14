@@ -23,6 +23,7 @@ export const API_ROUTES = {
     ACTIVE_RESERVATIONS: "/api/v1/reservations",
     RESERVE_NOW: '/api/v1/reservations/reserve',
     SELL_RESERVED_STAKE: (reservationId) => `/api/v1/reservations/${reservationId}/sell`,
+    RESERVATION_SUMMARY: "/api/v1/reservations/summary",
   },
 
   NOTIFICATION_API : {
@@ -38,6 +39,5 @@ export const API_ROUTES = {
     const queryString = new URLSearchParams(params).toString();
     return `/api/v1/investment/reserved/${userId}${queryString ? `?${queryString}` : ''}`;
   },
-  USER_STATS: (userId) => `/api/v1/stats/${userId}`,
 };
 

@@ -37,8 +37,9 @@ const UserStatistics = () => {
     setLoading(true);
     setError(null);
     try {
-      const res = await apiClient.get(API_ROUTES.USER_STATS(USER_ID));
-      setStats(res.data?.content || []);
+      const res = await apiClient.get(API_ROUTES.RESERVATION_API.RESERVATION_SUMMARY);
+      console.log("RESRVATION: ", res.data);
+      setStats(res.data || []);
     } catch (err) {
       console.error('Failed to fetch stake items:', err);
       const message = err?.message || 'Failed to load stake items.';
@@ -49,7 +50,7 @@ const UserStatistics = () => {
   };
   return (
     <div className="user-statistics">
-       {loading ? (
+       {/* {loading ? (
          <Loader size={60} color="#007bff" />
        ): error ? (
         <div className="error-message">
@@ -68,13 +69,22 @@ const UserStatistics = () => {
       ) : (
         <p>No statistics available.</p>
       )
-    )}
-      {/* <UserStatCard key="0" title="Today Earnings" value={statData.todayEarning} color={'blue'}/>
-      <UserStatCard key="1" title="Cumulative Income" value={statData.cumulativeIncome} color={'green'}/>
-      <UserStatCard key="2" title="Team Benefits" value={statData.teamBnefit} color={'gray'}/>
-      <UserStatCard key="3" title="Reservation Range" value={statData.reservationRange} color={'orange'}/>
-      <UserStatCard key="4" title="Wallet Balance" value={statData.walletBalance} color={'cyan'}/>
-      <UserStatCard key="5" title="Balance for Reservation" value={statData.balanceForReservation} color={'darkblue'}/> */}
+    )} */}
+      <UserStatCard key="0" title="Today Earnings" value={loading ? 'NaN' : stats.todayEarning.toLocaleString() ?? 0} color="blue" />
+      <UserStatCard key="1" title="Cumulative Income" value={loading ? 'NaN' : stats.cumulativeIncome.toLocaleString() ?? 0} color="green" />
+      <UserStatCard key="2" title="Team Benefits" value={loading ? 'NaN' : stats.totalTeamIncome.toLocaleString() ?? 0} color="gray" />
+      <UserStatCard
+        key="3"
+        title="Reservation Range"
+        value={
+          loading
+            ? 'NaN'
+            : `${stats?.reservationRange?.startPrice.toLocaleString() ?? 1} ~ ${stats?.reservationRange?.endPrice.toLocaleString() ?? 5000}`
+        }
+        color="orange"
+      />
+      <UserStatCard key="4" title="Wallet Balance" value={loading ? 'NaN' : stats.walletBalance.toLocaleString() ?? 0} color="cyan" />
+      <UserStatCard key="5" title="Balance for Reservation" value={loading ? 'NaN' : stats.walletBalance.toLocaleString() ?? 0} color="darkblue" />
     </div>
   );
 };
