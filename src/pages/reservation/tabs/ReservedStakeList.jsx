@@ -6,6 +6,7 @@ import { CURRENCY_UNIT, USER_ID } from '../../../constants/config';
 import SellNFTModal from '../../../components/modal/sellNft/SellNFTModal';
 import apiClient from '../../../api/apiClient';
 import { API_ROUTES } from '../../../api/apiRoutes';
+import AlertModal from '../../../components/modal/success/AlertModal';
 
 const defaultItems = [{
   id: 1,
@@ -17,40 +18,16 @@ const defaultItems = [{
 function ReservedStakeList({ reservedStakes, loading, error }) {
   const [isSelling, setIsSelling] = useState(false);
   const [sellData, setSellData] = useState(null); // For passing NFT info to SellNFT Modal
-
-  /*const [reservedItems, setReservedItems] = useState(defaultItems);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    fetchReservedStakes();
-  }, []);
-
-  const fetchReservedStakes = async () => {
-    try {
-      const response = await apiClient.get(API_ROUTES.RESERVED_STAKES(USER_ID));
-      setReservedItems(response.content || []);
-    } catch (err) {
-      console.error('Failed to fetch reserved stake items:', err);
-      setError('Failed to load reserved stake items.');
-    } finally {
-      setLoading(false);
-    }
-  };*/
+  const [errorModalVisible, setErrorModalVisible] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
 
   const handleSellClick = (item) => {
     setSellData(item);
     setIsSelling(true);
   };
 
-  const handleSellStake = async (item) => {
-    const reservationId = item?.reservationId;
-
-    if (!reservationId) {
-      alert('Reservation ID not found.');
-      return;
-    }
+  const handleSellStake = async () => {
+    const reservationId = sellData?.reservationId;
 
     try {
       const payload = {
@@ -62,13 +39,13 @@ function ReservedStakeList({ reservedStakes, loading, error }) {
         API_ROUTES.RESERVATION_API.SELL_RESERVED_STAKE(reservationId),
         payload
       );
-
-      alert('Stake sold successfully!');
       setIsSelling(false);
+      window.location.reload();
       // Optionally: refresh the list or remove sold item from state
     } catch (error) {
       console.error('Error selling stake:', error);
-      alert(error?.message || 'Failed to sell the stake. Please try again.');
+      setErrorMessage(error?.message || 'Failed to sell the stake. Please try again.');
+      setErrorModalVisible(true);
     }
 
   };
@@ -104,8 +81,26 @@ function ReservedStakeList({ reservedStakes, loading, error }) {
           currency = {CURRENCY_UNIT}
           handlingFee = {sellData.handlingFee}
           royalty = {sellData.returnRate}
+          onSell = {handleSellStake}
           onClose={() => setIsSelling(false)}
         />
+      )}
+
+      {errorModalVisible && (
+        <AlertModal
+          type="warning"
+          title="Sell Failed"
+          onClose={() => setErrorModalVisible(false)}
+          footerButtons={[
+            {
+              label: 'Close',
+              onClick: () => setErrorModalVisible(false),
+              className: 'btn btn-primary',
+            }
+          ]}
+        >
+          <p>{errorMessage}</p>
+        </AlertModal>
       )}
     </div>
   );

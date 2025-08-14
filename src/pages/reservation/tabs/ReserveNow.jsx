@@ -124,9 +124,10 @@ function ReserveNow({reservedStakes, onReservedSuccess}) {
 
       const response = await apiClient.post(API_ROUTES.RESERVATION_API.RESERVE_NOW, payload);
       //console.log("RESPONSE: ", response)
-      setExpiryAt(response.expiryAt);
-      onReservedSuccess(response);
-      handleNavigateToTodaysStake();
+      window.location.reload();
+      //setExpiryAt(response.expiryAt);
+      //onReservedSuccess(response);
+      //handleNavigateToTodaysStake();
     } catch (error) {
       console.error('Error while reserving:', error);
       setModalData({

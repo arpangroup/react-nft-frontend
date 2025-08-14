@@ -6,11 +6,13 @@ import WarningIcon from '../../../assets/icons/warming.png'
 export default function AlertModal({ 
   type = 'warning',
   onClose,
-  icon = SuccessIcon,
+  icon,
   title = 'Try Again',
   children,
   footerButtons = [],
-}) {
+}) { 
+  // Conditionally set icon based on type if icon is not provided
+  const resolvedIcon = icon || (type === 'success' ? SuccessIcon : WarningIcon);
 
   return (    
     <div className="modal-overlay">
@@ -25,9 +27,9 @@ export default function AlertModal({
 
         {/* Modal Body */}
         <div className="modal-body">
-          {icon && (
+          {resolvedIcon  && (
             <img
-              src={icon}
+              src={resolvedIcon }
               width="80"
               height="80"
               alt="modal-icon"

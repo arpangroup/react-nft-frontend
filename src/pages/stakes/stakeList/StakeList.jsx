@@ -35,13 +35,13 @@ function Stakes() {
 
   return (
     <div>
-      <div className="search_container">
+      {/* <div className="search_container">
         <input type="text" placeholder="Search Item Here" autoFocus />
         <div className="filter_container">
           <input type="number" placeholder="Lowest Price" min="0" />
           <input type="number" placeholder="Highest Price" min="0" />
         </div>
-      </div>
+      </div> */}
 
       <div className='stakes' style={{ marginBottom: '80px' }}>
         <div className="bids-container">
