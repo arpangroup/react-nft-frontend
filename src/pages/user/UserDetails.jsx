@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { FaUsers, FaUserCheck, FaUserFriends, FaUserTie, FaHandshake, FaRegListAlt, FaUserPlus, FaUsersCog, FaGavel, FaInfoCircle, FaArrowDown, FaArrowUp, FaShoppingCart, FaGift, FaHandsHelping } from "react-icons/fa";
 import Branding from '../../components/branding/Branding';
 import './UserDetails.css';
 import ProfileCard from '../../components/card/ProfileCard';
@@ -9,6 +10,7 @@ import DarkButtonGroup from './DarkButtonGroup';
 import { API_ROUTES } from '../../api/apiRoutes';
 import apiClient from '../../api/apiClient';
 import { CURRENCY_SYMBOL, CURRENCY_UNIT, RANK_TO_NUMBER_MAP } from '../../constants/config';
+import Panel from './Panel';
 
 const defaulImage = "https://www.gravatar.com/avatar/2c7d99fe281ecd3bcd65ab915bac6dd5?s=250";
 
@@ -21,22 +23,60 @@ const generateRandomString = (length = 8) => {
   return result;
 }
 
+const defaultIncomeData = [
+  { incomeType: "Comprehensive", daily: 3.37, total: 15007.89 },
+  { incomeType: "Reserve", daily: 3.12, total: 7.98 },
+  { incomeType: "Team", daily: 0.25, total: 0 },
+  { incomeType: "Activity", daily: 0, total: 15000 },
+  { incomeType: "Bid", daily: 0, total: 0 },
+  { incomeType: "Stake", daily: 0, total: 0 }
+]
+
+const INCOME_TYPE_LABEL_MAP = {
+  DAILY: "Comprehensive",
+  RESERVE: "Reserve",
+  TEAM: "Team",
+  ACTIVITY: "Activity",
+  BID: "Bid",
+  STAKE: "Stake",
+  REFERRAL: "Referral"
+};
+
+
+const myTeams = [
+    { label: "9.03", value: "Community rewards" },
+    { label: "1", value: "Valid Members" },
+    { label: "1", value: "A enthusiast" },
+    { label: "0", value: "B+C enthusiasts" },
+    { label: <FaUsers />, value: "Community enthusiasts" },
+    { label: <FaHandsHelping />, value: "Community contributions" },
+    { label: <FaShoppingCart />, value: "Community orders" },
+    { label: <FaGift />, value: "Referral" },
+  ];
+
+  const myOrders = [
+    { label: "5", value: "Orders" },
+    { label: "3", value: "Referrals" },
+    { label: "7", value: "Contributors" },
+    { label: "12", value: "Active Teams" },
+
+    { label: <FaGavel />, value: "My Bid" },
+    { label: <FaInfoCircle />, value: "Details" },
+    { label: <FaArrowDown />, value: "Deposit" },
+    { label: <FaArrowUp />, value: "Withdraw" },
+  ];
+
+
 function UserDetails() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [userInfo, setUserInfo] = useState([]);
+  const [incomeData, setIncomeData] = useState([]);
   const [userHierarchy, setUserHierarchy] = useState([]);
-  const [incomeData, setIncomeData] = useState([
-    { incomeType: "Comprehensive", daily: 3.37, total: 15007.89 },
-    { incomeType: "Reserve", daily: 3.12, total: 7.98 },
-    { incomeType: "Team", daily: 0.25, total: 0 },
-    { incomeType: "Activity", daily: 0, total: 15000 },
-    { incomeType: "Bid", daily: 0, total: 0 },
-    { incomeType: "Stake", daily: 0, total: 0 }
-  ]);
 
    useEffect(() => {
     fetchUserDetails();
+    fetchIncomeData();
    }, []);
 
 
@@ -50,6 +90,24 @@ function UserDetails() {
       //console.error(err);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const fetchIncomeData = async () => {
+    try {
+      const resp = await apiClient.get(API_ROUTES.INCOME_SUMMARY); // make sure this route is correct
+      const incomeResponse = resp.data;
+      console.log("INCOME: ", incomeResponse);
+
+      const formattedIncomeData = incomeResponse.map(item => ({
+        incomeType: INCOME_TYPE_LABEL_MAP[item.incomeType] || item.incomeType,
+        daily: item.todayAmount,             // map todayAmount to daily
+        total: item.totalAmount              // map totalAmount to total
+      }));
+
+      setIncomeData(formattedIncomeData);
+    } catch (err) {
+      console.error("Failed to fetch income data:", err);
     }
   };
 
@@ -74,16 +132,15 @@ function UserDetails() {
       <ProfitBalanceCard amount={-325.50} currency={CURRENCY_UNIT} label="Today Reservation" />     
     </div>
 
-     <DarkButtonGroup/>
 
-     <IncomeTable
+     {/* <IncomeTable
         incomeData={[
           { incomeType: 'Staking', daily: '$12.50', total: '$325.00' },
           { incomeType: 'Referral', daily: '$5.00', total: '$145.00' },
           { incomeType: 'Airdrop', daily: '$0.00', total: '$75.00' },
         ]}
         handleUserClick={(type) => console.log('Clicked:', type)}
-    />
+    /> */}
 
       {/* Column 2: Income Table */}
       <div className="income_card" style={{ marginBottom: '20px' }}>
@@ -121,6 +178,23 @@ function UserDetails() {
 
         </div>
       </div>
+
+      <Panel 
+        key="1" 
+        title = "My Team" 
+        items={myTeams}
+        actionText=""
+      />
+
+      <Panel 
+        key="2" 
+        title = "My Orders" 
+        items={myOrders}
+        actionText="Check Orders" 
+      />
+
+      {/* <DemoStatsPanel/> */}
+     {/* <DarkButtonGroup/> */}
 
       <Branding />
 

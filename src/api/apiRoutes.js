@@ -27,6 +27,7 @@ export const API_ROUTES = {
   },
 
   USER_INFO: "/api/v1/users/info",
+  INCOME_SUMMARY: "/api/v1/incomes/summary",
 
   NOTIFICATION_API : {
     NOTIFICATIONS: (userId) => `/api/v1/notifications?userId=${userId}`,

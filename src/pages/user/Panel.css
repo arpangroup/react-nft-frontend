@@ -1,0 +1,116 @@
+/* ---- Dark Stats Panel (4 per row) ---- */
+[data-aj-panel] { 
+  box-sizing: border-box; 
+}
+[data-aj-panel] * { 
+  box-sizing: inherit; 
+}
+
+.aj-panel {
+  background: #0f1115;
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 14px;
+  padding: 16px;
+  width: 100%;
+  color: #e6e9ef;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+  box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+  margin-bottom: 24px;
+}
+
+.aj-panel__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+.aj-panel__title { 
+  font-size: 16px; 
+  font-weight: 600; 
+  margin: 0; 
+  color: #f4f6fb; 
+  margin-left: 6px;
+}
+
+.aj-panel__action {
+  font-size: 13px;
+  font-weight: 500;
+  color: #8ca0b8;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  transition: color 0.2s ease;
+}
+
+.aj-panel__action:hover {
+  color: #c7d2e0;
+}
+
+.aj-panel__chevron {
+  font-size: 16px;
+  line-height: 1;
+  display: inline-block;
+  vertical-align: middle;
+  position: relative;
+  top: -1px;
+}
+
+/* FORCE a 4-column grid */
+.aj-panel__grid {
+  display: grid !important;
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  gap: 12px;
+}
+
+.aj-card {
+  position: relative;
+  background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 10px;
+  padding: 14px 10px;
+  text-align: center;
+  overflow: hidden;
+  transition: transform .2s ease, border-color .2s ease, background .3s ease;
+}
+.aj-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(140px 60px at 50% -20%, rgba(255,255,255,0.12), transparent 70%);
+  opacity: 0;
+  transition: opacity .25s ease;
+  pointer-events: none;
+}
+.aj-card:hover { 
+  transform: translateY(-2px); 
+  border-color: rgba(255,255,255,0.18); 
+}
+.aj-card:hover::before { 
+  opacity: 1; 
+}
+
+.aj-value { 
+  font-size: 18px; 
+  line-height: 1.2; 
+  font-weight: 800; 
+  color: #ffffff; 
+  size: 24px;
+}
+.aj-label { 
+  margin-top: 6px; 
+  font-size: 12px; 
+  color: #9aa4b2; 
+  letter-spacing: .2px; 
+}
+
+
+/* Optional tighter spacing on very small screens */
+@media (max-width: 420px) {
+  .aj-panel { padding: 12px; }
+  .aj-card { padding: 10px 8px; }
+  .aj-value { font-size: 16px; }
+  .aj-label { font-size: 11px; }
+}

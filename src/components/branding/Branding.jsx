@@ -47,7 +47,7 @@ export default function Branding() {
 
 
                     <div className="leaders-section mt-2">
-                        <p className="section-title">Leaders</p>
+                        <p className="section-title">Referrals</p>
                         <div className="leaders-list flex flex-row items-center gap-4 overflow-x-auto">
                             {medicalproBranding.leaders.map((item, index) => (
                                 <img

@@ -1,0 +1,27 @@
+.panel {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  background-color: #1c1c1c; /* Dark background */
+  padding: 16px;
+  border-radius: 10px;
+  flex-wrap: wrap; /* Mobile-friendly */
+}
+
+.panel-item {
+  text-align: center;
+  margin: 10px;
+  min-width: 100px;
+}
+
+.panel-header {
+  font-size: 1.4rem;
+  font-weight: bold;
+  color: #ffffff;
+}
+
+.panel-subtext {
+  font-size: 0.85rem;
+  color: #bbbbbb;
+  margin-top: 4px;
+}
