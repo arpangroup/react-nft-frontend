@@ -1,5 +1,6 @@
 import React from "react";
 import "./Panel.css";
+import { Link } from "react-router-dom";
 
 const COLORS = [
   "#55f0e0", // Aqua
@@ -29,10 +30,15 @@ export default function Panel({ title, items, actionText = "View All", onActionC
       <div className="aj-panel__grid">
         {items.map((it, idx) => {
           const color = COLORS[idx % COLORS.length]; // Rotate through the color list
-          return (
-            <div key={idx} className="aj-card">
+           const content = (
+            <div className="aj-card">
               <div className="aj-value" style={{ color }}>{it.label}</div>
               <div className="aj-label">{it.value}</div>
+            </div>
+          );
+          return (
+            <div key={idx}>
+              {it.link ? <Link to={it.link}>{content}</Link> : content}
             </div>
           );
         })}

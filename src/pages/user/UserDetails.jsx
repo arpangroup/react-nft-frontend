@@ -43,7 +43,7 @@ const INCOME_TYPE_LABEL_MAP = {
 };
 
 
-const myTeams = [
+const defaultMyTeams = [
     { label: "9.03", value: "Community rewards" },
     { label: "1", value: "Valid Members" },
     { label: "1", value: "A enthusiast" },
@@ -54,7 +54,7 @@ const myTeams = [
     { label: <FaGift />, value: "Referral" },
   ];
 
-  const myOrders = [
+  const defaultMyOrders = [
     { label: "5", value: "Orders" },
     { label: "3", value: "Referrals" },
     { label: "7", value: "Contributors" },
@@ -73,10 +73,13 @@ function UserDetails() {
   const [userInfo, setUserInfo] = useState([]);
   const [incomeData, setIncomeData] = useState([]);
   const [userHierarchy, setUserHierarchy] = useState([]);
+  const [myOrders, setMyOrders] = useState([]);
+  const [myTeams, setMyTeams] = useState([]);
 
    useEffect(() => {
     fetchUserDetails();
     fetchIncomeData();
+    fetchMemberSummary();
    }, []);
 
 
@@ -95,7 +98,7 @@ function UserDetails() {
 
   const fetchIncomeData = async () => {
     try {
-      const resp = await apiClient.get(API_ROUTES.INCOME_SUMMARY); // make sure this route is correct
+      const resp = await apiClient.get(API_ROUTES.INCOME_SUMMARY);
       const incomeResponse = resp.data;
       console.log("INCOME: ", incomeResponse);
 
@@ -110,6 +113,47 @@ function UserDetails() {
       console.error("Failed to fetch income data:", err);
     }
   };
+
+  
+  const fetchMemberSummary = async () => {
+    try {
+      const resp = await apiClient.get(API_ROUTES.MEMBER_SUMMARY); 
+      const memberSummary = resp.data;
+      console.log("MEMBER_SUMMARY: ", memberSummary);
+
+      // === Transform to myTeams format ===
+      const transformedMyTeams = [
+        { label: memberSummary.totalShare.toString(), value: "Community rewards" },
+        { label: memberSummary.totalActive.toString(), value: "Valid Members" },
+        { label: memberSummary.memberA.toString(), value: "A enthusiast" },
+        { label: (memberSummary.memberB + memberSummary.memberC).toString(), value: "B+C enthusiasts" },
+        { label: <FaUsers />, value: "Community enthusiasts", link: "/members" },
+        { label: <FaHandsHelping />, value: "Community contributions", link: "/contributions" },
+        { label: <FaShoppingCart />, value: "Community orders", link:"/orders" },
+        { label: <FaGift />, value: "Referral Members", link: "/referral" },
+      ];
+
+      // === Transform to myOrders format ===
+      const transformedMyOrders = [
+        { label: memberSummary.direct.toString(), value: "Orders" },
+        { label: memberSummary.activeDirect.toString(), value: "Referrals" },
+        { label: memberSummary.indirect.toString(), value: "Contributors" },
+        { label: memberSummary.activeIndirect.toString(), value: "Active Teams" },
+
+        { label: <FaGavel />, value: "My Bid", link: "/" },
+        { label: <FaInfoCircle />, value: "Details", link: "/contributions" },
+        { label: <FaArrowDown />, value: "Deposit", link: "/deposit" },
+        { label: <FaArrowUp />, value: "Withdraw", link: "/withdraw" },
+      ];
+
+      setMyTeams(transformedMyTeams);
+      setMyOrders(transformedMyOrders);
+
+    } catch (err) {
+      console.error("Failed to fetch income data:", err);
+    }
+  };
+
 
   const handleUserClick = () => {
 
@@ -196,9 +240,10 @@ function UserDetails() {
       {/* <DemoStatsPanel/> */}
      {/* <DarkButtonGroup/> */}
 
-      <Branding />
+      <Branding/>
 
-      <Transaction/>
+      {/* <Transaction/> */}
+      <div style={{marginBottom: '60px'}}></div>
     </div>
   );
 }

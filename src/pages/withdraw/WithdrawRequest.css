@@ -1,0 +1,115 @@
+.withdraw-page {
+  background-color: #121212;
+  min-height: 100vh;
+  padding: 0 12px;
+  font-family: "Arial", sans-serif;
+}
+
+.withdraw-title {
+  font-size: 1.8rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+  text-align: center;
+  color: #ffffff;
+}
+
+/* Card */
+.withdraw-card {
+  background-color: #1e1e1e;
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+}
+
+/* Form Groups */
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  font-weight: 500;
+  margin-bottom: 6px;
+  color: #ccc;
+}
+
+.withdraw-input {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 8px;
+  border: 1px solid #333;
+  background-color: #2a2a2a;
+  color: #fff;
+  font-size: 1rem;
+}
+
+.withdraw-input:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Amount with currency */
+.amount-wrapper {
+  position: relative;
+}
+
+.currency {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #4cafef;
+  font-weight: bold;
+}
+
+/* Divider */
+.divider {
+  border: 0;
+  border-top: 1px solid rgba(255,255,255,0.1);
+  margin: 15px 0;
+}
+
+/* Read-only info rows */
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+  font-size: 0.95rem;
+  color: #ddd;
+}
+
+/* Buttons */
+.button-row {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.cancel-button,
+.confirm-button {
+  flex: 1;
+  padding: 12px 0;
+  font-size: 1rem;
+  border-radius: 25px;
+  cursor: pointer;
+  border: none;
+  margin: 0 5px;
+}
+
+.cancel-button {
+  background-color: #333;
+  color: #fff;
+}
+
+.cancel-button:hover {
+  background-color: #444;
+}
+
+.confirm-button {
+  background-color: #4cafef;
+  color: #fff;
+}
+
+.confirm-button:hover {
+  background-color: #379ad6;
+}

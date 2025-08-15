@@ -1,0 +1,30 @@
+.toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* keeps rightContent to the far right */
+  padding: 0.8rem;
+  background-color: #121212;
+  color: #fff;
+}
+
+.toolbar-back-btn {
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 1.4rem;
+  cursor: pointer;
+  margin-right: 0.5rem;
+}
+
+.toolbar-title {
+  margin: 0;
+  font-size: 1.1rem;
+  flex-shrink: 0; /* prevent shrinking */
+}
+
+.toolbar-right {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-left: auto; /* pushes to far right */
+}

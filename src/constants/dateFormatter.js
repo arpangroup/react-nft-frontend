@@ -30,3 +30,4 @@ export function formatDateTime(dateStr) {
     hour12: true,
   });
 }
+

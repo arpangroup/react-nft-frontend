@@ -1,6 +1,6 @@
 import React from 'react';
 
-const NoData = ({ currentTime }) => (
+const NoData = ({ currentTime, message = "No Data Available" }) => (
   <div className="no-data">
     <img
       className="no-data__img"
@@ -8,7 +8,7 @@ const NoData = ({ currentTime }) => (
       alt="No Data"
       loading="lazy"
     />
-    <p className="no-data__title">No Data Available</p>
+    <p className="no-data__title">{message}</p>
     <p className="no-data__timestamp">{currentTime}</p>
   </div>
 );

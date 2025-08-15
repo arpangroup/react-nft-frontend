@@ -1,13 +1,13 @@
 import React from "react";
-import "./Panel.css";
+import "./StatPanel.css";
 
-export default function Panel({ items }) {
+export default function StatPanel({ items }) {
   return (
     <div className="panel">
       {items.map((item, index) => (
         <div key={index} className="panel-item">
-          <div className="panel-header">{item.header}</div>
-          <div className="panel-subtext">{item.subtext}</div>
+          <div className="panel-header">{item.label}</div>
+          <div className="panel-subtext">{item.value}</div>
         </div>
       ))}
     </div>

@@ -11,6 +11,11 @@ import Reservation from './pages/reservation/Reservation';
 import DepositPage from './pages/deposit/DepositPage';
 import NotificationList from './pages/notifications/NotificationList';
 import ProtectedRoute from './components/ProtectedRoute';
+import Members from './pages/user/members/Members';
+import MemberContribution from './pages/user/contributiors/MemberContribution';
+import Orders from './pages/user/orders/Orders';
+import ReferralScreen from './pages/referral/ReferralScreen';
+import WithdrawRequest from './pages/withdraw/WithdrawRequest';
 
 function App() {
   const location = useLocation();
@@ -30,6 +35,15 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/forgot" element={<Forgot />} />
           <Route path="/tree" element={<MLMTree />} />
+
+          
+          <Route path="/members" element={<Members />} />
+          <Route path="/contributions" element={<MemberContribution />} />          
+          <Route path="/orders" element={<Orders />} />      
+          <Route path="/referral" element={<ReferralScreen />} />
+          <Route path="/withdraw" element={<WithdrawRequest />} />
+
+
 
 
           {/* Protected routes grouped under ProtectedRoute */}
@@ -55,6 +69,7 @@ function App() {
             <Route path="/tree" element={<MLMTree />} />
             
             <Route path="/alerts" element={<NotificationList />} />
+            
 
           </Route>         
         </Routes>

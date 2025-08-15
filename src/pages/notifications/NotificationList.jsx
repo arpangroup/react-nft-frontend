@@ -4,6 +4,8 @@ import './NotificationList.css';
 import apiClient from '../../api/apiClient';
 import { API_ROUTES } from '../../api/apiRoutes';
 import { USER_ID } from '../../constants/config';
+import Toolbar from '../user/toolbar/Toolbar';
+import NoData from '../../components/NoData';
 
 const dummyNotifications = [
   {
@@ -30,28 +32,28 @@ const dummyNotifications = [
 ];
 
 export default function NotificationList() {
-  const [notifications, setNotifications] = useState([]);
+  const [notifications, setNotifications] = useState(dummyNotifications);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   // Fetch notifications on component mount
   useEffect(() => {
-    const fetchNotifications = async () => {
-      try {
-        const response = await apiClient.get(API_ROUTES.NOTIFICATION_API.NOTIFICATIONS(USER_ID));
-        const data = response.content;
-        console.log("RESPONSE: ", data);
-        setNotifications(data);
-      } catch (err) {
-        console.error('Failed to fetch notifications:', err);
-        setError('Failed to load notifications');
-      } finally {
-        setLoading(false);
-      }
-    };
-
     fetchNotifications();
   }, []);
+
+  const fetchNotifications = async () => {
+    try {
+      const response = await apiClient.get(API_ROUTES.NOTIFICATION_API.NOTIFICATIONS);
+      const data = response?.data?.content;
+      console.log("RESPONSE: ", data);
+      setNotifications(data);
+    } catch (err) {
+      console.error('Failed to fetch notifications:', err);
+      setError('Failed to load notifications');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   
   /*const markAsViewed = (id) => {
@@ -108,9 +110,16 @@ export default function NotificationList() {
 
   return (
     <div className="notification-wrapper">
-      <h2 className="heading">Notifications</h2>
+      {/* <h2 className="heading">Notifications</h2> */}
+      <Toolbar 
+        title="Announcements"        
+        onBack={() => window.history.back()}
+      />
+
+
       {notifications.length === 0 ? (
-        <p>No notifications found.</p>
+        // <p>No notifications found.</p>
+        <NoData message="No recent announcements"/>
       ) : (
         notifications.map((n) => (
           <NotificationCard

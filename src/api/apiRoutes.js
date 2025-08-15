@@ -28,9 +28,10 @@ export const API_ROUTES = {
 
   USER_INFO: "/api/v1/users/info",
   INCOME_SUMMARY: "/api/v1/incomes/summary",
+  MEMBER_SUMMARY: "/api/v1/users/metrics/member-summary",
 
   NOTIFICATION_API : {
-    NOTIFICATIONS: (userId) => `/api/v1/notifications?userId=${userId}`,
+    NOTIFICATIONS: `/api/v1/notifications`,
     MARK_VIEWED: (id) => `/api/v1/notifications/${id}/view`,
     DELETE: (id) => `/api/v1/notifications/${id}`,
   },
