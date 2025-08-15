@@ -26,3 +26,15 @@
     margin: 0;
     margin-bottom: 6px;
 }
+
+.profit-cards-container {
+  display: flex;
+  gap: 16px; /* optional spacing between cards */
+  margin: 16px 0; /* optional margin */
+  flex-wrap: wrap; /* allows cards to wrap on smaller screens */
+}
+
+.profit-cards-container > * {
+  flex: 1; /* equal width for both cards */
+  min-width: 100px; /* ensure they don't get too small on narrow screens */
+}

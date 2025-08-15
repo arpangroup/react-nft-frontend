@@ -25,6 +25,22 @@ export const RANK_LABEL_MAP = {
   RANK_5: "LV6",
   RANK_6: "LV7",
   RANK_7: "LV8", // optional, handle extra rank
+  RANK_8: "LV9",
+  RANK_9: "LV10",
+};
+
+export const RANK_TO_NUMBER_MAP = {
+  RANK_0: "0",
+  RANK_1: "1",
+  RANK_2: "2",
+  RANK_3: "3",
+  RANK_4: "4",
+  RANK_5: "5",
+  RANK_6: "6",
+  RANK_7: "7",
+  RANK_8: "8",
+  RANK_9: "9",
+  RANK_10: "10",
 };
 
 const imageFileTypes = "image/png, image/jpeg, image/gif";

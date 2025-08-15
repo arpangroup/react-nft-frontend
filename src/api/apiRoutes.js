@@ -26,6 +26,8 @@ export const API_ROUTES = {
     RESERVATION_SUMMARY: "/api/v1/reservations/summary",
   },
 
+  USER_INFO: "/api/v1/users/info",
+
   NOTIFICATION_API : {
     NOTIFICATIONS: (userId) => `/api/v1/notifications?userId=${userId}`,
     MARK_VIEWED: (id) => `/api/v1/notifications/${id}/view`,

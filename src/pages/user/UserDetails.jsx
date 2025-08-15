@@ -6,8 +6,25 @@ import ProfitBalanceCard from '../../components/card/ProfitBalanceCard';
 import IncomeTable from './IncomeTable';
 import Transaction from '../../components/transaction/Transaction';
 import DarkButtonGroup from './DarkButtonGroup';
+import { API_ROUTES } from '../../api/apiRoutes';
+import apiClient from '../../api/apiClient';
+import { CURRENCY_SYMBOL, CURRENCY_UNIT, RANK_TO_NUMBER_MAP } from '../../constants/config';
+
+const defaulImage = "https://www.gravatar.com/avatar/2c7d99fe281ecd3bcd65ab915bac6dd5?s=250";
+
+const generateRandomString = (length = 8) => {
+  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  let result = '';
+  for (let i = 0; i < length; i++) {
+    result += chars.charAt(Math.floor(Math.random() * chars.length));
+  }
+  return result;
+}
 
 function UserDetails() {
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [userInfo, setUserInfo] = useState([]);
   const [userHierarchy, setUserHierarchy] = useState([]);
   const [incomeData, setIncomeData] = useState([
     { incomeType: "Comprehensive", daily: 3.37, total: 15007.89 },
@@ -18,6 +35,24 @@ function UserDetails() {
     { incomeType: "Stake", daily: 0, total: 0 }
   ]);
 
+   useEffect(() => {
+    fetchUserDetails();
+   }, []);
+
+
+  const fetchUserDetails = async () => {
+    try {
+      const resp = await apiClient.get(API_ROUTES.USER_INFO);
+      console.log("RESPONSE: ", resp.data);
+      setUserInfo(resp.data);
+    } catch (err) {
+      //setError('Failed to load data');
+      //console.error(err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const handleUserClick = () => {
 
   }
@@ -27,15 +62,17 @@ function UserDetails() {
     <div className='' style={{ padding: '16px', marginBottom: '100px' }}>
 
       <ProfileCard
-        username="John Doe"
-        uuid="123e4567-e89b-12d3-a456-426614174000"
-        level={3}
-        points={305}
-        profileImage="https://www.gravatar.com/avatar/2c7d99fe281ecd3bcd65ab915bac6dd5?s=250"
+        username={userInfo.username}
+        uuid={generateRandomString(16)}
+        level={RANK_TO_NUMBER_MAP[userInfo.rankCode]}
+        points={userInfo.point}
+        profileImage={userInfo || defaulImage}
       />
 
-     <ProfitBalanceCard amount={1580.75} currency="USD" label="Today" />
-     <ProfitBalanceCard amount={-325.50} currency="USD" label="Last 7 Days" />
+    <div className="profit-cards-container">
+      <ProfitBalanceCard amount={userInfo.walletBalance} currency={CURRENCY_UNIT} label="Wallet Balance" />
+      <ProfitBalanceCard amount={-325.50} currency={CURRENCY_UNIT} label="Today Reservation" />     
+    </div>
 
      <DarkButtonGroup/>
 

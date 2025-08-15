@@ -9,7 +9,7 @@ const ProfileCard = ({ username, uuid, level, points, profileImage }) => {
   return (
     <div className="profile-card">
       <div className="top-row">
-        <img src={profileImage} alt="Profile" className="profile-img" />
+        <img src={profileImage} alt={username} className="profile-img" />
         <div className="user-info">
           <div className="user-header">
             <h2 className="username">{username}</h2>
