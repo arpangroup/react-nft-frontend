@@ -3,7 +3,7 @@ import { FiTrash2 } from 'react-icons/fi';
 import './NotificationCard.css';
 
 export default function NotificationCard({ notification, onClick, onDelete }) {
-  const { id, title, message, createdAt, viewed } = notification;
+  const { id, title, message, createdAt, viewed, image } = notification;
 
   return (
     <div
