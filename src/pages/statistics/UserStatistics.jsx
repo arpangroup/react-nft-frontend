@@ -30,14 +30,14 @@ const UserStatistics = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetchUserStats(setStats, setLoading, setError);
+    fetchOrderSummary(setStats, setLoading, setError);
   }, []);
 
-  const fetchUserStats = async () => {
+  const fetchOrderSummary = async () => {
     setLoading(true);
     setError(null);
     try {
-      const res = await apiClient.get(API_ROUTES.RESERVATION_API.RESERVATION_SUMMARY);
+      const res = await apiClient.get(API_ROUTES.RESERVATION_API.ORDER_SUMMARY);
       console.log("RESRVATION: ", res.data);
       setStats(res.data || []);
     } catch (err) {
@@ -48,6 +48,8 @@ const UserStatistics = () => {
       setLoading(false);
     }
   };
+
+  
   return (
     <div className="user-statistics">
        {/* {loading ? (

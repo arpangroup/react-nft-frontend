@@ -20,10 +20,11 @@ export const API_ROUTES = {
   },
 
   RESERVATION_API : {
-    ACTIVE_RESERVATIONS: "/api/v1/reservations",
-    RESERVE_NOW: '/api/v1/reservations/reserve',
-    SELL_RESERVED_STAKE: (reservationId) => `/api/v1/reservations/${reservationId}/sell`,
-    RESERVATION_SUMMARY: "/api/v1/reservations/summary",
+    ALL_ORDERS: `/api/v1/orders`,
+    ACTIVE_ORDERS: "/api/v1/orders?activeOnly=true",
+    RESERVE_NOW: '/api/v1/orders/reserve',
+    SELL_RESERVED_STAKE: (orderId) => `/api/v1/orders/${orderId}/sell`,
+    ORDER_SUMMARY: "/api/v1/orders/summary",
   },
 
   USER_INFO: "/api/v1/users/info",

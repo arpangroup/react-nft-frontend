@@ -37,9 +37,6 @@ export default function Login() {
       accessTokenExpiry,
       refreshTokenExpiry
     } = res.data;
-
-      console.log('ACCESS_TOKEN_RESPONSE:', res.data);
-
       // Store tokens in AuthContext
       login(accessToken, refreshToken, accessTokenExpiry, refreshTokenExpiry);
 

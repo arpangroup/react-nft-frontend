@@ -43,8 +43,8 @@ function Reservation() {
 
   const fetchReservedStakes = async () => {
     try {
-      const response = await apiClient.get(API_ROUTES.RESERVATION_API.ACTIVE_RESERVATIONS);
-      //console.log("RESPONSE: ", response);
+      const response = await apiClient.get(API_ROUTES.RESERVATION_API.ACTIVE_ORDERS);
+      console.log("ORDERS: ", response);
       setReservedStakes(response.data || []);
     } catch (err) {
       console.error('Failed to fetch stake items:', err);

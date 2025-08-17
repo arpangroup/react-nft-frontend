@@ -1,13 +1,50 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { QRCodeCanvas } from "qrcode.react";
-import { FaCopy, FaShareAlt } from "react-icons/fa";
+import { FaCopy, FaDownload, FaShareAlt } from "react-icons/fa";
 import "./ReferralScreen.css";
 import Toast from "./toast/Toast";
+import apiClient from "../../api/apiClient";
+import { API_ROUTES } from "../../api/apiRoutes";
+import { REFERRAL_URL, REGISTRATION_URL } from "../../constants/config";
 
 export default function ReferralScreen() {
-  const referralCode = "REF12345"; // You can fetch this from API
-  const referralLink = `https://example.com/register?ref=${referralCode}`;
+  const [loading, setLoading] = useState(true);
+  const [userInfo, setUserInfo] = useState({});
+  const [referralCode, setReferralCode] = useState("REF12345");
+  const referralLink = REFERRAL_URL(referralCode);
   const [toast, setToast] = useState(null);
+
+  useEffect(() => {
+    fetchUserDetails();
+  }, []);
+
+  const fetchUserDetails = async () => {
+    try {
+      const resp = await apiClient.get(API_ROUTES.USER_INFO);
+      const userInfo = resp.data;
+      //console.log("USER_RESPONSE: ", resp.data);
+      setUserInfo(userInfo);
+      setReferralCode(userInfo.referralCode);
+    } catch (err) {
+      //setError('Failed to load data');
+      //console.error(err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const downloadQRCode = () => {
+    const canvas = document.querySelector("canvas");
+    const pngUrl = canvas
+      .toDataURL("image/png")
+      .replace("image/png", "image/octet-stream");
+    const downloadLink = document.createElement("a");
+    downloadLink.href = pngUrl;
+    downloadLink.download = `referral-code-${referralCode}.png`;
+    document.body.appendChild(downloadLink);
+    downloadLink.click();
+    document.body.removeChild(downloadLink);
+  };
 
   const showToast = (message, type = "success") => {
     setToast({ message, type });
@@ -39,6 +76,7 @@ export default function ReferralScreen() {
       {/* QR Code */}
       <div className="qr-wrapper">
         <QRCodeCanvas value={referralLink} size={180} bgColor="#1e1e1e" fgColor="#ffffff" />
+        <FaDownload className="download-icon" onClick={downloadQRCode} title="Download QR" />
       </div>
 
       {/* Referral Code */}

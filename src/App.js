@@ -51,12 +51,12 @@ function App() {
             <Route path="/stakes" element={<Stake />} />
             <Route path="/earn" element={<Earn />} />
             <Route path=":item/:id" element={<Item />} />
-            <Route path="/userDetails/:id" element={<UserDetails />} />
+            <Route path="/userDetails" element={<UserDetails />} />
 
             <Route path="/reservation" element={<Reservation />} />
             
             <Route path="/create" element={<Create /> } />
-            <Route path="/profile/:id" element={<Profile />} />
+            {/* <Route path="/profile/:id" element={<Profile />} /> */}
             <Route path="/login" element={ <Login />} />
             <Route path="/register" element={ <Register />} />
             <Route path="/forgot" element={ <Forgot />} />

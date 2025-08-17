@@ -1,6 +1,9 @@
 // export const BASE_URL = import.meta.env.VITE_API_BASE_URL || '';
+export const BASE_URL = 'https://trustai.co.in/';
 export const API_VERSION = '/api/v1';
 export const USER_ID = 1;
+export const REGISTRATION_URL = `${BASE_URL}/register`;
+export const REFERRAL_URL = (referralCode) => `${BASE_URL}/register?ref=${referralCode}`;
 
 export const CURRENCY_UNIT = "USDT";
 export const CURRENCY_UNIT_DEFAULT = "INR";

@@ -11,6 +11,7 @@ import { API_ROUTES } from '../../api/apiRoutes';
 import apiClient from '../../api/apiClient';
 import { CURRENCY_SYMBOL, CURRENCY_UNIT, RANK_TO_NUMBER_MAP } from '../../constants/config';
 import Panel from './Panel';
+import { useNavigate } from 'react-router';
 
 const defaulImage = "https://www.gravatar.com/avatar/2c7d99fe281ecd3bcd65ab915bac6dd5?s=250";
 
@@ -70,23 +71,24 @@ const defaultMyTeams = [
 function UserDetails() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [userInfo, setUserInfo] = useState([]);
+  const [userInfo, setUserInfo] = useState({});
   const [incomeData, setIncomeData] = useState([]);
-  const [userHierarchy, setUserHierarchy] = useState([]);
   const [myOrders, setMyOrders] = useState([]);
   const [myTeams, setMyTeams] = useState([]);
+  const navigate = useNavigate();
 
    useEffect(() => {
     fetchUserDetails();
     fetchIncomeData();
     fetchMemberSummary();
+    fetchOrderSummary();
    }, []);
 
 
   const fetchUserDetails = async () => {
     try {
       const resp = await apiClient.get(API_ROUTES.USER_INFO);
-      console.log("RESPONSE: ", resp.data);
+      //console.log("USER_RESPONSE: ", resp.data);
       setUserInfo(resp.data);
     } catch (err) {
       //setError('Failed to load data');
@@ -100,7 +102,7 @@ function UserDetails() {
     try {
       const resp = await apiClient.get(API_ROUTES.INCOME_SUMMARY);
       const incomeResponse = resp.data;
-      console.log("INCOME: ", incomeResponse);
+      //console.log("INCOME: ", incomeResponse);
 
       const formattedIncomeData = incomeResponse.map(item => ({
         incomeType: INCOME_TYPE_LABEL_MAP[item.incomeType] || item.incomeType,
@@ -119,7 +121,7 @@ function UserDetails() {
     try {
       const resp = await apiClient.get(API_ROUTES.MEMBER_SUMMARY); 
       const memberSummary = resp.data;
-      console.log("MEMBER_SUMMARY: ", memberSummary);
+      //console.log("MEMBER_SUMMARY: ", memberSummary);
 
       // === Transform to myTeams format ===
       const transformedMyTeams = [
@@ -130,27 +132,43 @@ function UserDetails() {
         { label: <FaUsers />, value: "Community enthusiasts", link: "/members" },
         { label: <FaHandsHelping />, value: "Community contributions", link: "/contributions" },
         { label: <FaShoppingCart />, value: "Community orders", link:"/orders" },
-        { label: <FaGift />, value: "Referral Members", link: "/referral" },
+        { label: <FaGift />, value: "Referral & Invite", link: "/referral" },
       ];
+
+      setMyTeams(transformedMyTeams);
+    } catch (err) {
+      console.error("Failed to fetch income data:", err);
+    }
+  };
+
+  
+  const fetchOrderSummary = async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const res = await apiClient.get(API_ROUTES.RESERVATION_API.ORDER_SUMMARY);
+      const orderSummary = res.data;
+      //console.log("ORDER_SUMMARY: ", orderSummary);
 
       // === Transform to myOrders format ===
       const transformedMyOrders = [
-        { label: memberSummary.direct.toString(), value: "Orders" },
-        { label: memberSummary.activeDirect.toString(), value: "Referrals" },
-        { label: memberSummary.indirect.toString(), value: "Contributors" },
-        { label: memberSummary.activeIndirect.toString(), value: "Active Teams" },
+        { label: orderSummary.totalOrders, value: "Orders" },
+        { label: orderSummary.processingOrders, value: "Processing" },
+        { label: orderSummary.boughtOrders, value: "Bought" },
+        { label: orderSummary.soldOrders, value: "Sold" },
 
         { label: <FaGavel />, value: "My Bid", link: "/" },
         { label: <FaInfoCircle />, value: "Details", link: "/contributions" },
         { label: <FaArrowDown />, value: "Deposit", link: "/deposit" },
         { label: <FaArrowUp />, value: "Withdraw", link: "/withdraw" },
       ];
-
-      setMyTeams(transformedMyTeams);
       setMyOrders(transformedMyOrders);
-
     } catch (err) {
-      console.error("Failed to fetch income data:", err);
+      console.error('Failed to fetch stake items:', err);
+      const message = err?.message || 'Failed to load stake items.';
+      setError(message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -168,7 +186,7 @@ function UserDetails() {
         uuid={generateRandomString(16)}
         level={RANK_TO_NUMBER_MAP[userInfo.rankCode]}
         points={userInfo.point}
-        profileImage={userInfo || defaulImage}
+        profileImage={userInfo.image || defaulImage}
       />
 
     <div className="profit-cards-container">
@@ -235,6 +253,7 @@ function UserDetails() {
         title = "My Orders" 
         items={myOrders}
         actionText="Check Orders" 
+        onActionClick={() => navigate('/orders')}
       />
 
       {/* <DemoStatsPanel/> */}
