@@ -183,7 +183,7 @@ function UserDetails() {
 
       <ProfileCard
         username={userInfo.username}
-        uuid={generateRandomString(16)}
+        uuid={userInfo.accountId}
         level={RANK_TO_NUMBER_MAP[userInfo.rankCode]}
         points={userInfo.point}
         profileImage={userInfo.image || defaulImage}

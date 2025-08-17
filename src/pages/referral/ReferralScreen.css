@@ -40,17 +40,6 @@
   letter-spacing: 1px;
 }
 
-.copy-icon {
-  cursor: pointer;
-  font-size: 1.2rem;
-  color: #4cafef;
-  transition: transform 0.2s ease;
-}
-
-.copy-icon:hover {
-  transform: scale(1.1);
-}
-
 .share-button {
   display: flex;
   align-items: center;

@@ -6,6 +6,7 @@ import Toast from "./toast/Toast";
 import apiClient from "../../api/apiClient";
 import { API_ROUTES } from "../../api/apiRoutes";
 import { REFERRAL_URL, REGISTRATION_URL } from "../../constants/config";
+import CopyToClipboard from "../../components/clipboard/CopyToClipboard";
 
 export default function ReferralScreen() {
   const [loading, setLoading] = useState(true);
@@ -82,7 +83,14 @@ export default function ReferralScreen() {
       {/* Referral Code */}
       <div className="referral-code-box">
         <span className="referral-code">{referralCode}</span>
-        <FaCopy className="copy-icon" onClick={copyToClipboard} />
+        {/* <FaCopy className="copy-icon" onClick={copyToClipboard} /> */}
+        <CopyToClipboard
+          text={referralCode}
+          onCopy={showToast}
+          size={20}
+          color="#4cafef"
+          className="copy-icon"
+        />
       </div>
 
       {/* Share Button */}
@@ -92,12 +100,12 @@ export default function ReferralScreen() {
 
       {/* Toast */}
       {toast && (
-          <Toast
-            message={toast.message}
-            type={toast.type}
-            onClose={() => setToast(null)}
-          />
-        )}
+        <Toast
+          message={toast.message}
+          type={toast.type}
+          onClose={() => setToast(null)}
+        />
+      )}
 
     </div>
   );
