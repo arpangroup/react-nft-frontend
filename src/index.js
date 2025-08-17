@@ -4,14 +4,17 @@ import './index.css';
 import App from './App';
 import { BrowserRouter } from "react-router-dom";
 import { ContextProvider } from './context/Context';
-import { AuthProvider } from './api/AuthContext';
+import { AuthProvider } from './context/AuthContext';
+import { NotificationProvider } from "./context/NotificationContext";
 
 
 ReactDOM.render(
   <BrowserRouter>
     <AuthProvider>  
       <ContextProvider >
-        <App />
+         <NotificationProvider>
+          <App />
+         </NotificationProvider>
       </ContextProvider>
       </AuthProvider>
   </BrowserRouter>,

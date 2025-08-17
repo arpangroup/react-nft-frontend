@@ -38,7 +38,7 @@ const UserStatistics = () => {
     setError(null);
     try {
       const res = await apiClient.get(API_ROUTES.RESERVATION_API.ORDER_SUMMARY);
-      console.log("RESRVATION: ", res.data);
+      // console.log("RESRVATION: ", res.data);
       setStats(res.data || []);
     } catch (err) {
       console.error('Failed to fetch stake items:', err);

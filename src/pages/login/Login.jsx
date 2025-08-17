@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import './login.css';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { AuthContext } from '../../api/AuthContext.jsx';
+import { AuthContext } from '../../context/AuthContext.jsx';
 import { API_ROUTES } from '../../api/apiRoutes.js';
 import apiClient from '../../api/apiClient.jsx';
 

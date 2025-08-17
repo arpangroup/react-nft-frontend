@@ -3,6 +3,7 @@ import './navbarV2.css'
 import { RiMenu3Line, RiCloseLine, RiHome2Line, RiInformationLine, RiSettings3Line, RiNotificationLine, RiNotification3Line } from 'react-icons/ri';
 import LogoIcon from '../../assets/logo.png'
 import {  Link, useLocation, useNavigate } from "react-router-dom";
+import { useNotifications } from '../../context/NotificationContext';
 
 const Menu = () => (
   <>
@@ -19,6 +20,7 @@ const NavbarV2 = () => {
   const isActive = (path) => location.pathname === path;
   const navigate = useNavigate();
   const [notificationCount, setNotificationCount] = useState(3);
+  const { unreadCount } = useNotifications();
 
   const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
 
@@ -47,19 +49,22 @@ const NavbarV2 = () => {
   return (
     <>
       <div className="navbar">
-        <button className="menu-btn" onClick={toggleSidebar}>
+        {/* <button className="menu-btn" onClick={toggleSidebar}>
           &#9776;
-        </button>
+        </button> */}
         <div className="logo">
           <img
             src={LogoIcon}
             alt="App Logo" />
             <Link to="/" className="logo-title">TrustAI</Link>
         </div>
-        <div className="profile-icon">
+        
+        <div className="notification-icon">
           <Link to="/alerts" className="notification-icon-wrapper">
             <RiNotification3Line size={28} />
-            <span className="notification-badge">3</span>
+            {unreadCount > 0 && (
+              <span className="notification-badge">{unreadCount}</span>
+            )}
           </Link>
         </div>
       </div>

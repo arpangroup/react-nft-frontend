@@ -42,11 +42,11 @@
   font-family: "Poppins", sans-serif;
 }
 
-.profile-icon {
+.notification-icon {
   margin-left: auto;
 }
 
-.profile-icon img {
+.notification-icon img {
   height: 24px;
   filter: brightness(0) invert(1);
 }

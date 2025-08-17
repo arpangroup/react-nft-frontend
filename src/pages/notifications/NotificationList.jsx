@@ -6,6 +6,7 @@ import { API_ROUTES } from '../../api/apiRoutes';
 import { USER_ID } from '../../constants/config';
 import Toolbar from '../user/toolbar/Toolbar';
 import NoData from '../../components/NoData';
+import { useNotifications } from '../../context/NotificationContext';
 
 const dummyNotifications = [
   {
@@ -32,28 +33,27 @@ const dummyNotifications = [
 ];
 
 export default function NotificationList() {
-  const [notifications, setNotifications] = useState(dummyNotifications);
-  const [loading, setLoading] = useState(true);
+  const { notifications, setNotifications, loading } = useNotifications();
   const [error, setError] = useState(null);
 
   // Fetch notifications on component mount
-  useEffect(() => {
-    fetchNotifications();
-  }, []);
+  // useEffect(() => {
+  //   fetchNotifications();
+  // }, []);
 
-  const fetchNotifications = async () => {
-    try {
-      const response = await apiClient.get(API_ROUTES.NOTIFICATION_API.NOTIFICATIONS);
-      const data = response?.data?.content;
-      console.log("RESPONSE: ", data);
-      setNotifications(data);
-    } catch (err) {
-      console.error('Failed to fetch notifications:', err);
-      setError('Failed to load notifications');
-    } finally {
-      setLoading(false);
-    }
-  };
+  // const fetchNotifications = async () => {
+  //   try {
+  //     const response = await apiClient.get(API_ROUTES.NOTIFICATION_API.NOTIFICATIONS);
+  //     const data = response?.data?.content;
+  //     console.log("RESPONSE: ", data);
+  //     setNotifications(data);
+  //   } catch (err) {
+  //     console.error('Failed to fetch notifications:', err);
+  //     setError('Failed to load notifications');
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
 
   
   /*const markAsViewed = (id) => {
