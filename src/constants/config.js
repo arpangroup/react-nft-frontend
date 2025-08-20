@@ -10,6 +10,8 @@ export const CURRENCY_UNIT_DEFAULT = "INR";
 export const CURRENCY_SYMBOL = "$"; // "₹"
 export const CURRENCY_SYMBOL_DEFAULT = "₹";
 
+export const DEPOSIT_ADDRESS = "0x5987d451a2d9f7db04d8e539e4d3d6f8aede71bb";
+
 export const SCHEDULE_OPTIONS = [
   { label: "Hourly", value: 1, disabled: true,},
   { label: "Daily", value: 2, disabled: false, },

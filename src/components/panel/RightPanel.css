@@ -1,0 +1,65 @@
+.right-panel-overlay {
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100vh;
+  width: 100vw;
+  background-color: rgba(0, 0, 0, 0.4);
+  z-index: 1000;
+}
+
+.right-panel-container {
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  background-color: white;
+  box-shadow: -2px 0 8px rgba(0, 0, 0, 0.2);
+}
+
+.slide-in {
+  animation: slideIn 0.3s ease-out forwards;
+}
+
+.slide-out {
+  animation: slideOut 0.3s ease-in forwards;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0%);
+  }
+}
+
+@keyframes slideOut {
+  from {
+    transform: translateX(0%);
+  }
+  to {
+    transform: translateX(100%);
+  }
+}
+
+.right-panel-header {
+  padding: 1rem;
+  text-align: left;
+  /* background-color: #f9f9f9; */
+  /* border-bottom: 1px solid #eee; */
+}
+
+.right-panel-close {
+  background: transparent;
+  font-size: 1.5rem;
+  border: none;
+  cursor: pointer;
+}
+
+.right-panel-content {
+  padding: 1rem;
+  overflow-y: auto;
+  height: calc(100% - 60px); /* Adjust based on header */
+}

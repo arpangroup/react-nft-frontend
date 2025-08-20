@@ -1,27 +1,29 @@
 import React, { useState, useEffect } from "react";
 import "./register.css";
-import { Link, useSearchParams } from "react-router-dom";
-import apiClient from "../../api/apiClient"; // <-- your axios instance
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
+import apiClient from "../../api/apiClient";
 import Toast from "../referral/toast/Toast";
+import OTPVerification from "../otp/OTPVerification";
+import RightPanel from "../../components/panel/RightPanel"; // Path to your RightPanel component
 
 const TIMER_DELAY_SECONDS = 60;
 
 const Register = () => {
   const [searchParams] = useSearchParams();
-  const [otpSent, setOtpSent] = useState(false);
-  const [otpVerified, setOtpVerified] = useState(false);
   const [attempts, setAttempts] = useState(0);
   const maxAttempts = 3;
   const [loading, setLoading] = useState(false);
-  const [timer, setTimer] = useState(0);  
+  const [timer, setTimer] = useState(0);
   const [toast, setToast] = useState(null);
+  const [showOtpPanel, setShowOtpPanel] = useState(false);
+
   const [formData, setFormData] = useState({
-    username: "",
-    password: "",
-    confirmPassword: "",
+    username: "johndoe",
+    password: "12345",
+    confirmPassword: "12345",
     mobile: "",
     email: "john@doe.com",
-    referralCode: "",
+    referralCode: "123",
     otp: "",
   });
 
@@ -44,7 +46,6 @@ const Register = () => {
     return () => clearInterval(interval);
   }, [timer]);
 
-  // Handle input changes
   const handleChange = (e) => {
     setFormData((prev) => ({
       ...prev,
@@ -56,90 +57,28 @@ const Register = () => {
     setToast({ message, type });
   };
 
-  // Send OTP API call
-  const handleSendOtp = async () => {
-    if (!formData.email) {
-      alert("Please enter your email first.");
-      return;
-    }
-    try {
-      setLoading(true);
-      await apiClient.post("/send-otp", { email: formData.email });
-      setOtpSent(true);
-      showToast("OTP sent to your email.", "success");
-      setTimer(TIMER_DELAY_SECONDS);
-    } catch (error) {
-      console.error(error);
-      alert("Failed to send OTP.");
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  // Verify OTP API call
-  const handleVerifyOtp = async () => {
-    if (!formData.otp) {
-      alert("Enter the OTP to verify.");
-      return;
-    }
-    try {
-      setLoading(true);
-      const res = await apiClient.post("/verify-otp", {
-        email: formData.email,
-        otp: formData.otp,
-      });
-      if (res.data.success) {
-        setOtpVerified(true);
-        alert("OTP verified successfully.");
-      } else {
-        alert("Invalid OTP.");
-      }
-    } catch (error) {
-      console.error(error);
-      alert("OTP verification failed.");
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  // Submit handler for register
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     if (!formData.username || !formData.password || !formData.email || !formData.referralCode) {
       alert("Please fill all mandatory fields.");
       return;
     }
+
     if (formData.password !== formData.confirmPassword) {
       alert("Passwords do not match.");
       return;
     }
-    if (!otpVerified) {
-      alert("Please verify your email OTP first.");
-      return;
-    }
 
-    try {
-      setLoading(true);
-      setAttempts((prev) => prev + 1);
-      await apiClient.post("/register", formData);
-      alert("Registration successful.");
-    } catch (error) {
-      console.error(error);
-      alert("Registration failed.");
-    } finally {
-      setLoading(false);
-    }
+    // Instead of registering immediately, show OTP panel
+    setShowOtpPanel(true);
   };
 
   return (
     <div className="register section__padding">
       <div className="register-container">
         <h1>Register</h1>
-        <form
-          className="register-writeForm"
-          autoComplete="off"
-          onSubmit={handleSubmit}
-        >
+        <form className="register-writeForm" autoComplete="off" onSubmit={handleSubmit}>
           {/* Username */}
           <div className="register-formGroup">
             <label>
@@ -208,35 +147,6 @@ const Register = () => {
             />
           </div>
 
-
-          {/* OTP + Verify */}
-          <div className="form-group">
-            <div className="otp-wrapper">
-              <input
-                type="text"
-                name="otp"
-                placeholder="Verification Code"
-                value={formData.otp}                
-                onChange={handleChange} 
-                className="otp-input"
-              />
-              {timer > 0 ? (
-                <span className="otp-timer">
-                  {Math.floor(timer / 60)}:{String(timer % 60).padStart(2, "0")}
-                </span>
-              ) : (
-                <button
-                  type="button"
-                  className="btn-send-otp"
-                  onClick={handleSendOtp}
-                  disabled={loading}
-                >
-                  Send OTP
-                </button>
-              )}
-            </div>
-          </div>
-
           {/* Referral Code */}
           <div className="register-formGroup">
             <label>
@@ -276,12 +186,22 @@ const Register = () => {
 
       {/* Toast */}
       {toast && (
-          <Toast
-            message={toast.message}
-            type={toast.type}
-            onClose={() => setToast(null)}
-          />
-        )}
+        <Toast
+          message={toast.message}
+          type={toast.type}
+          onClose={() => setToast(null)}
+        />
+      )}
+
+      {/* RightPanel with OTPVerification */}
+      <RightPanel isOpen={showOtpPanel} onClose={() => setShowOtpPanel(false)}>
+        <OTPVerification
+          username={formData.username}
+          email={formData.email}
+          sessionId={"dummy-session-id"}
+          onClose={() => setShowOtpPanel(false)}
+        />
+      </RightPanel>
     </div>
   );
 };

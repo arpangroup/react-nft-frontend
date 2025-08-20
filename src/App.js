@@ -19,7 +19,7 @@ import WithdrawRequest from './pages/withdraw/WithdrawRequest';
 
 function App() {
   const location = useLocation();
-  const hideNavbarPaths = ['/login', '/register', '/forgot', '/tree'];
+  const hideNavbarPaths = ['/login', '/register', '/forgot', '/tree', '/verify'];
   const showNavbar = !hideNavbarPaths.includes(location.pathname);
 
   return (
@@ -34,7 +34,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/forgot" element={<Forgot />} />
-          <Route path="/tree" element={<MLMTree />} />
+          <Route path="/tree" element={<MLMTree />} /> 
 
           
           <Route path="/members" element={<Members />} />
@@ -42,8 +42,6 @@ function App() {
           <Route path="/orders" element={<Orders />} />      
           <Route path="/referral" element={<ReferralScreen />} />
           <Route path="/withdraw" element={<WithdrawRequest />} />
-
-
 
 
           {/* Protected routes grouped under ProtectedRoute */}

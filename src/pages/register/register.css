@@ -156,3 +156,51 @@
   font-weight: bold;
   background-color: transparent;
 }
+
+/* Popup panel */
+.otp-panel-overlay {
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: 100vw;
+  background-color: rgba(0, 0, 0, 0.5); /* Optional overlay */
+  z-index: 1000;
+}
+
+.otp-panel-slide {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 100%; /* Or use 50% for partial screen */
+  max-width: 480px; /* Optional: cap width */
+  height: 100%;
+  background-color: white;
+  animation: slideIn 0.3s ease-out forwards;
+  box-shadow: -2px 0 8px rgba(0,0,0,0.2);
+}
+
+.slide-in {
+  animation: slideIn 0.3s ease-out forwards;
+}
+.slide-out {
+  animation: slideOut 0.3s ease-in forwards;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideOut {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(100%);
+  }
+}

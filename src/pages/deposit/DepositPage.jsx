@@ -3,12 +3,25 @@ import './DepositPage.css';
 import { useNavigate } from 'react-router-dom';
 import { QRCodeCanvas } from 'qrcode.react';
 import DepositManual from './DepositManual';
+import { DEPOSIT_ADDRESS } from '../../constants/config';
 
 
 const DepositPage = () => {
     const navigate = useNavigate();
     const [panelOpen, setPanelOpen] = React.useState(false);
-    const depositAddress = "0x70557e7f8d1fb2ca0f87042b9d5e3c62b97c59d9";
+
+    const downloadQRCode = () => {
+      const canvas = document.querySelector("canvas");
+      const pngUrl = canvas
+        .toDataURL("image/png")
+        .replace("image/png", "image/octet-stream");
+      const downloadLink = document.createElement("a");
+      downloadLink.href = pngUrl;
+      downloadLink.download = `deposit-address-${DEPOSIT_ADDRESS}.png`;
+      document.body.appendChild(downloadLink);
+      downloadLink.click();
+      document.body.removeChild(downloadLink);
+    };
 
   return (
     <>
@@ -38,14 +51,17 @@ const DepositPage = () => {
             <p className="warning-text">*Only USDT-BEP-20 deposits accepted. Others will be lost.</p>
             <div className="qr-placeholder">
                 <QRCodeCanvas
-                    value={depositAddress}
+                    value={DEPOSIT_ADDRESS}
                     size={160}
                     bgColor="transparent"
                     fgColor="#3B82F6"
                     level="L"
                     />
             </div>
-            <button className="btn-outline">Save QR Code</button>
+            <button 
+              className="btn-outline"
+              onClick={downloadQRCode}
+            >Save QR Code</button>
             <p className="note">Only USDT, no NFT</p>
           </div>
 
