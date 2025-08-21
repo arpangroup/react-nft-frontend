@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from "react";
 import "./register.css";
-import { Link, useNavigate, useSearchParams } from "react-router-dom";
+import { Link, useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import apiClient from "../../api/apiClient";
 import Toast from "../referral/toast/Toast";
 import OTPVerification from "../otp/OTPVerification";
 import RightPanel from "../../components/panel/RightPanel"; // Path to your RightPanel component
+import { API_ROUTES } from "../../api/apiRoutes";
 
 const TIMER_DELAY_SECONDS = 60;
 
 const Register = () => {
+  const location = useLocation();
   const [searchParams] = useSearchParams();
   const [attempts, setAttempts] = useState(0);
   const maxAttempts = 3;
@@ -16,6 +18,7 @@ const Register = () => {
   const [timer, setTimer] = useState(0);
   const [toast, setToast] = useState(null);
   const [showOtpPanel, setShowOtpPanel] = useState(false);
+  const [registrationResponse, setRregistrationResponse] = useState(null)
 
   const [formData, setFormData] = useState({
     username: "johndoe",
@@ -70,9 +73,33 @@ const Register = () => {
       return;
     }
 
-    // Instead of registering immediately, show OTP panel
-    setShowOtpPanel(true);
+    setLoading(true);
+
+    try {
+      // Prepare the payload for registration
+      const payload = {
+        username: formData.username,
+        password: formData.password,
+        email: formData.email,
+        mobile: formData.mobile,
+        referralCode: formData.referralCode,
+      };
+
+      const response = await apiClient.post(API_ROUTES.AUTH_API.REGISTRATION, payload);
+      setRregistrationResponse(response.data)
+      console.log("RESPONSE: ", response.data);
+      
+      // Instead of registering immediately, show OTP panel
+      setShowOtpPanel(true);
+    } catch (error) {
+      console.error("Registration error:", error);
+      showToast(error.message || "Failed to register. Please try again.", "error");
+    } finally {
+      setLoading(false);
+    }
+
   };
+
 
   return (
     <div className="register section__padding">
@@ -195,12 +222,14 @@ const Register = () => {
 
       {/* RightPanel with OTPVerification */}
       <RightPanel isOpen={showOtpPanel} onClose={() => setShowOtpPanel(false)}>
-        <OTPVerification
-          username={formData.username}
-          email={formData.email}
-          sessionId={"dummy-session-id"}
-          onClose={() => setShowOtpPanel(false)}
-        />
+        {registrationResponse && (
+          <OTPVerification
+            username={registrationResponse.username || formData.username}
+            email={formData.email}
+            sessionId={registrationResponse.sessionId}
+            onClose={() => setShowOtpPanel(false)}
+          />
+        )}
       </RightPanel>
     </div>
   );
