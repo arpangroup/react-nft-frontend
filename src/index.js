@@ -6,6 +6,7 @@ import { BrowserRouter } from "react-router-dom";
 import { ContextProvider } from './context/Context';
 import { AuthProvider } from './context/AuthContext';
 import { NotificationProvider } from "./context/NotificationContext";
+import AppWrapper from './AppWrapper';
 
 
 ReactDOM.render(
@@ -13,7 +14,8 @@ ReactDOM.render(
     <AuthProvider>  
       <ContextProvider >
          <NotificationProvider>
-          <App />
+          {/* <App /> */}
+          <AppWrapper/>
          </NotificationProvider>
       </ContextProvider>
       </AuthProvider>
