@@ -24,7 +24,7 @@ export default function Login() {
     setError(null);
 
     try {
-      console.log('Calling ACCESS_TOKEN...');
+      //console.log('Calling ACCESS_TOKEN...');
       const res = await apiClient.post(API_ROUTES.AUTH_API.ACCESS_TOKEN, {
         username,
         password,
